@@ -1,0 +1,25 @@
+.genre-card {
+    min-width: 250px;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-self: flex-start;
+    gap: 20px;
+    background-color: #101010;
+    color: #e4e4e4;
+    .hex-color {
+        width: 10px;
+        height: inherit;
+        transition: .1s ease-in-out;
+    }
+    .content {
+        height: inherit;
+        display: flex;
+        align-items: center;
+    }
+    &:hover {
+        .hex-color {
+            width: 15px;
+        }
+    }
+}

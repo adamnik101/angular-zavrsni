@@ -1,0 +1,31 @@
+@import '../../../../shared/global-styles/colors';
+
+.playlist-card {
+    width: 200px;
+    height: 250px;
+    padding: 10px;
+    transition: .125s ease;
+    display: block;
+    .cover{
+        img{
+            width: 100%;
+            height: auto;
+        }
+    }
+    .content {
+        .title {
+            color: $text-color-light;
+        }
+        .desc {
+        
+        }
+    }
+    &:hover {
+        background-color: $hover;
+        .content{
+            .title {
+                color: $text-color-main;
+            }
+        }
+    }
+}

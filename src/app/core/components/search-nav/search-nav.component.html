@@ -1,0 +1,26 @@
+<mat-toolbar class="search-toolbar">
+    <div class="search-input-wrapper">
+        <app-common-input
+            [type]="commonInputType.search"
+            [placeholder]="'What do you want to listen?'"
+            [iconPrefix]="'search'"
+            [formControlToFill]="form.get('search')">
+        </app-common-input>
+    </div>
+
+    @if (userService.loggedIn()) {
+        <div class="user">
+            <button mat-mini-fab [mat-menu-trigger-for]="menu">
+                <mat-icon>settings</mat-icon>
+            </button>
+
+            <mat-menu #menu>
+                <button mat-menu-item>
+                    <mat-icon>dialpad</mat-icon>
+                    <span>Redial</span>
+                  </button>
+            </mat-menu>
+        </div>
+    }
+    
+</mat-toolbar>
