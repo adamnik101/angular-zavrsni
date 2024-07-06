@@ -1,0 +1,7 @@
+<h1>My Playlists</h1>
+
+<div class="playlist-wrapper">
+    @for (playlist of userPlaylistsService.playlists(); track $index) {
+        <app-playlist-card [playlist]="playlist"></app-playlist-card>
+    }
+</div>

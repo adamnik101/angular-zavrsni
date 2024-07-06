@@ -1,0 +1,17 @@
+<div class="common-input-wrapper">
+    <mat-form-field appearance="outline">
+        @if (label) {
+            <mat-label>{{label}}</mat-label>
+        }
+        <input [formControl]="formControlToFill" matInput [type]="type" [autocomplete]="autocomplete" [placeholder]="placeholder ?? '' "/>
+
+        @if (iconPrefix) {
+            <mat-icon matIconPrefix>{{iconPrefix}}</mat-icon>
+        }
+
+        @if (iconSuffix) {
+            <mat-icon matIconPrefix>{{iconSuffix}}</mat-icon>
+        }
+
+    </mat-form-field>
+</div>

@@ -1,0 +1,30 @@
+.navigation-link-item-wrapper {
+    width: 100%;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    .navigation-link-item {
+        width: 90%;
+        height: inherit;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        column-gap: 15px;
+        padding-left: 15px;
+        transition: .125s ease-in-out;
+        border-radius: 10px;
+        .icon {
+
+        }
+
+        .title-link {
+            width: 100%;
+            height: 45px;
+            display: block;
+        }
+        &:hover {
+
+        }
+    }
+}

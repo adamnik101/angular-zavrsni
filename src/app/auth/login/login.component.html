@@ -1,0 +1,22 @@
+<div class="login-wrapper">
+    <h1>Login</h1>
+    <form [formGroup]="form" class="custom-form">
+        <div class="row">
+            <app-common-input
+                [label]="'Email'"
+                [type]="commonInputType.email"
+                [formControlToFill]="form.get('email')">
+            </app-common-input>
+        </div>
+        <div class="row">
+            <app-common-input
+                [label]="'Pasword'"
+                [type]="commonInputType.password"
+                [formControlToFill]="form.get('password')">
+            </app-common-input>
+        </div>
+        <div class="row">
+            <button mat-button type="button" (click)="login()">Login</button>
+        </div>
+    </form>
+</div>

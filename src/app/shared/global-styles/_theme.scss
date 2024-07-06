@@ -1,0 +1,45 @@
+@import './_colors';
+
+.dark-theme,body {
+
+   background-color: $background-color;
+
+  .header-main {
+    color: $text-color-main;
+    background-color: $background-color;
+  }
+
+  .search-toolbar {
+    background-color: $background-color;
+
+  }
+  
+  .mat-drawer.mat-drawer-side {
+    background-color: $background-color;
+    color: $text-color-main;
+
+    .navigation-link-item {
+    
+      .icon {
+        color: $white;
+      }
+  
+      .title {
+        color: $white;
+      }
+
+      &:hover {
+        background-color: $gray;
+      }
+    }
+  }
+
+  .footer-main {
+    background-color: $background-color;
+    color: $text-color-main;
+  }
+
+  input.mat-mdc-input-element {
+    color: white !important;
+  }
+}

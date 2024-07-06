@@ -1,0 +1,28 @@
+@for (link of mainNavigationLinks; track $index) {
+    <app-navigation-link-item
+        [title]="link.title"
+        [routePath]="link.routePath"
+        [icon]="link.icon">
+    </app-navigation-link-item>
+}
+<mat-divider class="divider"></mat-divider>
+
+@if (!userService.loggedIn()) {
+    @for (link of authNavigationLinks; track $index) {
+        <app-navigation-link-item
+            [title]="link.title"
+            [routePath]="link.routePath"
+            [icon]="link.icon">
+        </app-navigation-link-item>
+    }
+}
+
+@if (userService.loggedIn()) {
+    @for (link of userNavigationLinks; track $index) {
+        <app-navigation-link-item
+            [title]="link.title"
+            [routePath]="link.routePath"
+            [icon]="link.icon">
+        </app-navigation-link-item>
+    }
+}

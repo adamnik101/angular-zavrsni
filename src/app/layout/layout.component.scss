@@ -1,0 +1,18 @@
+.header-main {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    width: calc(var(--mat-sidenav-container-width) - 80px);
+}
+
+.footer-main {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    z-index: 99000000000;
+    
+}
