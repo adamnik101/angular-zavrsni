@@ -10,6 +10,7 @@ import { UserService } from '../../../user/services/user/user.service';
 import { AlertService } from '../../../../shared/services/alert/alert.service';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { UserPlaylistsService } from '../../../user/services/playlists/user-playlists.service';
+import { AudioService } from '../../../services/audio/audio.service';
 
 @Component({
   selector: 'app-tracks-table-row',
@@ -26,7 +27,8 @@ export class TracksTableRowComponent implements OnInit {
     public likedTracksService: LikedTracksService,
     public userPlaylistsService: UserPlaylistsService,
     public userService: UserService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private audioService: AudioService
   ) {}
 
   public currentSectionId: string = "";
@@ -60,6 +62,7 @@ export class TracksTableRowComponent implements OnInit {
 
   play(): void {
     this.onPlay.emit(this.track);
+    this.audioService.play();
   }
 
   addToLiked(): void {

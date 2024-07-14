@@ -223,16 +223,21 @@ a{
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
+  border-radius: 5px;
+
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: $main-content-background;
+  background: $gray-main;
+  border-radius: 5px;
+
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: $main-color;
+  border-radius: 5px;
 }
 
 /* Handle on hover */

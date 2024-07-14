@@ -25,14 +25,16 @@ export class TracksTableComponent implements OnInit{
   }
 
   onPlay(event: any, newIndex: number): void {
-    console.log(event)
     this.OnTrackPlayed.emit(event);
-    this.setQueue(newIndex);
+    this.setQueue();
+    this.setQueueIndex(newIndex);
   }
 
-  setQueue(newIndex: number): void {
-    this.queueService.setQueueIndex(newIndex);
+  setQueue(): void {
     this.queueService.setQueue(this.tracksTableService.getTracks());
   }
 
+  setQueueIndex(newIndex: number): void {
+    this.queueService.setQueueIndex(newIndex);
+  }
 }

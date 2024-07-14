@@ -7,7 +7,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FormatDurationFromSecondsPipe implements PipeTransform {
 
   transform(value: string, ...args: unknown[]): string {
-    return calculate(+value);
+    return calculate(Math.round(+value));
 
     function calculate(seconds: number) {
       const minutes: number = Math.floor(seconds / 60);

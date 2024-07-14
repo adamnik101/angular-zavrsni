@@ -1,0 +1,147 @@
+@import '../../../shared/global-styles/colors';
+
+.audio-player-wrapper {
+    width: 100%;
+    height: 100%;
+    background: $background-color;
+    padding: 10px;
+    .track-main-info {
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        align-items: center;
+        .image {
+            height: 100%;
+            width: auto;
+            img {
+                width: auto;
+                height: 100%;
+                border-radius: 5px;
+            }
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 350px;
+            .title {
+                display: flex;
+                flex-direction: row;
+                gap: 7.5px;
+                align-items: center;
+
+                .mat-icon {
+                    width: 17px;
+                    height: 17px;
+                    font-size: 17px;
+                    color: $text-color-light;
+                }
+            }
+
+            .artists {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                color: $text-color-light;
+                font-size: 13px;
+                .owner {
+                    a {
+                        color: $text-color-light;
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+                }
+
+                .features {
+                    a {
+                        color: $text-color-light;
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+                }
+            }
+        }
+
+        .actions {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            .audio-actions {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                .play {
+                    width: 40px;
+                    height: 40px;
+                    .mat-icon {
+                        width: 40px;
+                        height: 40px;
+                        line-height: 40px;
+                        font-size: 32px;
+                    }
+                }
+            }
+
+            .progress {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 15px;
+
+                .current-time, .duration {
+                    width: 50px;
+                }
+
+                .mat-mdc-slider {
+                    min-width: 500px;
+                }
+            }
+        }
+
+        .other {
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+            gap: 15px;
+            .queue {
+
+            }
+
+            .volume {
+                display: flex;
+                align-items: center;
+                flex-direction: row;
+                gap: 10px;
+            }  
+        }
+    }
+}
+
+
+.action-icon-button {
+    width: 35px;
+    height: 35px;
+    .mat-icon {
+        width: 35px;
+        height: 35px;
+        line-height: 36.5px;
+        color: $white;
+    }
+}
+
+.small {
+    .mat-icon {
+        font-size: 22px;
+    }
+}
+
+.smallest {    
+    .mat-icon {
+        font-size: 20px;
+    }
+}
