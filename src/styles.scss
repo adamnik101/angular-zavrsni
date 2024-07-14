@@ -218,3 +218,24 @@ a{
   background: linear-gradient(to top, $main-content-background 0%, $main-content-background 40%, #000000ce 100%);
   z-index: 0;
 }
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: $main-content-background;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $main-color;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #88dd88;
+}
