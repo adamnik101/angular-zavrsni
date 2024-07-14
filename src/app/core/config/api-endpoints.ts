@@ -17,5 +17,25 @@ export const API_ENDPOINTS = {
     },
     genre: {
         api: "genres"
+    },
+    playlist: {
+        api: "playlists"
+    },
+    search: {
+        api: "search"
+    },
+    tracks: {
+        api: "tracks",
+        trending: "tracks/trending",
+        newReleases: "tracks/new-releases"
+    },
+    albums: {
+        api: "albums",
+        trending: "albums/trending",
+        newReleases: "albums/new-releases"
+    },
+    artists: {
+        api: "artists",
+        trending: "artists/trending"
     }
 }

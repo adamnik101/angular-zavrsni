@@ -4,21 +4,24 @@
             [type]="commonInputType.search"
             [placeholder]="'What do you want to listen?'"
             [iconPrefix]="'search'"
-            [formControlToFill]="form.get('search')">
+            [formControlToFill]="form.get('search')"
+            (KeyEnter)="onKeyEnter($event)">
         </app-common-input>
     </div>
 
     @if (userService.loggedIn()) {
         <div class="user">
-            <button mat-mini-fab [mat-menu-trigger-for]="menu">
-                <mat-icon>settings</mat-icon>
+            <button mat-mini-fab [mat-menu-trigger-for]="menu" color="accent">
+                <mat-icon>menu</mat-icon>
             </button>
 
             <mat-menu #menu>
-                <button mat-menu-item>
-                    <mat-icon>dialpad</mat-icon>
-                    <span>Redial</span>
-                  </button>
+                @for (link of userMenuNavigationLinks; track $index) {
+                    <button mat-menu-item [routerLink]="link.routePath ? link.routePath: null" (click)="link.method ? link.method() : null">
+                        <mat-icon>{{link.icon}}</mat-icon>
+                        <span>{{link.title}}</span>
+                    </button>
+                }
             </mat-menu>
         </div>
     }

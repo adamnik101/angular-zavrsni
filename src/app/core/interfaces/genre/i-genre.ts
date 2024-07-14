@@ -8,6 +8,7 @@ export interface IGenre {
     created_at: string;
     updated_at: string;
     deleted_at: string;
+    playlists_count: number;
 }
 
 export interface IGenreDetail extends IGenre{

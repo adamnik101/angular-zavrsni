@@ -3,14 +3,16 @@
     <div class="title">
         <h1>{{genre.name}}</h1>
     </div>
-    <div class="background" [style.background-color]="genre.hex_color"></div>
+    <div class="background-color-header" [style.background-color]="genre.hex_color"></div>
 </div>
 <div class="playlist-wrapper">
     @for (playlist of genre.playlists; track $index) {
         @defer (on viewport) {
             <app-playlist-card [playlist]="playlist"></app-playlist-card>
         } @placeholder {
-            <p>;pading</p>
+            <app-placeholder-card></app-placeholder-card>
+        } @loading {
+            <app-placeholder-card></app-placeholder-card>
         }
     }
 </div>

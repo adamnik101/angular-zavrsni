@@ -1,3 +1,11 @@
+<mat-form-field appearance="outline">
+    <mat-label>Favorite food</mat-label>
+    <mat-select>
+      @for (food of foods; track food) {
+        <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
 @for (playlist of playlistsService.playlists(); track $index) {
     <p>
     {{playlist.title}}

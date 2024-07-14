@@ -16,6 +16,23 @@
         height: inherit;
         display: flex;
         align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        .title {
+            width: fit-content;
+        }
+        .details {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            color: #616161;
+            gap: 5px;
+            padding-right: 10px;
+            font-size: 10px !important;
+            .mat-icon {
+
+            }
+        }
     }
     &:hover {
         .hex-color {

@@ -1,6 +1,10 @@
 <a class="genre-card" routerLink="/genres/{{genre.id}}">
     <div class="hex-color" [style.backgroundColor]="genre.hex_color"></div>
     <div class="content">
-        {{genre.name}}
+        <p class="title">{{genre.name}}</p>
+        <p class="details" matTooltip="Number of playlists"> 
+            {{genre.playlists_count}} 
+            <mat-icon>library_music</mat-icon>
+        </p>
     </div>
 </a>

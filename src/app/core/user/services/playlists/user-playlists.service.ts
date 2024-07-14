@@ -8,7 +8,7 @@ export class UserPlaylistsService {
 
   constructor() { }
 
-  playlists = signal<IPlaylist[]>([])
+  playlists = signal<IPlaylist[]>([]);
 
   setPlaylists(playlists: IPlaylist[]): void {
     this.playlists.set(playlists);

@@ -1,9 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonInputType } from './interfaces/i-common-input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { AbstractControl, FormControl, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-common-input',
@@ -22,4 +22,10 @@ export class CommonInputComponent {
   @Input() public iconSuffix: string | null = null; 
   @Input() public formControlToFill: any;
   
+
+  @Output() KeyEnter: EventEmitter<string> = new EventEmitter();
+
+  onKeyEnter(event: Event): void {
+    this.KeyEnter.emit(this.formControlToFill.value);
+  }
 }

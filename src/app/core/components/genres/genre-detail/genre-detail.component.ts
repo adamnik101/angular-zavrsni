@@ -1,17 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { GenreService } from '../../../services/genre/genre.service';
-import { IGenreDetail } from '../../../interfaces/genre/i-genre';
+import { GenreService } from '../../../services/genre/base/genre.service';
+import { IGenre, IGenreDetail } from '../../../interfaces/genre/i-genre';
 import { IApiResponse } from '../../../../shared/interfaces/i-api-response';
 import { SpinnerFunctions } from '../../../static/spinner-functions';
 import { PlaylistCardComponent } from '../../playlists/playlist-card/playlist-card.component';
-import { ScrollingModule } from '@angular/cdk/scrolling';
+import { PlaceholderCardComponent } from '../../placeholder-card/placeholder-card.component';
 
 @Component({
   selector: 'app-genre-detail',
   standalone: true,
-  imports: [PlaylistCardComponent, ScrollingModule],
+  imports: [PlaylistCardComponent, PlaceholderCardComponent],
   templateUrl: './genre-detail.component.html',
   styleUrl: './genre-detail.component.scss'
 })
@@ -36,7 +36,7 @@ export class GenreDetailComponent implements OnInit, OnDestroy{
 
   getGenre(id: string): void {
     SpinnerFunctions.showSpinner();
-      this.genreService.get(id).subscribe({
+      this.genreService.get<IGenreDetail>(id).subscribe({
         next: (data: IApiResponse<IGenreDetail>) => {
           this.genre = data.data;
 

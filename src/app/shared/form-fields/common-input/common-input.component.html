@@ -3,7 +3,7 @@
         @if (label) {
             <mat-label>{{label}}</mat-label>
         }
-        <input [formControl]="formControlToFill" matInput [type]="type" [autocomplete]="autocomplete" [placeholder]="placeholder ?? '' "/>
+        <input [formControl]="formControlToFill" matInput [type]="type" [autocomplete]="autocomplete" [placeholder]="placeholder ?? '' " (keyup.Enter)="onKeyEnter($event)"/>
 
         @if (iconPrefix) {
             <mat-icon matIconPrefix>{{iconPrefix}}</mat-icon>

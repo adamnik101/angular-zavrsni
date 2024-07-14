@@ -1,0 +1,26 @@
+<div class="card-whole">
+    <a class="card" routerLink="/artists/{{artist.id}}">
+        <div class="cover">
+            <img src="{{artist.cover}}"/>
+        </div>
+        <div class="content">
+            <div class="title">
+                <p>{{artist.name}}</p>
+            </div>
+            <div class="desc">
+                {{artist.followed_by_count}}
+                @if (artist.followed_by_count == 1) {
+                    follower
+                } @else {
+                    followers
+                } 
+            </div>
+        </div>
+    </a>
+    
+    <app-play-all-button 
+    class="play-button" 
+    [apiService]="apiService"
+    [id]="artist.id"
+    (onPlay)="playAll($event)"></app-play-all-button>    
+</div>

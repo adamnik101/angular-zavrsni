@@ -1,0 +1,23 @@
+<div class="playlist-wrapper">
+    <div class="header">
+        <div class="cover">
+            <img src="{{playlist.image_url}}" alt="playlist_cover"/>
+        </div>
+        <div class="info-main">
+            <div class="title">
+                <h2>{{playlist.title}}</h2>
+                <p class="desc">{{playlist.description}}</p>
+                <div>
+                    <p>{{playlist.tracks_count}} tracks</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="background" #back></div>
+        <div class="background-gradient"></div>
+    </div>
+
+    <div class="content">
+        <app-tracks-table (onTrackPlayed)="onTrackPlayed($event)"></app-tracks-table>
+    </div>
+</div>

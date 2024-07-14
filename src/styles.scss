@@ -3,6 +3,10 @@
 // For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
 @import 'app/shared/global-styles/theme';
+@font-face {
+  font-family: 'Light';
+  src: url("../public/fonts/Circular/CircularStd-Book.otf") format('truetype');
+}
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -14,8 +18,8 @@
 $ng-zavrsni-theme: mat.define-theme((
   color: (
     theme-type: dark,
-    primary: mat.$azure-palette,
-    tertiary: mat.$blue-palette,
+    primary: mat.$spring-green-palette,
+    tertiary: mat.$spring-green-palette,
   ),
   density: (
     scale: -5,
@@ -40,10 +44,11 @@ $ng-zavrsni-theme: mat.define-theme((
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: Light ;
 }
 
 html, body { height: 100%; overflow-y: hidden; }
-body { font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { font-family: Roboto, "Helvetica Neue", sans-serif; letter-spacing: .6px; }
 
 .mat-drawer-container { 
   position: static !important;
@@ -54,7 +59,7 @@ body { font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .mat-drawer.mat-drawer-side {
   border-radius: 0;
-  width: calc(var(--mat-sidenav-container-width) - 80px);
+  width: calc(var(--mat-sidenav-container-width) - 100px);
 }
 
 a{
@@ -73,4 +78,143 @@ a{
   flex-direction: column;
   gap: 20px;
   
+}
+
+.wrapper {
+  width: 100%;
+  height: calc(100% - 60px);
+  overflow-y: auto;
+}
+
+.slide-toggle {
+  width: 500px;
+  gap: 20px;
+  .mdc-form-field--align-end>label {
+    margin: 0 !important;
+  }
+}
+
+.mat-mdc-slide-toggle .mat-internal-form-field {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cdk-overlay-container {
+  z-index: 99999999999999; 
+}
+
+.custom-snackbar {
+  margin-bottom: 120px !important;
+  text-align: center;
+  .mat-mdc-snackbar-surface {
+    min-width: fit-content !important;
+  }
+  .mdc-snackbar__label {
+    font-family: Light !important;
+  }
+}
+
+.custom-error-snackbar {
+  .mat-mdc-snackbar-surface {
+    background-color: red !important;
+  }
+  .mdc-snackbar__label {
+    color: $text-color-main !important;
+  }
+}
+.card-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 20px;
+}
+.card-whole {
+  position: relative;
+  .card {
+    width: 200px;
+    height: 280px;
+    padding: 10px;
+    transition: .125s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: $card-background;
+    border-radius: 10px;
+    position: relative;
+    .cover{
+        border-radius: 5px;
+        width: 180px;
+        height: 180px;
+        img{
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+    }
+    .content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 10px;
+        height: 100%;
+
+        .title {
+            color: $text-color-main;
+            transition: .125s ease-in-out;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .desc {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            color: $text-color-light;
+            font-size: 13px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+    &:hover {
+        background-color: $hover;
+    }
+  }
+
+  .play-button {
+    position: absolute;
+    right: 20px;
+    bottom: 80px;
+    z-index: 222222;
+    transition: .2s ease-in-out;
+    opacity: 0;
+  }
+
+  &:hover {
+    .play-button {
+      opacity: 1;
+      bottom: 100px;
+    }
+  }
+}
+
+.background {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  left: -20px;
+  height: 250px;
+  z-index: 0;
+  background-repeat: repeat-x;
+  background-position: center;
+  background-size: cover;
+}
+.background-gradient {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  left: -20px;
+  height: 250px;
+  background: linear-gradient(to top, $main-content-background 0%, $main-content-background 40%, #000000ce 100%);
+  z-index: 0;
 }

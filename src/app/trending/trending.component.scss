@@ -1,0 +1,51 @@
+.trending-wrapper {
+    .main-header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 20px;
+        .title {
+
+        }
+        .desc{ }
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+        .card-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            .header {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                .title {
+                    h3 {
+                        font-size: 25px;
+                    }
+                }
+                .desc {
+
+                }
+            }
+
+            .cards {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                -ms-overflow-style: none;  /* Internet Explorer 10+ */
+                scrollbar-width: none;
+                overflow-y: auto;
+                gap: 20px;
+                &::-webkit-scrollbar { 
+                    display: none;  /* Safari and Chrome */
+                }
+            }
+        }
+    }
+}

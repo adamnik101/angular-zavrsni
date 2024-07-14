@@ -1,11 +1,22 @@
 <div class="navigation-link-item-wrapper">
-    <a class="navigation-link-item" [routerLink]="routePath">
+    <a class="navigation-link-item" [routerLink]="routePath" routerLinkActive #link="routerLinkActive">
         <div class="icon">
             <mat-icon>{{icon}}</mat-icon>
+            
         </div>
     
         <div class="title">
             {{title}} 
+            <div class="desc" [matTooltip]="tooltip" matTooltipPosition="right">
+                @switch (title) {
+                    @case ("Liked songs") {
+                        {{likedTracksService.likedTracks().length}}
+                    }
+                    @case ("My library") {
+                        {{userPlaylistsService.playlists().length}}
+                    }
+                }
+            </div>
         </div>
     </a>
 </div>

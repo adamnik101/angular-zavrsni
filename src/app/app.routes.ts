@@ -1,11 +1,4 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/register/register.component';
-import { HomeComponent } from './home/home.component';
-import { ExploreComponent } from './explore/explore.component';
-import { TrendingComponent } from './trending/trending.component';
-import { LibraryComponent } from './library/library.component';
-import { GenreDetailComponent } from './core/components/genres/genre-detail/genre-detail.component';
 
 export const routes: Routes = [
     {
@@ -15,18 +8,15 @@ export const routes: Routes = [
     },
     {
         path: 'home',
-        loadComponent: () => import('./home/home.component').then(c => c.HomeComponent),
-        data: {animation: 'HomePage'}
+        loadComponent: () => import('./home/home.component').then(c => c.HomeComponent)
     },
     {
         path: 'explore',
-        loadComponent: () => import('./explore/explore.component').then(c => c.ExploreComponent),
-        data: {animation: 'AboutPage'}
+        loadComponent: () => import('./explore/explore.component').then(c => c.ExploreComponent)
     },
     {
         path: 'trending',
-        loadComponent: () => import('./trending/trending.component').then(c => c.TrendingComponent),
-        data: {animation: 'TrendingPage'},
+        loadComponent: () => import('./trending/trending.component').then(c => c.TrendingComponent)
     },
     {
         path: "login",
@@ -41,11 +31,35 @@ export const routes: Routes = [
         loadComponent: () => import('./library/library.component').then(c => c.LibraryComponent)
     },
     {
+        path: "playlists/:id",
+        loadComponent: () => import('./core/components/playlists/playlist-detail/playlist-detail.component').then(c => c.PlaylistDetailComponent)
+    },
+    {
         path: "genres/:id",
-        component: GenreDetailComponent
+        loadComponent: () => import('./core/components/genres/genre-detail/genre-detail.component').then(c => c.GenreDetailComponent)
+    },
+    {
+        path: "artists/:id",
+        loadComponent: () => import('./core/components/artists/artist-detail/artist-detail.component').then(c => c.ArtistDetailComponent)
+    },
+    {
+        path: "albums/:id",
+        loadComponent: () => import('./core/components/albums/album-detail/album-detail.component').then(c => c.AlbumDetailComponent)
     },
     {
         path: "liked",
-        loadComponent: () => import('./liked-songs/liked-songs.component').then(c => c.LikedSongsComponent)
+        loadComponent: () => import('./liked-tracks/liked-tracks.component').then(c => c.LikedTracksComponent)
+    },
+    {
+        path: "profile",
+        loadComponent: () => import('./profile/profile.component').then(c => c.ProfileComponent)
+    },
+    {
+        path: "settings",
+        loadComponent: () => import('./settings/settings.component').then(c => c.SettingsComponent)
+    },
+    {
+        path: "search",
+        loadComponent: () => import('./search/search.component').then(c => c.SearchComponent)
     }
 ];

@@ -1,0 +1,26 @@
+<div class="wrapper">
+    @if(searchService.results()) {
+        @if (
+        !searchService.results()!.albums.data.length &&
+        !searchService.results()!.tracks.data.length && 
+        !searchService.results()!.artists.data.length
+        ) {
+            <app-no-results class="wrapper"></app-no-results>
+        } @else {
+                @if (!!(searchService.results()!.artists!.total)) {
+                    <div class="wrapper-cards">
+                        @for (artist of searchService.results()?.artists?.data; track $index) {
+                            <app-artist-card [artist]="artist"></app-artist-card>
+                        }
+                    </div>
+                }
+                @if (!!(searchService.results()!.albums!.total)) {
+                    <div class="wrapper-cards">
+                        @for (album of searchService.results()?.albums?.data; track $index) {
+                            <app-album-card [album]="album"></app-album-card>
+                        }    
+                    </div>
+                }
+        }
+    }
+</div>

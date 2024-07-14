@@ -1,13 +1,21 @@
-<a class="playlist-card" routerLink="/playlists/{{playlist.id}}">
-    <div class="cover">
-        <img src="{{playlist.image_url}}"/>
-    </div>
-    <div class="content">
-        <div class="title">
-            {{playlist.title}}
+<div class="card-whole">
+    <a class="card" routerLink="/playlists/{{playlist.id}}">
+        <div class="cover">
+            <img src="{{playlist.image_url}}"/>
         </div>
-        <div class="desc">
+        <div class="content">
+            <div class="title">
+                {{playlist.title}}
+            </div>
+            <div class="desc">
+                <p>{{playlist.tracks_count | number}} tracks</p>
+            </div>
+        </div>
+    </a>
 
-        </div>
-    </div>
-</a>
+    <app-play-all-button 
+    class="play-button" 
+    [apiService]="apiService"
+    [id]="playlist.id" 
+    (onPlay)="playAll($event)"></app-play-all-button>    
+</div>

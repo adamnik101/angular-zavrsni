@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+import { IApiResponse } from '../../interfaces/i-api-response';
 
 @Injectable({
   providedIn: 'root'
@@ -17,19 +18,27 @@ export abstract class ApiService<T> {
 
   private baseUrl: string = "";
 
-  getAll(): Observable<T> {
-    return this.http.get<T>(`${this.baseUrl + this.endpoint}`);
+  getAll<T>(): Observable<IApiResponse<T>> {
+    return this.http.get<IApiResponse<T>>(`${this.baseUrl + this.endpoint}`);
   }
 
-  get(id: string): Observable<T> {
-    return this.http.get<T>(`${this.baseUrl + this.endpoint}/${id}`);
+  get<T>(id: string): Observable<IApiResponse<T>> {
+    return this.http.get<IApiResponse<T>>(`${this.baseUrl + this.endpoint}/${id}`);
   }
 
-  getWithOverideEndpoint(endpoint: string): Observable<T> {
-    return this.http.get<T>(`${this.baseUrl + endpoint}`);
+  getWithQueryParams<T>(params: any[]): Observable<IApiResponse<T>> {
+    return this.http.get<IApiResponse<T>>(`${this.baseUrl + this.endpoint}?${params.join("&")}`)
   }
 
-  post(body: any): Observable<T> {
+  getWithOverideEndpoint<T>(endpoint: string): Observable<IApiResponse<T>> {
+    return this.http.get<IApiResponse<T>>(`${this.baseUrl + endpoint}`);
+  }
+
+  post<T>(body: any): Observable<T> {
     return this.http.post<T>(`${this.baseUrl + this.endpoint}`, body);
+  }
+
+  delete<T>(id: string): Observable<IApiResponse<T>> {
+    return this.http.delete<IApiResponse<T>>(`${this.baseUrl + this.endpoint}/${id}`);
   }
 }

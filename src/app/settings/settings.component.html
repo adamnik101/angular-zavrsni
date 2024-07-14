@@ -1,0 +1,13 @@
+<h1>Settings</h1>
+
+<div class="settings-wrapper">
+    <mat-slide-toggle
+        labelPosition="before"
+        [(ngModel)]="userSettingsService.settings().explicit"
+        (toggleChange)="updateExplicit()"
+        class="slide-toggle">
+        Enable explicit content to be played
+    </mat-slide-toggle>
+    <mat-divider class="divider"></mat-divider>
+    
+</div>

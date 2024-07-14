@@ -1,5 +1,6 @@
 export interface IMainNavigationLink {
     title: string;
-    routePath: string;
+    routePath: string | null;
     icon: string;
+    method?: any;
 }

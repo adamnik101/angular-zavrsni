@@ -1,0 +1,24 @@
+.no-results-wrapper {
+    min-height: 100%;
+    width: 100%;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    justify-content: center;
+    .content {
+        min-height: 100%;
+        display: flex;
+        align-items: center;
+        justify-items: center;
+        flex-direction: column;
+        gap: 20px;
+
+        .mat-icon {
+            width: 50px;
+            height: 50px;
+            font-size: 50px;
+        }
+    }
+}

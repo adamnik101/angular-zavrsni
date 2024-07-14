@@ -1,0 +1,43 @@
+<div class="artist-wrapper">
+    <div class="header">
+        <div class="cover">
+            @if (artist.cover) {
+                <img [ngSrc]="artist.cover" alt="artist,{{artist.name}}" [width]="250" height="250" [priority]="true"/>
+            }
+        </div>
+        <div class="info">
+            <div class="header">
+                <p>Artist</p>
+            </div>
+            <div class="name">
+                <h1>{{artist.name}}</h1>
+                @if(artist.verified) {
+                    <mat-icon matTooltip="Verified" matTooltipPosition="right">verified</mat-icon>
+                }
+            </div>
+            <p>
+                {{artist.monthly_listeners}} monthly listeners
+            </p>  
+            <div class="desc">    
+                <p>
+                    {{artist.followed_by_count}} followers
+                </p>
+                <app-small-round-divider></app-small-round-divider>
+                <p>
+                    {{artist.tracks_count}} tracks
+                </p>
+                <app-small-round-divider></app-small-round-divider>
+                <p>
+                    {{artist.albums_count}} albums
+                </p>
+            </div>
+        </div>
+
+                
+        <div class="background" #back></div>
+        <div class="background-gradient"></div>
+    </div>
+    <div class="content">
+        <app-tracks-table></app-tracks-table>
+    </div>
+</div>

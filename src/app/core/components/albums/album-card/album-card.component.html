@@ -1,0 +1,18 @@
+<a class="card" routerLink="/albums/{{album.id}}">
+    <div class="cover">
+        <img src="{{album.cover}}"/>
+    </div>
+    <div class="content">
+        <div class="title">
+            {{album.name}}
+        </div>
+        <div class="desc">
+            {{album.tracks_count}} 
+            @if (album.tracks_count == 1) {
+                track
+            } @else {
+                tracks
+            }
+        </div>
+    </div>
+</a>

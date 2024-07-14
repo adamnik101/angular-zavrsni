@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonInputComponent } from '../../shared/form-fields/common-input/common-input.component';
 import { CommonInputType } from '../../shared/form-fields/common-input/interfaces/i-common-input';
 import { AuthService } from '../../shared/auth/auth.service';
@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit, OnDestroy{
 
   constructor(
     private loginFormService: LoginFormService,
@@ -42,6 +42,10 @@ export class LoginComponent implements OnInit{
 
         SpinnerFunctions.hideSpinner();
       }
-    })    
+    });    
+  }
+
+  ngOnDestroy(): void {
+    this.loginFormService.reset();
   }
 }

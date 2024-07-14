@@ -1,1 +1,48 @@
-<p>trending works!</p>
+<div class="trending-wrapper">
+    <div class="main-header">
+        <div class="title">
+            <h1>Trending</h1>
+        </div>
+        <div class="desc">
+            <mat-icon>whatshot</mat-icon>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="card-wrapper">
+            <div class="header">
+                <div class="title">
+                    <h3>Albums</h3>
+                </div>
+                <div class="desc"></div>
+            </div>
+            <div class="cards">
+                @for (album of trending.albums; track $index) {
+                    @defer (on viewport) {
+                        <app-album-card [album]="album"></app-album-card>
+                    } @placeholder {
+                        <app-placeholder-card></app-placeholder-card>
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="card-wrapper">
+            <div class="header">
+                <div class="title">
+                    <h3>Artists</h3>
+                </div>
+                <div class="desc"></div>
+            </div>
+            <div class="cards">
+                @for (artist of trending.artists; track $index) {
+                    @defer (on viewport) {
+                        <app-artist-card [artist]="artist"></app-artist-card>
+                    } @placeholder {
+                        <app-placeholder-card></app-placeholder-card>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>

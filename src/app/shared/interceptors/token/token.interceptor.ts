@@ -20,7 +20,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, n
     return next(newRequest);
   }
   else {
-    authService.logout();
+    // authService.logout();
   }
 
   return next(req);

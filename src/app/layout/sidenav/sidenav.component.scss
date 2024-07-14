@@ -15,12 +15,18 @@
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: 500px;
+    margin-left: 300px;
+
+    .search-nav {
+        position: relative;
+        z-index: 2222222222222222;
+    }
+    overflow-y: auto;
 }
 
 .main-content {
     padding: 20px;
-    padding-bottom: 120px;
     background: $main-content-background;
     min-height: calc(100% - 120px);
 }
