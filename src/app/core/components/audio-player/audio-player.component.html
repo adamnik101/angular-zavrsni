@@ -27,29 +27,29 @@
     
             <div class="actions">
                 <div class="audio-actions">
-                    <button mat-icon-button class="action-icon-button smallest">
+                    <button mat-icon-button class="action-icon-button smallest" matTooltip="Shuffle" matTooltipPosition="above">
                         <mat-icon>shuffle</mat-icon>
                     </button>
     
-                    <button mat-icon-button class="action-icon-button" (click)="skipPrevious()">
+                    <button mat-icon-button class="action-icon-button" (click)="skipPrevious()" matTooltip="Previous" matTooltipPosition="above">
                         <mat-icon>skip_previous</mat-icon>
                     </button>
                     
                     @if (!audioService.isPlaying()) {
-                        <button mat-icon-button class="action-icon-button play" (click)="continue()">
+                        <button mat-icon-button class="action-icon-button play" (click)="continue()" matTooltip="Play" matTooltipPosition="above">
                             <mat-icon>play_arrow</mat-icon>
                         </button>
                     } @else {
-                        <button mat-icon-button class="action-icon-button play" (click)="pause()">
+                        <button mat-icon-button class="action-icon-button play" (click)="pause()" matTooltip="Pause" matTooltipPosition="above">
                             <mat-icon>pause</mat-icon>
                         </button>
                     }
     
-                    <button mat-icon-button class="action-icon-button" (click)="skipNext()">
+                    <button mat-icon-button class="action-icon-button" (click)="skipNext()" matTooltip="Next" matTooltipPosition="above">
                         <mat-icon>skip_next</mat-icon>
                     </button>
     
-                    <button mat-icon-button class="action-icon-button smallest">
+                    <button mat-icon-button class="action-icon-button smallest" matTooltip="Toggle Repeat" matTooltipPosition="above">
                         <mat-icon>repeat</mat-icon>
                     </button>
                 </div>
