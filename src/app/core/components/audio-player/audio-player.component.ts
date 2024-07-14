@@ -7,11 +7,12 @@ import { MatIconButton } from '@angular/material/button';
 import { MatSlider, MatSliderThumb } from '@angular/material/slider';
 import { FormatDurationFromSecondsPipe } from "../../../shared/pipes/format-duration-from-seconds.pipe";
 import { AudioService } from '../../services/audio/audio.service';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-audio-player',
   standalone: true,
-  imports: [RouterLink, MatIcon, MatIconButton, MatSlider, MatSliderThumb, FormatDurationFromSecondsPipe],
+  imports: [RouterLink, MatIcon, MatIconButton, MatSlider, MatSliderThumb, FormatDurationFromSecondsPipe, MatTooltip],
   templateUrl: './audio-player.component.html',
   styleUrl: './audio-player.component.scss'
 })
