@@ -1,14 +1,15 @@
 
 <div class="tracks-table-wrapper">
     @for (track of tracksTableService.getTracks(); track $index; let index = $index) {
-        @defer (on viewport) {
+        @defer (on viewport; prefetch on idle) {
             <app-tracks-table-row 
                 [index]="index" 
                 [track]="track"
                 (onPlay)="onPlay($event, index)">
             </app-tracks-table-row>
-        } @placeholder {
+        } @placeholder (minimum 300ms) {
             <app-tracks-table-placeholder-row></app-tracks-table-placeholder-row>
         }
     }
+
 </div>

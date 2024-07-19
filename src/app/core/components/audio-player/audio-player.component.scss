@@ -12,8 +12,8 @@
         gap: 10px;
         align-items: center;
         .image {
-            height: 100%;
-            width: auto;
+            height: 80px;
+            width: 80px;
             img {
                 width: auto;
                 height: 100%;
@@ -75,6 +75,9 @@
                 display: flex;
                 align-items: center;
                 gap: 15px;
+
+                .progress-spinner {
+                }
                 .play {
                     width: 40px;
                     height: 40px;
