@@ -1,4 +1,4 @@
-<div class="table-row" (contextmenu)="onContextMenu($event)">
+<div class="table-row" #row tabindex="1" (blur)="selectRow($event)" (click)="selectRow($event)" (contextmenu)="onContextMenu($event)" [ngClass]="{'selected-row' : trackTableRowService.currTrack() == track.id}">
     <div class="inner">
         <div class="index-play">
             <div class="number">
@@ -90,7 +90,7 @@
 
               <mat-menu #playlists>
                     @for (playlist of userPlaylistsService.playlists(); track $index) {
-                        <button mat-menu-item>{{playlist.title}}</button>
+                        <button mat-menu-item (click)="addToPlaylist(playlist.id)">{{playlist.title}}</button>
                     }
               </mat-menu>
               <mat-menu #owner="matMenu">

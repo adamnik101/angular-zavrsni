@@ -19,7 +19,8 @@ export const API_ENDPOINTS = {
         api: "genres"
     },
     playlist: {
-        api: "playlists"
+        api: "playlists",
+        tracks: "playlists/tracks/"
     },
     search: {
         api: "search"

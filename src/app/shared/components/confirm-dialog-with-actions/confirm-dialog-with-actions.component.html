@@ -1,0 +1,18 @@
+<div mat-dialog-title>
+    <h3>{{data.header}}</h3>
+</div>
+
+<div mat-dialog-content>
+    <p>{{data.message}}</p>
+</div>
+
+<div mat-dialog-actions>
+    @for (action of data.actions; track $index) {
+
+        @if (action === confirmDialogActions.addAnyway) {
+            <button class="secondary-btn" mat-flat-button>{{action}}</button>
+        }
+    }
+
+    <button class="warning-btn" mat-flat-button (click)="close()">{{confirmDialogActions.cancel}}</button>
+</div>

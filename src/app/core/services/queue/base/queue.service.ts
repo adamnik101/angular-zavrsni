@@ -1,5 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { ITrack } from '../../../interfaces/tracks/i-track';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -56,7 +57,6 @@ export class QueueService {
     return this._from();
   }
 
-
   public resetQueue(): void {
     this._queue.set([]);
   }
@@ -71,5 +71,19 @@ export class QueueService {
     }
 
     return null;
+  }
+
+  public shuffleQueueIndex(): void {
+    let rand = this.generateRandom(0, this._queue().length);  
+
+    while (rand == this._queueIndex()) {
+      rand = this.generateRandom(0, this._queue().length);
+    }
+
+    this.setQueueIndex(rand);
+  }
+
+  private generateRandom(min: number, max: number): number {
+    return Math.floor(Math.random() * ((max - min + 1)) + min);
   }
 }

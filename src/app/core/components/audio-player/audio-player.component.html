@@ -2,23 +2,23 @@
     @if (track) {
         <div class="track-main-info">
             <div class="image">
-                <img src="{{track?.cover}}"/>
+                <img src="{{track.cover}}"/>
             </div>
             
             <div class="content">
                 <div class="title">
-                    <p>{{track?.title}}</p>
-                    @if (track?.explicit) {
+                    <p>{{track.title}}</p>
+                    @if (track.explicit) {
                         <mat-icon>explicit</mat-icon>
                     }
                 </div>
                 <div class="artists">
                     <div class="owner">
-                        <a routerLink="/artists/{{track?.owner_id}}">{{track?.owner?.name}}</a>
+                        <a routerLink="/artists/{{track.owner_id}}">{{track.owner.name}}</a>
                     </div>
     
                     <div class="features">
-                        @for (feature of track?.features; track $index; let index = $index) {
+                        @for (feature of track.features; track $index; let index = $index) {
                             @if (index !== 0) {,&nbsp;} @else {&nbsp;x&nbsp;} <a routerLink="/artists/{{feature.id}}">{{feature.name}}</a>
                         }
                     </div>
@@ -27,30 +27,50 @@
     
             <div class="actions">
                 <div class="audio-actions">
-                    <button mat-icon-button class="action-icon-button smallest" matTooltip="Shuffle" matTooltipPosition="above">
-                        <mat-icon>shuffle</mat-icon>
+                    <button mat-icon-button class="action-icon-button smallest" (click)="toggleShuffle()" [matTooltip]="audioService.shuffle() ? 'Shuffle on' : 'Shuffle off'" matTooltipPosition="above">
+                        @if (audioService.shuffle()) {
+                            <mat-icon>shuffle_on</mat-icon>
+                        } @else {
+                            <mat-icon>shuffle</mat-icon>
+                        }
                     </button>
     
-                    <button mat-icon-button class="action-icon-button" (click)="skipPrevious()" matTooltip="Previous" matTooltipPosition="above">
+                    <button mat-icon-button class="action-icon-button" [disabled]="audioService.trackIsLoading()" (click)="skipPrevious()" matTooltip="Previous" matTooltipPosition="above">
                         <mat-icon>skip_previous</mat-icon>
                     </button>
                     
-                    @if (!audioService.isPlaying()) {
-                        <button mat-icon-button class="action-icon-button play" (click)="continue()" matTooltip="Play" matTooltipPosition="above">
-                            <mat-icon>play_arrow</mat-icon>
-                        </button>
+                    @if (audioService.trackIsLoading()) {
+                        <div class="progress-spinner" matTooltip="Loading..." matTooltipPosition="above">
+                            <mat-progress-spinner [strokeWidth]="5" mode="indeterminate" [diameter]="40"></mat-progress-spinner>
+                        </div>
                     } @else {
-                        <button mat-icon-button class="action-icon-button play" (click)="pause()" matTooltip="Pause" matTooltipPosition="above">
-                            <mat-icon>pause</mat-icon>
-                        </button>
+                        @if (!audioService.isPlaying()) {
+                            <button mat-icon-button class="action-icon-button play" (click)="continue()" matTooltip="Play" matTooltipPosition="above">
+                                <mat-icon>play_arrow</mat-icon>
+                            </button>
+                        } @else {
+                            <button mat-icon-button class="action-icon-button play" (click)="pause()" matTooltip="Pause" matTooltipPosition="above">
+                                <mat-icon>pause</mat-icon>
+                            </button>
+                        }
                     }
     
-                    <button mat-icon-button class="action-icon-button" (click)="skipNext()" matTooltip="Next" matTooltipPosition="above">
+                    <button mat-icon-button class="action-icon-button" [disabled]="audioService.trackIsLoading()" (click)="skipNext()" matTooltip="Next" matTooltipPosition="above">
                         <mat-icon>skip_next</mat-icon>
                     </button>
     
-                    <button mat-icon-button class="action-icon-button smallest" matTooltip="Toggle Repeat" matTooltipPosition="above">
-                        <mat-icon>repeat</mat-icon>
+                    <button mat-icon-button class="action-icon-button smallest" (click)="toggleRepeat()" [matTooltip]="audioService.repeat().title" matTooltipPosition="above">
+                        @switch (audioService.repeat().repeat) {
+                            @case (repeatEnum.DisableRepeat) {
+                                <mat-icon>repeat</mat-icon>
+                            }
+                            @case (repeatEnum.EnableRepeat) {
+                                <mat-icon>repeat_on</mat-icon>
+                            }
+                            @case (repeatEnum.EnableRepeatOne) {
+                                <mat-icon>repeat_one_on</mat-icon>
+                            }
+                        }
                     </button>
                 </div>
     
@@ -59,12 +79,12 @@
                         <p>{{audioService.currentTime() | formatDurationFromSeconds}}</p>
                     </div>
                     
-                    <mat-slider [min]="0" [max]="(+track!.duration) * 10" step="1">
-                        <input matSliderThumb [value]="+audioService.currentTime() * 10" (dragStart)="onDragStart($event)" (dragEnd)="onDragEnd($event)">
+                    <mat-slider [min]="0" [max]="(+track!.duration) * 1000" step="1" discrete [displayWith]="formatTime">
+                        <input #slider matSliderThumb [value]="+audioService.currentTime() * 1000" (dragStart)="onDragStart($event)" (change)="onSliderChange(slider.value)" (dragEnd)="onDragEnd($event)">
                     </mat-slider>
     
                     <div class="duration">
-                        <p>{{track?.duration! | formatDurationFromSeconds}}</p>
+                        <p>{{track.duration! | formatDurationFromSeconds}}</p>
                     </div>
                 </div>
             </div>
