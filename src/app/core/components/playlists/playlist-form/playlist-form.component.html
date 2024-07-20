@@ -1,0 +1,25 @@
+<div mat-dialog-title>
+    <h3>
+        @if (isEdit) {
+            {{enumActions.Edit}}
+        } @else {
+            {{enumActions.Create}}
+        }
+        Playlist
+    </h3>
+</div>
+
+<div mat-dialog-content>
+
+    <form [formGroup]="form">
+        <app-common-input
+            [formControlToFill]="form.get('title')"
+            [label]="'Playlist Title'">
+        </app-common-input>
+    </form>
+</div>
+
+<div mat-dialog-actions>
+    <button mat-flat-button (click)="confirm()">{{confirmDialogActions.confirm}}</button>
+    <button class="warning-btn" mat-flat-button (click)="close()">{{confirmDialogActions.cancel}}</button>
+</div>

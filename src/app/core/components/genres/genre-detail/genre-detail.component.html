@@ -1,4 +1,4 @@
-<div class="genre-header">
+<div class="genre-header" [style.background]="linearGradientBackground">
     <div class="hex" [style.background-color]="genre.hex_color"></div>
     <div class="title">
         <h1>{{genre.name}}</h1>
@@ -8,7 +8,7 @@
 <div class="playlist-wrapper">
     @for (playlist of genre.playlists; track $index) {
         @defer (on viewport) {
-            <app-playlist-card [playlist]="playlist"></app-playlist-card>
+            <app-playlist-card [playlist]="playlist" class="card"></app-playlist-card>
         } @placeholder {
             <app-placeholder-card></app-placeholder-card>
         }

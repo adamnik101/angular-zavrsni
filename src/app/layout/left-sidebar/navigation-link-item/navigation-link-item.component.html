@@ -7,6 +7,17 @@
     
         <div class="title">
             {{title}} 
+            <div class="action">
+                @if (action) {
+                    @switch (action.id) {
+                        @case (enumActions.Create) {
+                            <button mat-icon-button (click)="create($event, action.dialogConfig)">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        }
+                    }
+                }
+            </div>
             <div class="desc" [matTooltip]="tooltip" matTooltipPosition="right">
                 @switch (title) {
                     @case ("Liked songs") {

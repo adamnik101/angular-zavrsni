@@ -85,4 +85,12 @@ export class QueueService {
   private generateRandom(min: number, max: number): number {
     return Math.floor(Math.random() * ((max - min + 1)) + min);
   }
+
+  public addToQueue(track: ITrack): void {
+    this._queue.update(queue => {
+      let newQueue = queue.concat([track]);
+      return newQueue;
+    });
+    console.log(this._queue())
+  }
 }

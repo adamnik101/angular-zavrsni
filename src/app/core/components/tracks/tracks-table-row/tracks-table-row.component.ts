@@ -85,6 +85,14 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
     this.audioService.play();
   }
 
+  toggleLike(event: any): void {
+    if(this.track.liked) {
+      this.removeFromLiked();
+    } else {
+      this.addToLiked();
+    }
+  }
+
   addToLiked(): void {
     this.likedTracksService.addToLiked(this.track.id).subscribe({
       next: (response) => {
@@ -133,6 +141,10 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
         this.alertService.showErrorMessage(err.message);
       }
     })
+  }
+
+  addToQueue(event: any): void {
+    this.queueService.addToQueue(this.track);
   }
 
   onContextMenu(event: MouseEvent): void {

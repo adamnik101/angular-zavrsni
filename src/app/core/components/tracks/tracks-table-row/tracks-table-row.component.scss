@@ -15,141 +15,171 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        gap: 6.5px;
-        .index-play {
-            width: 35px;
-            height: 35px;
+        justify-content: space-between;
+        .left {
             display: flex;
-            justify-content: center;
+            flex-direction: row;
             align-items: center;
-
-            .play {
+            gap: 6.5px;
+            .index-play {
                 width: 35px;
                 height: 35px;
-                display: none;
-                .mat-icon {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+    
+                .play {
                     width: 35px;
                     height: 35px;
-                    line-height: 36.5px;
+                    display: none;
+                    .mat-icon {
+                        width: 35px;
+                        height: 35px;
+                        line-height: 36.5px;
+                        color: $main-color;
+                    }
+                }
+                .number {
+                    width: 35px;
+                    height: 35px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+    
+            .cover {
+                height: 37px;
+                width: 37px;
+                margin-right: 7.5px;
+                img {
+                    height: 100%;
+                    width: auto;
+                }
+            }
+    
+            .title-artists {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                gap: 5px;
+                min-width: 350px;
+                .title {
+                    font-size: 15px;
+                }
+    
+                .artists {
+                    font-size: 12.5px;
+                    color: $text-color-light;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    .owner {
+                        a {
+                            color: $text-color-light;
+                            &:hover {
+                                text-decoration: underline;
+                            }
+                        }
+                    }
+    
+                    .features {
+                        a {
+                            color: $text-color-light;
+                            &:hover {
+                                text-decoration: underline;
+                            }
+                        }
+                    }
+                }
+            }
+    
+            .album {
+                a {
+                    color: $text-color-light;
+                    font-size: 13px;
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+    
+        }
+
+        .right {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 6.5px;
+            .duration {
+                span {
+                    font-size: 13px;
+                }
+            }
+    
+            .favorite {
+                width: 35px;
+                height: 35px;
+                .not-favorite {
+                    opacity: 0;
+                }
+    
+                .mat-icon {
                     color: $main-color;
                 }
-            }
-            .number {
-                width: 35px;
-                height: 35px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-        }
-
-        .title-artists {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            gap: 5px;
-            min-width: 350px;
-            .title {
-                font-size: 15px;
-            }
-
-            .artists {
-                font-size: 12.5px;
-                color: $text-color-light;
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                .owner {
-                    a {
-                        color: $text-color-light;
-                        &:hover {
-                            text-decoration: underline;
-                        }
+    
+                .mat-mdc-icon-button {
+                    width: 35px;
+                    height: 35px;
+                    .mat-icon {
+                        width: 35px;
+                        height: 35px;
+                        line-height: 37px;
                     }
                 }
-
-                .features {
-                    a {
-                        color: $text-color-light;
-                        &:hover {
-                            text-decoration: underline;
-                        }
+            }
+    
+            .options-menu {
+                width: 35px;
+                height: 35px;
+                .mat-mdc-icon-button {
+                    width: 35px;
+                    height: 35px;
+                    .mat-icon {
+                        width: 35px;
+                        height: 35px;
+                        line-height: 37px;
                     }
                 }
             }
         }
 
-        .album {
-            a {
-                color: $text-color-light;
-                font-size: 13px;
-                &:hover {
-                    text-decoration: underline;
-                }
-            }
-        }
-
-
-        .duration {
-            span {
-                font-size: 13px;
-            }
-        }
-
-        .favorite {
-            width: 35px;
-            height: 35px;
-            .not-favorite {
-                opacity: 0;
-            }
-
-            .mat-icon {
-                color: $main-color;
-            }
-
-            .mat-mdc-icon-button {
-                width: 35px;
-                height: 35px;
-                .mat-icon {
-                    width: 35px;
-                    height: 35px;
-                    line-height: 37px;
-                }
-            }
-        }
-
-        .options-menu {
-            width: 35px;
-            height: 35px;
-            .mat-mdc-icon-button {
-                width: 35px;
-                height: 35px;
-                .mat-icon {
-                    width: 35px;
-                    height: 35px;
-                    line-height: 37px;
-                }
-            }
-        }
+        
     }
     &:hover {
         background-color: rgb(32, 32, 32);
         .inner {
-            .index-play {
-                .number {
-                    display: none;
+            .left {
+                .index-play {
+                    .number {
+                        display: none;
+                    }
+    
+                    .play {
+                        display: block;
+                    }
                 }
-
-                .play {
-                    display: block;
+            }
+            
+            .right {
+                .favorite {
+                    .not-favorite {
+                        opacity: 1;
+                    }
                 }
             }
 
-            .favorite {
-                .not-favorite {
-                    opacity: 1;
-                }
-            }
+            
         }
     }
 }
