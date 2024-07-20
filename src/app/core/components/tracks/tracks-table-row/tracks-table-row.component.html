@@ -1,113 +1,145 @@
 <div class="table-row" #row tabindex="1" (blur)="selectRow($event)" (click)="selectRow($event)" (contextmenu)="onContextMenu($event)" [ngClass]="{'selected-row' : trackTableRowService.currTrack() == track.id}">
     <div class="inner">
-        <div class="index-play">
-            <div class="number">
-                {{index + 1}}
-            </div>
-
-            @if (queueService.getQueueIndex() !== index && queueService.getFrom() !== currentSectionId) {
-                <button mat-icon-button class="play" (click)="play()">
+        <div class="left">
+            <div class="index-play">
+                <div class="number">
+                    {{index + 1}}
+                </div>
+                
+                <button mat-icon-button class="play" (click)="play()" >
                     <mat-icon>play_arrow</mat-icon>
                 </button>
-            } @else {
-                <button mat-icon-button class="play" (click)="play()">
-                    <mat-icon>pause</mat-icon>
-                </button>
-            }
-        </div>
-
-        <div class="title-artists">
-            <p class="title">{{track.title}}</p>
-            <div class="artists">
-                <div class="owner">
-                    <a routerLink="/artists/{{track.owner_id}}">{{track.owner.name}}</a>
-                </div>
-
-                <div class="features">
-                    @for (feature of track.features; track $index; let index = $index) {
-                        @if (index !== 0) {,&nbsp;} @else {&nbsp;x&nbsp;} <a routerLink="/artists/{{feature.id}}">{{feature.name}}</a>
-                    }
+            </div>
+    
+            <div class="cover">
+                <img src="{{track.cover}}" alt="{{track.title}},cover"/>
+            </div>
+            <div class="title-artists">
+                <p class="title">{{track.title}}</p>
+                <div class="artists">
+                    <div class="owner">
+                        <a routerLink="/artists/{{track.owner_id}}">{{track.owner.name}}</a>
+                    </div>
+    
+                    <div class="features">
+                        @for (feature of track.features; track $index; let index = $index) {
+                            @if (index !== 0) {,&nbsp;} @else {&nbsp;x&nbsp;} <a routerLink="/artists/{{feature.id}}">{{feature.name}}</a>
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="album">
-            @if (track.album) {            
-                <a routerLink="/albums/{{track.album.id}}">
-                    {{track.album.name}}
-                </a>
-            }
-        </div>
-
-        <div class="favorite">
-            @if (userService.loggedIn()) {
-                @if(liked) {
-                    <button mat-icon-button (click)="removeFromLiked()" class="is-favorite">
-                        <mat-icon>favorite</mat-icon>
-                    </button>
-                } @else {
-                    <button mat-icon-button (click)="addToLiked()" class="not-favorite">
-                        <mat-icon>
-                            favorite_outline
-                        </mat-icon>
-                    </button>
+    
+            <div class="album">
+                @if (track.album) {            
+                    <a routerLink="/albums/{{track.album.id}}">
+                        {{track.album.name}}
+                    </a>
                 }
-            }
+            </div>
+    
         </div>
-
-        <div class="duration">
-            <span>{{track.duration | formatDurationFromSeconds}}</span>
-        </div>
-
         
-
-        <div class="options-menu">
-            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-                <mat-icon>more_vert</mat-icon>
-            </button>
-
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item [matMenuTriggerFor]="playlists">
-                  <mat-icon>playlist_add</mat-icon>
-                  <span>Add to Playlist</span>
-                </button>
-                
-                <button mat-menu-item [matMenuTriggerFor]="owner">
-                  <mat-icon>person</mat-icon>
-                  <span>Owner</span>
-                </button>
-
-                <button mat-menu-item [matMenuTriggerFor]="features" [disabled]="track.features.length === 0">
-                    <mat-icon>recent_actors</mat-icon>
-                    <span>Features</span>
-                </button>
-  
-                <button mat-menu-item [matMenuTriggerFor]="album" [disabled]="!track.album?.id">
-                  <mat-icon>album</mat-icon>
-                  <span>Album</span>
-                </button>
-              </mat-menu>
-
-              <mat-menu #playlists>
-                    @for (playlist of userPlaylistsService.playlists(); track $index) {
-                        <button mat-menu-item (click)="addToPlaylist(playlist.id)">{{playlist.title}}</button>
+        <div class="right">
+            <div class="favorite">
+                @if (userService.loggedIn()) {
+                    @if(track.liked) {
+                        <button mat-icon-button (click)="removeFromLiked()" class="is-favorite">
+                            <mat-icon>favorite</mat-icon>
+                        </button>
+                    } @else {
+                        <button mat-icon-button (click)="addToLiked()" class="not-favorite">
+                            <mat-icon>
+                                favorite_outline
+                            </mat-icon>
+                        </button>
                     }
-              </mat-menu>
-              <mat-menu #owner="matMenu">
-                    <button mat-menu-item routerLink="/artists/{{track.owner.id}}">{{track.owner.name}}</button>
-              </mat-menu>
-
-              
-              <mat-menu #features="matMenu">
-                @for (feature of track.features; track $index) {
-                    <button mat-menu-item routerLink="/artists/{{feature.id}}">{{feature.name}}</button>
                 }
-              </mat-menu>
-
-              <mat-menu #album="matMenu">
-                <button mat-menu-item routerLink="/albums/{{track.album?.id}}">{{track.album?.name}}</button>
-              </mat-menu>
+            </div>
+    
+            <div class="duration">
+                <span>{{track.duration | formatDurationFromSeconds}}</span>
+            </div>
+    
+            
+    
+            <div class="options-menu">
+                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+    
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item [matMenuTriggerFor]="playlists">
+                      <mat-icon>queue</mat-icon>
+                      <span>Add to Playlist</span>
+                    </button>
+                    
+                    <button mat-menu-item (click)="toggleLike($event)">
+                        <mat-icon>
+                            @if (track.liked) {
+                                favorite
+                            } @else {
+                                favorite_outline
+                            }
+                        </mat-icon>
+                        <span>
+                            @if (track.liked) {
+                                Remove from liked
+                            } @else {
+                                Add to liked
+                            }
+                        </span>
+                    </button>
+    
+                    <button mat-menu-item (click)="addToQueue($event)">
+                        <mat-icon>library_add</mat-icon>
+                        <span>Add to queue</span>
+                    </button>
+                    <button mat-menu-item [matMenuTriggerFor]="owner">
+                      <mat-icon>person</mat-icon>
+                      <span>Owner</span>
+                    </button>
+    
+                    <button mat-menu-item [matMenuTriggerFor]="features" [disabled]="track.features.length === 0">
+                        <mat-icon>recent_actors</mat-icon>
+                        <span>Features</span>
+                    </button>
+      
+                    <button mat-menu-item [matMenuTriggerFor]="album" [disabled]="!track.album?.id">
+                      <mat-icon>album</mat-icon>
+                      <span>Album</span>
+                    </button>
+                  </mat-menu>
+    
+                  <mat-menu #playlists>
+                    <ng-template matMenuContent>
+                        @for (playlist of userPlaylistsService.playlists(); track $index) {
+                            <button mat-menu-item (click)="addToPlaylist(playlist.id)">{{playlist.title}}</button>
+                        }
+                    </ng-template>
+                  </mat-menu>
+                  <mat-menu #owner="matMenu">
+                        <ng-template matMenuContent>
+                            <button mat-menu-item routerLink="/artists/{{track.owner.id}}">{{track.owner.name}}</button>
+                        </ng-template>
+                  </mat-menu>
+    
+                  
+                  <mat-menu #features="matMenu">
+                    <ng-template matMenuContent>
+                        @for (feature of track.features; track $index) {
+                            <button mat-menu-item routerLink="/artists/{{feature.id}}">{{feature.name}}</button>
+                        }
+                    </ng-template>
+                  </mat-menu>
+    
+                  <mat-menu #album="matMenu">
+                    <ng-template matMenuContent>
+                        <button mat-menu-item routerLink="/albums/{{track.album?.id}}">{{track.album?.name}}</button>
+                    </ng-template>
+                  </mat-menu>
+            </div>
         </div>
+        
     </div>
 
     <div #trigger="matMenuTrigger"

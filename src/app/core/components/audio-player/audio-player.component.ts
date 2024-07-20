@@ -91,4 +91,19 @@ export class AudioPlayerComponent implements OnInit{
 
     return `${formattedMinutes}:${formattedSeconds}`;
   }
+
+  onVolumeInput(volume: string): void {
+    this.audioService.audio.volume = +volume;
+  }
+
+  toggleVolume(event: any): void {
+    const muted = this.audioService.audio.muted;
+    
+    if(!muted) {
+     this.audioService.audio.muted = true;
+      return;
+    }
+
+    this.audioService.audio.muted = false;
+  }
 }

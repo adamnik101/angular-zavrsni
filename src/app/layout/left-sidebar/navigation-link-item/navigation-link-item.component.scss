@@ -25,6 +25,10 @@
             align-items: center;
             justify-content: space-between;
             width: 100%;
+            .action {
+                display: flex;
+                align-items: center;
+            }
             .desc {
                 color: #636363;
                 padding-right: 20px;

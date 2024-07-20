@@ -22,6 +22,8 @@ export class AudioService {
 
   public trackIsLoading = signal<boolean>(false);
 
+  public volume: number = 1;
+
   play(): void {
     const track = this.queueService.getCurrentTrack();
     if(track) {

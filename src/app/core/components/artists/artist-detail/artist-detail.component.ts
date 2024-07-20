@@ -10,6 +10,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { SmallRoundDividerComponent } from '../../../../shared/components/small-round-divider/small-round-divider.component';
 import { TracksTableComponent } from "../../tracks/tracks-table/tracks-table.component";
 import { TracksTableService } from '../../../services/tracks/table/tracks-table.service';
+import { UserArtistFollowingsService } from '../../../user/services/artists/user-artist-followings.service';
 
 @Component({
   selector: 'app-artist-detail',
@@ -23,7 +24,8 @@ export class ArtistDetailComponent implements OnInit{
   constructor(
     private artistsService: ArtistsService,
     private route: ActivatedRoute,
-    private tracksTableService: TracksTableService
+    private tracksTableService: TracksTableService,
+    public userArtistsFollowingsService: UserArtistFollowingsService
   ) {}
 
   public artist: IArtist = {} as IArtist;

@@ -59,7 +59,7 @@ body { font-family: Roboto, "Helvetica Neue", sans-serif; letter-spacing: .6px; 
 
 .mat-drawer.mat-drawer-side {
   border-radius: 0;
-  width: calc(var(--mat-sidenav-container-width) - 100px);
+  width: calc(var(--mat-sidenav-container-width) - 50px);
 }
 
 a{
@@ -138,6 +138,7 @@ a{
     display: flex;
     flex-direction: column;
     gap: 10px;
+    background: linear-gradient(265.27deg, #0000 20.55%, $card-background 94.17%);  
     background-color: $card-background;
     border-radius: 10px;
     position: relative;
@@ -177,7 +178,7 @@ a{
         }
     }
     &:hover {
-        background-color: $hover;
+      background-color: #00ff2f26;
     }
   }
 
@@ -215,7 +216,7 @@ a{
   right: -20px;
   left: -20px;
   height: 250px;
-  background: linear-gradient(to top, $main-content-background 0%, $main-content-background 40%, #000000ce 100%);
+  background: linear-gradient(to top, $main-content-background 0%, #000000c9 40%, #000000a2 100%);
   z-index: 0;
 }
 
@@ -323,4 +324,17 @@ a{
       background-position-x: -200%;
     }
 }
+}
+
+.mat-mdc-menu-item {
+  min-height: 40px !important;
+
+  .mat-icon {
+    width: 22px !important;
+    height: 22px !important;
+    font-size: 22px;
+  }
+  .mat-mdc-menu-item-text {
+    font-size: .8rem !important;
+  }
 }

@@ -31,7 +31,7 @@ export class TracksTableComponent implements OnInit{
   }
 
   setQueue(): void {
-    this.queueService.setQueue(this.tracksTableService.getTracks());
+    this.queueService.setQueue(this.tracksTableService.tracks());
   }
 
   setQueueIndex(newIndex: number): void {

@@ -23,6 +23,7 @@ export class GenreDetailComponent implements OnInit, OnDestroy{
   ) {}
 
   public genre: IGenreDetail = {} as IGenreDetail;
+  public linearGradientBackground = '';
 
   private id: string | null = null;
   private subscription: Subscription = new Subscription();
@@ -39,7 +40,7 @@ export class GenreDetailComponent implements OnInit, OnDestroy{
       this.genreService.get<IGenreDetail>(id).subscribe({
         next: (data: IApiResponse<IGenreDetail>) => {
           this.genre = data.data;
-
+          this.linearGradientBackground = `linear-gradient(-45deg, ${this.genre.hex_color} 0%, #070707 100%)`
           SpinnerFunctions.hideSpinner();
         }
       })
