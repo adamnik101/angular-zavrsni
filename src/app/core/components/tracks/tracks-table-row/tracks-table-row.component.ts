@@ -17,6 +17,7 @@ import { ConfirmDialogWithActionsComponent } from '../../../../shared/components
 import { NgClass } from '@angular/common';
 import { TracksTableRowService } from '../../../services/tracks/tracks-table-row/tracks-table-row.service';
 import { Subscription } from 'rxjs';
+import { TracksTableService } from '../../../services/tracks/table/tracks-table.service';
 
 @Component({
   selector: 'app-tracks-table-row',
@@ -38,6 +39,7 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
     private audioService: AudioService,
     private playlistsService: PlaylistsService,
     private matDialog: MatDialog,
+    private tracksTableService: TracksTableService
   ) {}
 
   public currentSectionId: string = "";
@@ -59,9 +61,7 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
   private subscription: Subscription = new Subscription();
 
   ngOnInit(): void {
-    this.checkIfLiked();
     this.setFeatures();
-
   }
 
   ngAfterViewInit(): void {
@@ -72,11 +72,6 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
         }
       })
     );
-  }
-
-  checkIfLiked(): void {
-    const isLiked = this.likedTracksService.likedTracks().findIndex(x => x.id === this.track.id);
-    this.liked = isLiked != -1;
   }
 
   setFeatures(): void {
@@ -96,12 +91,19 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
         console.log(response)
         if(response.status_code === 200) {
           this.likedTracksService.likedTracks.update(tracks => {
-            return [response.data].concat(tracks);
+            return [{...response.data, liked: true}].concat(tracks);
           });
           
-          this.checkIfLiked();
-        }
+          this.tracksTableService.tracks.update(tracks => {
+            let track = tracks.find(x => x.id === this.track.id);
 
+            if(track) {
+              track.liked = true;
+            }
+
+            return tracks;
+          })
+        }
         this.alertService.showDefaultMessage(response.message);
       },
       error: (err) => {
@@ -113,12 +115,17 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
   removeFromLiked(): void {
     this.likedTracksService.removeFromLiked(this.track.id).subscribe({
       next: (data) => {
-        this.likedTracksService.likedTracks.update(tracks => {
-          const withoutRemoved = tracks.filter(track => track.id != this.track.id);
-          return withoutRemoved;
-        });
+        this.likedTracksService.likedTracks.set(this.likedTracksService.likedTracks().filter(track => track.id != this.track.id));
         
-        this.checkIfLiked();
+        this.tracksTableService.tracks.update(tracks => {
+          let track = tracks.find(x => x.id === this.track.id);
+
+          if(track) {
+            track.liked = false;
+          }
+
+          return tracks;
+        })
 
         this.alertService.showDefaultMessage("Removed from liked.");
       },

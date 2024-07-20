@@ -20,7 +20,7 @@ export class LikedTracksService extends ApiService<any>{
   public likedTracks = signal<ITrack[]>([]);
 
   setLikedTracks(tracks: ITrack[]): void {
-    this.likedTracks.set(tracks);
+    this.likedTracks.set(tracks.map(track => { return {...track, liked: true}}));
   }
 
   addToLiked(id: string): Observable<IApiResponse<any>> {

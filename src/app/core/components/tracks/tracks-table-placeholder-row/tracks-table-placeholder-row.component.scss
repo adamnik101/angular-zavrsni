@@ -23,7 +23,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            
+            background: $card-background;
         }
 
         .title-artists {
@@ -36,11 +36,13 @@
                 font-size: 15px;
                 width: 170px;
                 height: 10px;
+                background: $card-background;
             }
 
             .artists {
                 width: 300px;
                 height: 10px;
+                background: $card-background;
             }
         }
 
@@ -69,17 +71,21 @@
 
     .album {
         min-width: 300px;
+        background: $card-background;
     }
 
     .duration {
         min-width: 40px;
+        background: $card-background;
     }
 
     .favorite {
         min-width: 40px;
+        background: $card-background;
     }
 
     .options-menu {
         min-width: 40px;
+        background: $card-background;
     }
 }

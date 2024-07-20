@@ -5,15 +5,11 @@
                 {{index + 1}}
             </div>
 
-            @if (queueService.getQueueIndex() !== index && queueService.getFrom() !== currentSectionId) {
-                <button mat-icon-button class="play" (click)="play()">
+            
+                <button mat-icon-button class="play" (click)="play()" >
                     <mat-icon>play_arrow</mat-icon>
                 </button>
-            } @else {
-                <button mat-icon-button class="play" (click)="play()">
-                    <mat-icon>pause</mat-icon>
-                </button>
-            }
+            
         </div>
 
         <div class="title-artists">
@@ -41,7 +37,7 @@
 
         <div class="favorite">
             @if (userService.loggedIn()) {
-                @if(liked) {
+                @if(track.liked) {
                     <button mat-icon-button (click)="removeFromLiked()" class="is-favorite">
                         <mat-icon>favorite</mat-icon>
                     </button>
@@ -89,23 +85,31 @@
               </mat-menu>
 
               <mat-menu #playlists>
+                <ng-template matMenuContent>
                     @for (playlist of userPlaylistsService.playlists(); track $index) {
                         <button mat-menu-item (click)="addToPlaylist(playlist.id)">{{playlist.title}}</button>
                     }
+                </ng-template>
               </mat-menu>
               <mat-menu #owner="matMenu">
-                    <button mat-menu-item routerLink="/artists/{{track.owner.id}}">{{track.owner.name}}</button>
+                    <ng-template matMenuContent>
+                        <button mat-menu-item routerLink="/artists/{{track.owner.id}}">{{track.owner.name}}</button>
+                    </ng-template>
               </mat-menu>
 
               
               <mat-menu #features="matMenu">
-                @for (feature of track.features; track $index) {
-                    <button mat-menu-item routerLink="/artists/{{feature.id}}">{{feature.name}}</button>
-                }
+                <ng-template matMenuContent>
+                    @for (feature of track.features; track $index) {
+                        <button mat-menu-item routerLink="/artists/{{feature.id}}">{{feature.name}}</button>
+                    }
+                </ng-template>
               </mat-menu>
 
               <mat-menu #album="matMenu">
-                <button mat-menu-item routerLink="/albums/{{track.album?.id}}">{{track.album?.name}}</button>
+                <ng-template matMenuContent>
+                    <button mat-menu-item routerLink="/albums/{{track.album?.id}}">{{track.album?.name}}</button>
+                </ng-template>
               </mat-menu>
         </div>
     </div>

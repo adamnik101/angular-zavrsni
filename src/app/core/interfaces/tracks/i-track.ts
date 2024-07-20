@@ -18,4 +18,5 @@ export interface ITrack extends BaseInterface {
     albumId: string | null;
 
     pivot: any;
+    liked: boolean;
 }

@@ -1,6 +1,5 @@
 import { Injectable, signal } from '@angular/core';
 import { ITrack } from '../../../interfaces/tracks/i-track';
-import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

@@ -1,5 +1,6 @@
 .tracks-table-wrapper {
     display: flex;
     flex-direction: column;
-    width: 850px;
+    max-width: 1200px;
+    min-width: 600px;
 }
