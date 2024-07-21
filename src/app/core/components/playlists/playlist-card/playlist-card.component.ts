@@ -23,24 +23,26 @@ export class PlaylistCardComponent {
   @Input() public playlist: IPlaylist = {} as IPlaylist;
   @ViewChild('card') public cardElement!: ElementRef;
   @ViewChild('myCanvas', {static: false}) myCanvas!: ElementRef;
-  @ViewChild('preview', {static: false}) preview!: ElementRef;
+  @ViewChild('image') image!: ElementRef;
+  
+  private cardColor: string = "#23232375";
+  private cardHoverColor: string = "";
+
+  ngAfterViewInit(): void {
+    this.image.nativeElement.onload = () => {
+      this.cardHoverColor = this.dominantColorService.getDominantColorFromImage(this.image.nativeElement, this.myCanvas.nativeElement);
+    }
+  }
 
   playAll(event: any): void {
 
   }
 
   applyBackground(): void {
-    const image = new Image();
-    image.crossOrigin = 'anonymous'
-
-    image.onload = () => {
-      this.dominantColorService.getDominantColorFromImage(image, this.preview, this.myCanvas.nativeElement, this.cardElement.nativeElement)
-    }
-
-    image.src = this.playlist.image_url;
+    this.cardElement.nativeElement.style.backgroundColor = this.cardHoverColor; 
   }
 
   removeBackground(): void {
-    this.cardElement.nativeElement.style.backgroundColor = '#000' 
+    this.cardElement.nativeElement.style.backgroundColor = this.cardColor; 
   }
 }

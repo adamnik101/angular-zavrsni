@@ -1,7 +1,7 @@
 <div class="playlist-wrapper">
     <div class="header">
         <div class="cover">
-            <img src="{{playlist.image_url}}" alt="playlist_cover"/>
+            <img crossorigin="anonymous" src="{{playlist.image_url}}" alt="playlist_cover" #image/>
         </div>
         <div class="info-main">
             <div class="title">
@@ -13,11 +13,13 @@
             </div>
         </div>
 
-        <div class="background" #back></div>
-        <div class="background-gradient"></div>
+        <div class="background-gradient" #back></div>
+        <div class="background"></div>
     </div>
 
     <div class="content">
         <app-tracks-table (onTrackPlayed)="onTrackPlayed($event)"></app-tracks-table>
     </div>
 </div>
+
+<canvas #canvas hidden></canvas>

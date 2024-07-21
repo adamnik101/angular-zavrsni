@@ -1,7 +1,7 @@
 <div class="card-whole">
     <a class="card" routerLink="/playlists/{{playlist.id}}" #card (mouseenter)="applyBackground()" (mouseleave)="removeBackground()">
         <div class="cover">
-            <img src="{{playlist.image_url}}"/>
+            <img crossorigin="anonymous" src="{{playlist.image_url}}" #image/>
         </div>
         <div class="content">
             <div class="title">
