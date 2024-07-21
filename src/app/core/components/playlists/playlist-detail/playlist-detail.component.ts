@@ -6,6 +6,7 @@ import { PlaylistsService } from '../../../services/playlists/base/playlists.ser
 import { TracksTableService } from '../../../services/tracks/table/tracks-table.service';
 import { TracksTableComponent } from '../../tracks/tracks-table/tracks-table.component';
 import { QueueService } from '../../../services/queue/base/queue.service';
+import { DominantColorService } from '../../../../shared/services/dominant-color/dominant-color.service';
 
 @Component({
   selector: 'app-playlist-detail',
@@ -20,12 +21,15 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy{
     private route: ActivatedRoute,
     private playlistsService: PlaylistsService,
     private tracksTableService: TracksTableService,
-    private queueService: QueueService
+    private queueService: QueueService,
+    private dominantColorService: DominantColorService
   ) {}
 
   public playlist: IPlaylist = {} as IPlaylist;
 
   @ViewChild('back') private back: ElementRef = {} as ElementRef;
+  @ViewChild('image') private image: ElementRef = {} as ElementRef;
+  @ViewChild('canvas') private canvas: ElementRef = {} as ElementRef;
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -37,7 +41,6 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy{
         next: (response) => {
           this.playlist = response.data;
           this.tracksTableService.setTracks(this.playlist.tracks);
-          this.back.nativeElement.style.backgroundImage = `url(${this.playlist.image_url})`;
 
           SpinnerFunctions.hideSpinner();
         }
@@ -46,8 +49,15 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy{
     }
   }
 
+  ngAfterViewInit(): void {
+    this.image.nativeElement.onload = () => {
+      const color = this.dominantColorService.getDominantColorFromImage(this.image.nativeElement, this.canvas.nativeElement);
+
+      this.back.nativeElement.style.background = `linear-gradient(45deg, #070707 0%, #07070795 20%, ${color} 100%)`
+    }
+  }
+
   onTrackPlayed(event: any): void {
-    console.log('track played./..')
     this.queueService.setFrom(this.playlist.id);
   }
 

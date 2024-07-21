@@ -68,28 +68,30 @@
                 </button>
     
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item [matMenuTriggerFor]="playlists">
-                      <mat-icon>queue</mat-icon>
-                      <span>Add to Playlist</span>
-                    </button>
+                    @if (userService.loggedIn()) {
+                        <button mat-menu-item [matMenuTriggerFor]="playlists">
+                            <mat-icon>queue</mat-icon>
+                            <span>Add to Playlist</span>
+                        </button>     
+                         
+                        <button mat-menu-item (click)="toggleLike($event)">
+                            <mat-icon>
+                                @if (track.liked) {
+                                    favorite
+                                } @else {
+                                    favorite_outline
+                                }
+                            </mat-icon>
+                            <span>
+                                @if (track.liked) {
+                                    Remove from liked
+                                } @else {
+                                    Add to liked
+                                }
+                            </span>
+                        </button>    
+                    }
                     
-                    <button mat-menu-item (click)="toggleLike($event)">
-                        <mat-icon>
-                            @if (track.liked) {
-                                favorite
-                            } @else {
-                                favorite_outline
-                            }
-                        </mat-icon>
-                        <span>
-                            @if (track.liked) {
-                                Remove from liked
-                            } @else {
-                                Add to liked
-                            }
-                        </span>
-                    </button>
-    
                     <button mat-menu-item (click)="addToQueue($event)">
                         <mat-icon>library_add</mat-icon>
                         <span>Add to queue</span>

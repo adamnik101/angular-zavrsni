@@ -31,6 +31,8 @@ $ng-zavrsni-theme: mat.define-theme((
 // that you are using.
 :root {
   @include mat.all-component-themes($ng-zavrsni-theme);
+
+  --header: #010c01;
 }
 
 // Comment out the line below if you want to use the pre-defined typography utility classes.
@@ -177,9 +179,6 @@ a{
             text-overflow: ellipsis;
         }
     }
-    &:hover {
-      background-color: #00ff2f26;
-    }
   }
 
   .play-button {
@@ -206,9 +205,8 @@ a{
   left: -20px;
   height: 250px;
   z-index: 0;
-  background-repeat: repeat-x;
-  background-position: center;
-  background-size: cover;
+  background: linear-gradient(to top, $main-content-background 0%, #000000c9 20%, #00000000 100%);
+
 }
 .background-gradient {
   position: absolute;
@@ -337,4 +335,8 @@ a{
   .mat-mdc-menu-item-text {
     font-size: .8rem !important;
   }
+}
+
+.dark-theme .search-toolbar, body .search-toolbar {
+  background: var(--header);
 }
