@@ -38,6 +38,8 @@
                     font-size: 17px;
                     color: $text-color-light;
                 }
+
+                
             }
 
             .artists {
@@ -146,5 +148,17 @@
 .smallest {    
     .mat-icon {
         font-size: 20px;
+    }
+}
+
+.toggle-like-btn {
+    width: 35px;
+    height: 35px;
+    .mat-icon {
+        width: 35px !important;
+        height: 35px !important;
+        line-height: 37px !important;
+        font-size: 20px !important;
+        color: $main-color !important;
     }
 }

@@ -1,0 +1,39 @@
+<div class="playlist-small-item-row-wrapper" routerLinkActive="selected-playlist">
+    <div class="content">
+        <div class="image">
+            <img src="{{playlist.image_url}}"/>
+
+            <div class="toggle-play" [ngClass]="{'show-play-all': playingFromService.playingFrom() && playingFromService.playingFrom() === playlist.id ? 1 : 0}">
+                @if(audioService.isPlaying() && playingFromService.playingFrom() === playlist.id) {
+                    <button class="play" (click)="pause($event)" mat-icon-button matTooltip="Pause" matTooltipPosition="above">
+                        <mat-icon>pause</mat-icon>
+                    </button>
+                } @else {
+                    @if(!audioService.isPlaying() && playingFromService.playingFrom() === playlist.id) { 
+                        @if(audioService.trackIsLoading()) {
+                                <mat-progress-spinner [strokeWidth]="5" mode="indeterminate" [diameter]="50"></mat-progress-spinner>
+                        } @else {
+                            <button class="play" (click)="continue($event)" mat-icon-button matTooltip="Continue" matTooltipPosition="above">
+                                <mat-icon>play_arrow</mat-icon>
+                            </button>
+                        }
+                    } @else {
+                        <button class="play" (click)="play($event)" mat-icon-button matTooltip="Play" matTooltipPosition="above">
+                            <mat-icon>play_arrow</mat-icon>
+                        </button>
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="main">
+            <a class="title" routerLink="/playlists/{{playlist.id}}">
+                {{playlist.title}}
+            </a>
+
+            <div class="desc">
+                <p>{{playlist.tracks_count}} tracks</p>
+            </div>
+        </div>
+    </div>
+</div>

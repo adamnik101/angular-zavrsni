@@ -9,7 +9,17 @@
                 <div class="title">
                     <p>{{track.title}}</p>
                     @if (track.explicit) {
-                        <mat-icon>explicit</mat-icon>
+                        <mat-icon matTooltip="Explicit" matTooltipPosition="above">explicit</mat-icon>
+                    }
+
+                    @if(track.liked) {
+                        <button class="toggle-like-btn" mat-icon-button matTooltip="Remove from liked" matTooltipPosition="above">
+                            <mat-icon>favorite</mat-icon>
+                        </button>
+                    } @else {
+                        <button class="toggle-like-btn" mat-icon-button matTooltip="Add to liked" matTooltipPosition="above">
+                            <mat-icon>favorite_outline</mat-icon>                                
+                        </button>
                     }
                 </div>
                 <div class="artists">
