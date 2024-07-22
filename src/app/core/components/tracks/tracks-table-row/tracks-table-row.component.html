@@ -114,8 +114,19 @@
     
                   <mat-menu #playlists>
                     <ng-template matMenuContent>
-                        @for (playlist of userPlaylistsService.playlists(); track $index) {
+                        <button mat-menu-item (click)="openCreateNewPlaylistDialog()">
+                            <mat-icon>add</mat-icon>
+                            <span>Create new playlist</span>
+                        </button>
+                        <button mat-menu-item (click)="$event.stopPropagation()">
+                            <mat-icon>search</mat-icon>
+
+                            <app-common-input [type]="commonInputType.text" #search [onBlurElement]="true" [formControlToFill]="searchControl.get('search')" (OnInput)="searchPlaylists($event)" (keyup.Space)="$event.stopPropagation(); $event.preventDefault()"></app-common-input>
+                        </button>
+                        @for (playlist of filteredPlaylists(); track $index) {
                             <button mat-menu-item (click)="addToPlaylist(playlist.id)">{{playlist.title}}</button>
+                        } @empty {
+                            <button mat-menu-item>No playlists</button>
                         }
                     </ng-template>
                   </mat-menu>

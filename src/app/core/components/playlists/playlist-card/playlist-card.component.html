@@ -8,13 +8,13 @@
                 {{playlist.title}}
             </div>
             <div class="desc">
+                <p>{{playlist.description}}</p>
                 <p>{{playlist.tracks_count | number}} tracks</p>
             </div>
         </div>
     </a>
 
     <app-play-all-button 
-    class="play-button" 
     [apiService]="apiService"
     [id]="playlist.id" 
     (onPlay)="playAll($event)"></app-play-all-button>    

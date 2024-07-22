@@ -19,11 +19,11 @@ export class UserService {
 
   loggedIn = signal<boolean | null>(null);
 
-  setUserData(data: IUser): void {
-    this.loggedIn.set(true);
-    this.setUserPlaylists(data.playlists);
-    this.setUserLikedTracks(data.liked_tracks);
-    this.setUserSettings(data.settings);
+  setUserData(data: IUser | null): void {
+    this.loggedIn.set(data ? true : false);
+    this.setUserPlaylists(data?.playlists ?? []);
+    this.setUserLikedTracks(data?.liked_tracks ?? []);
+    this.setUserSettings(data?.settings ?? {} as ISettings);
   }
 
   setUserPlaylists(playlists: any): void {

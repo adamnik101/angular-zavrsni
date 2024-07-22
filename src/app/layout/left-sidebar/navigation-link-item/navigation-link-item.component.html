@@ -11,7 +11,7 @@
                 @if (action) {
                     @switch (action.id) {
                         @case (enumActions.Create) {
-                            <button mat-icon-button (click)="create($event, action.dialogConfig)">
+                            <button mat-icon-button (click)="create($event, action.dialogConfig)" [matTooltip]="enumActions.Create" matTooltipPosition="above">
                                 <mat-icon>add</mat-icon>
                             </button>
                         }

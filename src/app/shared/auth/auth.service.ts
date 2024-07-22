@@ -59,7 +59,7 @@ export class AuthService extends ApiService<any>{
 
   clearAllDataForUser(): void {
     this.removeToken();
-    this.userService.setUserData({} as IUser);
+    this.userService.setUserData(null);
     this.userService.loggedIn.set(null);
   }
 }
