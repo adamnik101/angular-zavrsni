@@ -1,1 +1,48 @@
-<p>register works!</p>
+<div class="register-wrapper">
+    <h1>Register</h1>
+    <form [formGroup]="form">
+        <div class="row common-input-error">
+            <app-common-input
+                [label]="'Username'"
+                [type]="commonInputType.text"
+                [formControlToFill]="form.get('username')">
+            </app-common-input>
+        </div>
+        <div class="row common-input-error">
+            <app-common-input
+                [label]="'Email'"
+                [type]="commonInputType.email"
+                [formControlToFill]="form.get('email')">
+            </app-common-input>
+        </div>
+        <div class="row common-input-error">
+            <app-common-input
+                [label]="'Password'"
+                [type]="commonInputType.password"
+                [formControlToFill]="form.get('password')">
+            </app-common-input>
+        </div>
+        <div class="row common-input-error">
+            <app-common-input
+                [label]="'Confirm Pasword'"
+                [type]="commonInputType.password"
+                [formControlToFill]="form.get('confirmPassword')">
+            </app-common-input>
+
+        </div>
+
+        <div class="row common-input-checkbox">
+            <app-common-radio-checkbox
+                [formControlToFill]="form.get('terms')"
+                [label]="'By creating an account, you agree to our Terms and Conditions and Privacy Policy.'">
+            </app-common-radio-checkbox>
+        </div>
+        <div class="row register-button">
+            <button mat-flat-button type="button" [disabled]="form.invalid" (click)="register()">Register</button>
+        </div>
+    </form>
+
+    <div class="more-actions">
+        <a routerLink="/login">Already have an account?</a>
+    </div>
+</div>

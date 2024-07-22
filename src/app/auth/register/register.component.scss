@@ -1,0 +1,26 @@
+@import '../../shared/global-styles/colors';
+
+.register-wrapper {
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    .register-button {
+        button {
+            width: 100%;
+            padding: 18px;
+        }
+    }
+
+    .more-actions {
+        a {
+            color: $text-color-main;
+            text-decoration: underline;
+            font-size: 14px;
+        }
+    }
+}
+
+.common-input-checkbox {
+    height: 50px;
+}

@@ -15,8 +15,12 @@
                 [formControlToFill]="form.get('password')">
             </app-common-input>
         </div>
-        <div class="row">
+        <div class="row login-btn">
             <button mat-flat-button type="button" (click)="login()">Login</button>
+        </div>
+
+        <div class="row register-link">
+            <a routerLink="/register">Don't have an account?</a>
         </div>
     </form>
 </div>
