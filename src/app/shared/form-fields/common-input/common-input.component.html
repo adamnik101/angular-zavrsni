@@ -13,5 +13,28 @@
             <mat-icon matIconPrefix>{{iconSuffix}}</mat-icon>
         }
 
+        @if (showError) {
+            <mat-error>
+                @if (formControlToFill.hasError('required')) {
+                    {{label}} is required
+                }
+
+                @if (formControlToFill.hasError('minlength')) {
+                    Minimum length is {{formControlToFill.errors.minlength.requiredLength}} characters
+                }
+
+                @if (formControlToFill.hasError('maxlength')) {
+                    Maximum length is {{formControlToFill.errors.maxlength.requiredLength}} characters
+                }
+
+                @if (formControlToFill.hasError('email')) {
+                    {{label}} is not valid
+                }
+
+                @if (formControlToFill.hasError('confirm')) {
+                    Passwords must match
+                }
+            </mat-error>    
+        }
     </mat-form-field>
 </div>

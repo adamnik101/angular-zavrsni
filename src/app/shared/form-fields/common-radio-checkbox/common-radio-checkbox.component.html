@@ -1,1 +1,6 @@
-<p>common-radio-checkbox works!</p>
+<mat-checkbox [formControl]="formControlToFill">
+    {{label}}
+    @if (formControlToFill.hasValidator(requiredValidator)) {
+        <span [ngClass]="{'required' : formControlToFill.hasError('required')}">*</span>
+    }
+</mat-checkbox>

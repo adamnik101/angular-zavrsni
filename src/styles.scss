@@ -340,3 +340,28 @@ a{
 .dark-theme .search-toolbar, body .search-toolbar {
   background: var(--header);
 }
+
+.common-input-error {
+  display: flex;
+  flex-direction: column;
+  height: 60px;
+  gap: 3.5px;
+  .common-input-error-display {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 7.5px;
+    .mat-icon {
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
+      line-height: 16px;
+      color: red;
+    }
+    p {
+      color: red;
+      font-size: 13px;
+    }    
+  }
+}

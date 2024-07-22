@@ -1,18 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonInputComponent } from '../../shared/form-fields/common-input/common-input.component';
 import { CommonInputType } from '../../shared/form-fields/common-input/interfaces/i-common-input';
-import { AuthService } from '../../shared/auth/auth.service';
 import { LoginFormService } from './services/login-form.service';
 import { SpinnerFunctions } from '../../core/static/spinner-functions';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AlertService } from '../../shared/services/alert/alert.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonInputComponent, MatButtonModule, ReactiveFormsModule],
+  imports: [CommonInputComponent, MatButtonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

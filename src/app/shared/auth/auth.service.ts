@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 import { UserService } from '../../core/user/services/user/user.service';
 import { IUser } from '../../core/interfaces/user/i-user';
 import { Router } from '@angular/router';
+import { IRegisterRequest } from '../../auth/register/interfaces/i-register';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +43,10 @@ export class AuthService extends ApiService<any>{
     return this.post(credentials);
   }
   
+  register(body: IRegisterRequest): Observable<any> {
+    return this.http.post<any>(`${environment.baseUrl + API_ENDPOINTS.auth.register}`, body);    
+  }
+
   logout(): void {
     this.router.navigateByUrl("/login").then((val) => {
       this.clearAllDataForUser();

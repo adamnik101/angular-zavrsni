@@ -21,7 +21,7 @@ export class CommonInputComponent {
   @Input() public iconPrefix: string | null = null; 
   @Input() public iconSuffix: string | null = null; 
   @Input() public formControlToFill: any;
-  
+  @Input() public showError: boolean = true;
 
   @Output() KeyEnter: EventEmitter<string> = new EventEmitter();
 

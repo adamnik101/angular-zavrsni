@@ -1,5 +1,22 @@
+@import '../../shared/global-styles/colors';
+
 .login-wrapper {
+    width: 600px;
     h1 {
         margin-bottom: 20px;
+    }
+    .login-btn {
+        button {
+            width: 100%;
+            padding: 18px;
+        }
+    }
+
+    .register-link {
+        a {
+            color: $text-color-main;
+            font-size: 14px;
+            text-decoration: underline;
+        }
     }
 }
