@@ -14,7 +14,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 @Component({
   selector: 'app-audio-player',
   standalone: true,
-  imports: [RouterLink, MatIcon, MatIconButton, MatSlider, MatSliderThumb, FormatDurationFromSecondsPipe, MatTooltip, MatProgressSpinner],
+  imports: [RouterLink, MatIcon, MatIconButton, MatSlider, MatSliderThumb, FormatDurationFromSecondsPipe, MatTooltip, MatIconButton, MatProgressSpinner],
   templateUrl: './audio-player.component.html',
   styleUrl: './audio-player.component.scss'
 })

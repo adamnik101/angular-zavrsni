@@ -63,7 +63,9 @@ body { font-family: Roboto, "Helvetica Neue", sans-serif; letter-spacing: .6px; 
   border-radius: 0;
   width: calc(var(--mat-sidenav-container-width) - 50px);
 }
-
+.mat-drawer-inner-container {
+  overflow: hidden !important;
+}
 a{
   text-decoration: none;
 }
@@ -73,6 +75,7 @@ a{
 }
 .divider {
   margin: 10px 0 !important;
+  width: 90%;
 }
 
 .custom-form {
@@ -382,4 +385,38 @@ a{
 
 .custom-search-inside-mat-menu {
   height: 100%;
+}
+
+.custom-search-mat-menu {
+  width: 90%;
+
+  input[type=text] {
+    background: none;
+    color: $text-color-main;
+    padding: 10px 0;
+    outline: none;
+    border: none;
+  }
+}
+
+
+.mat-mdc-tab-group {
+  min-width: 90%;
+}
+
+.mdc-tab {
+  padding: 0 !important;
+}
+
+.mat-mdc-tab-body-wrapper {
+  min-height: 350px;
+  overflow-y: scroll;
+}
+
+.mat-mdc-tab-label-container {
+  border-bottom-color: transparent !important;
+}
+
+img {
+  border-radius: 5px;
 }

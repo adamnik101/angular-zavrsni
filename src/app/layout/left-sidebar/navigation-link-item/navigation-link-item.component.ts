@@ -5,13 +5,13 @@ import { LikedTracksService } from '../../../core/user/services/liked-tracks/lik
 import { UserPlaylistsService } from '../../../core/user/services/playlists/user-playlists.service';
 import { MatTooltip } from '@angular/material/tooltip';
 import { EnumActions } from '../../../shared/enums/enum-actions';
-import { MatIconButton } from '@angular/material/button';
+import { MatIconButton, MatMiniFabButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-navigation-link-item',
   standalone: true,
-  imports: [MatIconModule, RouterLink, MatTooltip, RouterLinkActive, MatIcon, MatIconButton],
+  imports: [MatIconModule, RouterLink, MatTooltip, RouterLinkActive, MatIcon, MatIconButton, MatMiniFabButton],
   templateUrl: './navigation-link-item.component.html',
   styleUrl: './navigation-link-item.component.scss'
 })
