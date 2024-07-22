@@ -146,11 +146,11 @@ a{
     position: relative;
     .cover{
         border-radius: 5px;
-        width: 180px;
-        height: 180px;
+        width: 100%;
+        height: auto;
         img{
             width: 100%;
-            height: 180px;
+            height: auto;
             border-radius: 5px;
         }
     }
@@ -167,6 +167,7 @@ a{
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            font-size: 14px;
         }
         .desc {
             display: flex;
@@ -174,9 +175,11 @@ a{
             gap: 5px;
             color: $text-color-light;
             font-size: 13px;
-            white-space: nowrap;
+            p{
+              white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            }
         }
     }
   }
@@ -192,7 +195,7 @@ a{
 
   &:hover {
     .play-button {
-      opacity: 1;
+      opacity: 1 !important;
       bottom: 100px;
     }
   }
@@ -364,4 +367,19 @@ a{
       font-size: 13px;
     }    
   }
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+.dialog-title {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.custom-search-inside-mat-menu {
+  height: 100%;
 }

@@ -1,0 +1,8 @@
+.playlist-form {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5px;
+    .row {
+        min-height: 60px;
+    }
+}

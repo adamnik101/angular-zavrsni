@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { PlayAllButtonComponent } from '../../play-all-button/play-all-button.component';
 import { PlaylistsService } from '../../../services/playlists/base/playlists.service';
 import { DominantColorService } from '../../../../shared/services/dominant-color/dominant-color.service';
+import { PlayingFromService } from '../../../services/playing-from/playing-from.service';
 
 @Component({
   selector: 'app-playlist-card',
@@ -17,7 +18,8 @@ export class PlaylistCardComponent {
 
   constructor(
     public apiService: PlaylistsService,
-    private dominantColorService: DominantColorService
+    private dominantColorService: DominantColorService,
+    private playingFromService: PlayingFromService
   ) {}
   
   @Input() public playlist: IPlaylist = {} as IPlaylist;

@@ -1,0 +1,14 @@
+<div class="common-textarea-wrapper">
+    <mat-form-field appearance="outline">
+        @if (label) {
+            <mat-label>{{label}}</mat-label>
+        }
+        <textarea matInput [formControl]="formControlToFill" [rows]="rows" [cols]="cols"></textarea>
+    
+        <mat-error>
+            @if (formControlToFill.hasError('required')) {
+                {{label}} is required
+            }
+        </mat-error>
+      </mat-form-field>
+</div>

@@ -7,4 +7,10 @@
     .search-input-wrapper {
         width: 600px;
     }
+
+    .user {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+    }
 }

@@ -13,11 +13,15 @@ import { debounceTime, Subscription } from 'rxjs';
 import { SearchService } from '../../../search/services/api/search.service';
 import { IMainNavigationLink } from '../../interfaces/i-main-navigation-link';
 import { AuthService } from '../../../shared/auth/auth.service';
+import { MatBadge } from '@angular/material/badge';
 
 @Component({
   selector: 'app-search-nav',
   standalone: true,
-  imports: [MatToolbarModule, CommonInputComponent, MatButtonModule, MatMenuModule, MatIconModule, MatFabButton, RouterLink],
+  imports: [MatToolbarModule, CommonInputComponent, MatButtonModule,
+            MatMenuModule, MatIconModule, MatFabButton, RouterLink,
+            MatBadge
+          ],
   templateUrl: './search-nav.component.html',
   styleUrl: './search-nav.component.scss'
 })

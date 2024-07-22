@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IFormService } from '../../../../shared/interfaces/i-form-service';
-import { FormBuilder, UntypedFormGroup } from '@angular/forms';
+import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../../shared/auth/auth.service';
 import { UserService } from '../../../user/services/user/user.service';
 import { Observable } from 'rxjs';
@@ -19,7 +19,8 @@ export class PlaylistsFormService implements IFormService{
 
   init(): UntypedFormGroup {
     return this.formBuilder.group<any>({
-      title: this.formBuilder.control(''),
+      title: this.formBuilder.control('', [Validators.required]),
+      description: this.formBuilder.control('')
     })
   }
 
@@ -30,7 +31,8 @@ export class PlaylistsFormService implements IFormService{
   prepareDataToSend(): any {
     let dataToSend: any = {
       title: this.form.get('title')?.value,
-    }
+      description: this.form.get('description')?.value
+    };
 
     return dataToSend;
   }

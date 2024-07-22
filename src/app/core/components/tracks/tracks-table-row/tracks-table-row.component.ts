@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, signal, ViewChild } from '@angular/core';
 import { ITrack } from '../../../interfaces/tracks/i-track';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
@@ -18,11 +18,16 @@ import { NgClass } from '@angular/common';
 import { TracksTableRowService } from '../../../services/tracks/tracks-table-row/tracks-table-row.service';
 import { Subscription } from 'rxjs';
 import { TracksTableService } from '../../../services/tracks/table/tracks-table.service';
+import { PlaylistFormComponent } from '../../playlists/playlist-form/playlist-form.component';
+import { IPlaylist } from '../../../interfaces/playlist/i-playlist';
+import { CommonInputType } from '../../../../shared/form-fields/common-input/interfaces/i-common-input';
+import { CommonInputComponent } from '../../../../shared/form-fields/common-input/common-input.component';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-tracks-table-row',
   standalone: true,
-  imports: [MatIcon, MatIconButton, RouterLink, FormatDurationFromSecondsPipe, MatMenuModule, NgClass],
+  imports: [MatIcon, MatIconButton, RouterLink, FormatDurationFromSecondsPipe, MatMenuModule, NgClass, CommonInputComponent],
   templateUrl: './tracks-table-row.component.html',
   styleUrl: './tracks-table-row.component.scss'
 })
@@ -39,7 +44,8 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
     private audioService: AudioService,
     private playlistsService: PlaylistsService,
     private matDialog: MatDialog,
-    private tracksTableService: TracksTableService
+    private tracksTableService: TracksTableService,
+    private formBuilder: FormBuilder
   ) {}
 
   public currentSectionId: string = "";
@@ -47,6 +53,8 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
   public liked: boolean = false;
   public features: Map<string, string> = new Map<string, string>();
   public isSelectedRow: boolean = false;
+  
+  public filteredPlaylists = signal<IPlaylist[]>(this.userPlaylistsService.playlists());
 
   @Input({required: true}) public index: number = 0;
   @Input({required: true}) public track: ITrack = {} as ITrack;
@@ -58,7 +66,20 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
 
   public contextMenuPosition = { x: '0px', y: '0px' };
 
+  public commonInputType = CommonInputType;
+  public searchControl = this.formBuilder.group({
+    search: this.formBuilder.control('')
+  });
   private subscription: Subscription = new Subscription();
+
+  private newPlaylistDialog: any = {
+    component: PlaylistFormComponent,
+    dimensions: {
+      width: "500px",
+      height: "auto",
+      customPanel: "playlist-form"
+    }
+  };
 
   ngOnInit(): void {
     this.setFeatures();
@@ -198,8 +219,24 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
     })
   }
 
+  openCreateNewPlaylistDialog(): void {
+    this.matDialog.open(this.newPlaylistDialog.component, this.newPlaylistDialog.dimensions);
+  }
+
+  searchPlaylists(searchBy: any): void {
+    this.searchControl.get('search')?.markAsDirty()
+    let filteredPlaylists: IPlaylist[] = [];
+
+    this.userPlaylistsService.playlists().filter(playlist => {
+      if(playlist.title.toLowerCase().trim().includes(searchBy.toLowerCase().trim())) {
+        filteredPlaylists.push(playlist);
+      }
+    })
+
+    this.filteredPlaylists.set(filteredPlaylists);
+  }
+
   ngOnDestroy(): void {
     this.removeSelected();
-    // this.subscription.unsubscribe();
   }
 }
