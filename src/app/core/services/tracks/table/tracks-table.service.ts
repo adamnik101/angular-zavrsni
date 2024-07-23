@@ -9,15 +9,15 @@ import { LikedTracksService } from '../../../user/services/liked-tracks/liked-tr
 export class TracksTableService {
 
   constructor(
-    private likedTracksService: LikedTracksService
+    // private likedTracksService: LikedTracksService
   ) {}
 
   public tracks = signal<ITrack[]>([]);
 
   public setTracks(tracks: ITrack[]): void {
-    tracks.forEach(track => {
-      track['liked'] = this.likedTracksService.likedTracks().some(t => t.id === track.id);
-    })
+    // tracks.forEach(track => {
+    //   track['liked'] = this.likedTracksService.likedTracks().some(t => t.id === track.id);
+    // })
     this.tracks.set(tracks);
   }
 

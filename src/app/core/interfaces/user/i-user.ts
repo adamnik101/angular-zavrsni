@@ -1,4 +1,5 @@
 import { ISettings } from "../../../settings/interfaces/settings/i-settings";
+import { IArtist } from "../artist/i-artist";
 import { IPlaylist } from "../playlist/i-playlist";
 
 export interface IUser {
@@ -10,6 +11,7 @@ export interface IUser {
     liked_tracks: any[];
     liked_albums: any[];
     playlists: IPlaylist[];
-
+    followings: IArtist[];
+    
     settings: ISettings;
 }

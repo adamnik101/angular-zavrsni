@@ -62,6 +62,7 @@ body { font-family: Roboto, "Helvetica Neue", sans-serif; letter-spacing: .6px; 
 .mat-drawer.mat-drawer-side {
   border-radius: 0;
   width: calc(var(--mat-sidenav-container-width) - 50px);
+  max-height: calc(100% - 170px);
 }
 .mat-drawer-inner-container {
   overflow: hidden !important;
@@ -402,6 +403,7 @@ a{
 
 .mat-mdc-tab-group {
   min-width: 90%;
+  max-width: 90%;
 }
 
 .mdc-tab {
@@ -409,8 +411,17 @@ a{
 }
 
 .mat-mdc-tab-body-wrapper {
-  min-height: 350px;
-  overflow-y: scroll;
+  overflow: hidden;
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: calc(100vh - 370px);
+  max-height: calc(100vh - 370px);
+
+  .mat-mdc-tab-body-content {
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 278px;
+  }
 }
 
 .mat-mdc-tab-label-container {

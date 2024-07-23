@@ -10,11 +10,18 @@ import { CdkAccordion, CdkAccordionItem } from '@angular/cdk/accordion';
 import { MatTabsModule } from '@angular/material/tabs';
 import { UserPlaylistsService } from '../../core/user/services/playlists/user-playlists.service';
 import { PlaylistSmallRowItemComponent } from '../../core/components/playlists/playlist-small-row-item/playlist-small-row-item.component';
+import { UserArtistFollowingsService } from '../../core/user/services/artists/user-artist-followings.service';
+import { UserAlbumLikesService } from '../../core/user/services/albums/user-album-likes.service';
+import { AlbumSmallRowItemComponent } from '../../core/components/albums/album-small-row-item/album-small-row-item.component';
+import { ArtistSmallRowItemComponent } from '../../core/components/artists/artist-small-row-item/artist-small-row-item.component';
 
 @Component({
   selector: 'app-left-sidebar',
   standalone: true,
-  imports: [NavigationLinkItemComponent, MatDividerModule, CdkAccordion, CdkAccordionItem, MatTabsModule, PlaylistSmallRowItemComponent],
+  imports: [NavigationLinkItemComponent, MatDividerModule, CdkAccordion, CdkAccordionItem,
+    MatTabsModule, PlaylistSmallRowItemComponent,
+    AlbumSmallRowItemComponent, ArtistSmallRowItemComponent
+  ],
   templateUrl: './left-sidebar.component.html',
   styleUrl: './left-sidebar.component.scss'
 })
@@ -22,7 +29,9 @@ export class LeftSidebarComponent {
 
   constructor(
     public userService: UserService,
-    public userPlaylistsService: UserPlaylistsService
+    public userPlaylistsService: UserPlaylistsService,
+    public userArtistsFollowingsService: UserArtistFollowingsService,
+    public userAlbumLikesService: UserAlbumLikesService,
   ) {}
   
   public mainNavigationLinks: IMainNavigationLink[] = MAIN_NAVIGATION_LINKS;

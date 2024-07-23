@@ -13,11 +13,11 @@
                     }
 
                     @if(track.liked) {
-                        <button class="toggle-like-btn" mat-icon-button matTooltip="Remove from liked" matTooltipPosition="above">
+                        <button (click)="removeFromLiked($event)" class="toggle-like-btn" mat-icon-button matTooltip="Remove from liked" matTooltipPosition="above">
                             <mat-icon>favorite</mat-icon>
                         </button>
                     } @else {
-                        <button class="toggle-like-btn" mat-icon-button matTooltip="Add to liked" matTooltipPosition="above">
+                        <button (click)="addToLiked($event)" class="toggle-like-btn" mat-icon-button matTooltip="Add to liked" matTooltipPosition="above">
                             <mat-icon>favorite_outline</mat-icon>                                
                         </button>
                     }

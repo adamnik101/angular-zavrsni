@@ -9,9 +9,10 @@
         width: 100%;
     }
     .mat-tab-group-wrapper {
-        width: 100%;
+        width: 90%;
         display: flex;
         justify-content: center;
+        max-height: calc(100vh - 375px);
     }
     
 }

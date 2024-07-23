@@ -117,26 +117,10 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
   addToLiked(): void {
     this.likedTracksService.addToLiked(this.track.id).subscribe({
       next: (response) => {
-        console.log(response)
-        if(response.status_code === 200) {
-          this.likedTracksService.likedTracks.update(tracks => {
-            return [{...response.data, liked: true}].concat(tracks);
-          });
-          
-          this.tracksTableService.tracks.update(tracks => {
-            let track = tracks.find(x => x.id === this.track.id);
-
-            if(track) {
-              track.liked = true;
-            }
-
-            return tracks;
-          })
-        }
-        this.alertService.showDefaultMessage(response.message);
+        
       },
       error: (err) => {
-        this.alertService.showErrorMessage(err.message);
+        
       }
     })
   }
@@ -144,22 +128,10 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
   removeFromLiked(): void {
     this.likedTracksService.removeFromLiked(this.track.id).subscribe({
       next: (data) => {
-        this.likedTracksService.likedTracks.set(this.likedTracksService.likedTracks().filter(track => track.id != this.track.id));
         
-        this.tracksTableService.tracks.update(tracks => {
-          let track = tracks.find(x => x.id === this.track.id);
-
-          if(track) {
-            track.liked = false;
-          }
-
-          return tracks;
-        })
-
-        this.alertService.showDefaultMessage("Removed from liked.");
       },
       error: (err) => {
-        this.alertService.showErrorMessage(err.message);
+        
       }
     })
   }
@@ -223,15 +195,14 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
     this.matDialog.open(this.newPlaylistDialog.component, this.newPlaylistDialog.dimensions);
   }
 
-  searchPlaylists(searchBy: any): void {
-    this.searchControl.get('search')?.markAsDirty()
+  searchPlaylists(searchBy: string): void {
     let filteredPlaylists: IPlaylist[] = [];
 
     this.userPlaylistsService.playlists().filter(playlist => {
       if(playlist.title.toLowerCase().trim().includes(searchBy.toLowerCase().trim())) {
         filteredPlaylists.push(playlist);
       }
-    })
+    });
 
     this.filteredPlaylists.set(filteredPlaylists);
   }
