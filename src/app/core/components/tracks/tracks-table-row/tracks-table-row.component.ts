@@ -23,6 +23,7 @@ import { IPlaylist } from '../../../interfaces/playlist/i-playlist';
 import { CommonInputType } from '../../../../shared/form-fields/common-input/interfaces/i-common-input';
 import { CommonInputComponent } from '../../../../shared/form-fields/common-input/common-input.component';
 import { FormBuilder } from '@angular/forms';
+import { PlayingFromService } from '../../../services/playing-from/playing-from.service';
 
 @Component({
   selector: 'app-tracks-table-row',
@@ -45,7 +46,8 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
     private playlistsService: PlaylistsService,
     private matDialog: MatDialog,
     private tracksTableService: TracksTableService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private playingFromService: PlayingFromService
   ) {}
 
   public currentSectionId: string = "";
@@ -103,6 +105,7 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
 
   play(): void {
     this.onPlay.emit(this.track);
+    this.playingFromService.playingFrom.set(null);
     this.audioService.play();
   }
 

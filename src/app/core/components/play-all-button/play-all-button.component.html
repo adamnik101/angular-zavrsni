@@ -1,4 +1,4 @@
-<div class="button mat-elevation-z7 play-button" #togglePlayButton [ngClass]="{'show-play-all': playingFromService.playingFrom() && playingFromService.playingFrom() === id ? 1 : 0}">
+<div class="button mat-elevation-z7 play-button {{customClass}}" #togglePlayButton [ngClass]="{'show-play-all': playingFromService.playingFrom() && playingFromService.playingFrom() === id ? 1 : 0}">
     @if(audioService.isPlaying() && playingFromService.playingFrom() === id) {
         <button (click)="pause($event)" mat-icon-button matTooltip="Pause" matTooltipPosition="above">
             <mat-icon>pause</mat-icon>

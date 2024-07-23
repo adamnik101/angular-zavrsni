@@ -431,3 +431,52 @@ a{
 img {
   border-radius: 5px;
 }
+
+.custom-play-all {
+  opacity: 0;
+}
+
+.small-item-row-play-btn {
+  width: 25px !important;
+  height: 25px !important;
+  opacity: 0 !important; 
+
+  button {
+      width: 25px !important;
+      height: 25px !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: $main-color;
+
+  }
+  .mat-icon {
+      font-size: 20px !important;
+      line-height: 20px !important;
+      width: 20px !important;
+      height: 20px !important;
+      color: $background-color !important;
+  }
+
+  
+}
+
+
+.show-play-all {
+  opacity: 1 !important;
+  bottom: 100px;
+  transition: none;
+}
+
+.playlist-small-item-row-wrapper {
+  &:hover {
+    .small-item-row-play-btn {
+      transition: none !important;
+      opacity: 1 !important;
+    }
+
+    .play-button {
+      transition: none !important;
+    }
+  }
+}

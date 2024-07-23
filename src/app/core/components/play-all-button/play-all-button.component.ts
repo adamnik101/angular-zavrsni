@@ -8,6 +8,8 @@ import { AudioService } from '../../services/audio/audio.service';
 import { NgClass } from '@angular/common';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { LikedTracksService } from '../../user/services/liked-tracks/liked-tracks.service';
+import { ITrack } from '../../interfaces/tracks/i-track';
 
 @Component({
   selector: 'app-play-all-button',
@@ -21,11 +23,13 @@ export class PlayAllButtonComponent {
   constructor(
     private queueService: QueueService,
     public playingFromService: PlayingFromService,
-    public audioService: AudioService
+    public audioService: AudioService,
+    private likedTracksService: LikedTracksService
   ) {}
 
   @Input({required: true}) public apiService!: ApiService<any>;
   @Input({required: true}) public id: string = "";
+  @Input() public customClass: string = "";
 
   @Output() public onPlay: EventEmitter<boolean> = new EventEmitter();
 
@@ -38,7 +42,17 @@ export class PlayAllButtonComponent {
     this.apiService.get<any>(this.id).subscribe({
       next: (response) => {
         if(response.data.hasOwnProperty('tracks')) {
-          this.queueService.setQueue(response.data.tracks);
+          let tracks: ITrack[] = response.data.tracks;
+
+          this.likedTracksService.likedTracks().forEach(liked => {
+              response.data.tracks.forEach((track: ITrack, index: number) => {
+                if(liked.id === track.id) {
+                  tracks[index].liked = true;
+                }
+              });
+          });
+
+          this.queueService.setQueue(tracks);
           this.queueService._queueIndex.set(0);
           this.playingFromService.playingFrom.set(this.id);
           

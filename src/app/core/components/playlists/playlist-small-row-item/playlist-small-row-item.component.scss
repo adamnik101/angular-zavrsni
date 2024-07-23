@@ -6,21 +6,18 @@
     padding: 7.5px;
     display: block;
 
+
+    
     &:hover {
-        background-color: $card-background;
+        background-color: $card-background;        
+        
         .content {
             .image {
                 img {
                     opacity: .5;
                 }
 
-                .toggle-play {
-                    opacity: 1;
-                    
-                }
             }
-
-
         }
     }
     .content {
@@ -48,20 +45,6 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                opacity: 0;
-
-                .play {
-                    width: 35px;
-                    height: 35px; 
-                    .mat-icon {
-                        color: $main-color;
-                        background-color: rgba(15, 15, 15, 0.744) !important;
-                        border-radius: 50% !important;
-                        line-height: 35px;
-                        width: 35px;
-                        height: 35px; 
-                    }   
-                }
             }
         }
 
