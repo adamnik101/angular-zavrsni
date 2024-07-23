@@ -10,11 +10,13 @@ import { PlayingFromService } from '../../../services/playing-from/playing-from.
 import { AudioService } from '../../../services/audio/audio.service';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { NgClass } from '@angular/common';
+import { LikedTracksService } from '../../../user/services/liked-tracks/liked-tracks.service';
+import { PlayAllButtonComponent } from '../../play-all-button/play-all-button.component';
 
 @Component({
   selector: 'app-playlist-small-row-item',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, MatIconButton, MatIcon, MatTooltip, MatProgressSpinner, NgClass],
+  imports: [RouterLink, RouterLinkActive, MatIconButton, MatIcon, MatTooltip, MatProgressSpinner, NgClass, PlayAllButtonComponent],
   templateUrl: './playlist-small-row-item.component.html',
   styleUrl: './playlist-small-row-item.component.scss'
 })
@@ -22,9 +24,10 @@ export class PlaylistSmallRowItemComponent {
 
   constructor(
     private queueService: QueueService,
-    private playlistsService: PlaylistsService,
+    public playlistsService: PlaylistsService,
     public playingFromService: PlayingFromService,
-    public audioService: AudioService
+    public audioService: AudioService,
+    private likedTracksService: LikedTracksService,
   ) {}
   
   @Input() public playlist: IPlaylist = {} as IPlaylist;
