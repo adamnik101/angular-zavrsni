@@ -10,6 +10,10 @@ import { AudioService } from '../../services/audio/audio.service';
 import { MatTooltip } from '@angular/material/tooltip';
 import { Repeat } from '../../services/audio/enums/repeat';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { UserTrackLikesService } from '../../user/services/tracks/user-track-likes.service';
+import { LikedTracksService } from '../../user/services/liked-tracks/liked-tracks.service';
+import { AlertService } from '../../../shared/services/alert/alert.service';
+import { TracksTableService } from '../../services/tracks/table/tracks-table.service';
 
 @Component({
   selector: 'app-audio-player',
@@ -22,7 +26,10 @@ export class AudioPlayerComponent implements OnInit{
 
   constructor(
     public queueService: QueueService,
-    public audioService: AudioService
+    public audioService: AudioService,
+    private likedTracksService: LikedTracksService,
+    private alertService: AlertService,
+    private tracksTableService: TracksTableService
   ) {
     effect(() => {
       const currentTrack = this.queueService.getCurrentTrack();
@@ -105,5 +112,33 @@ export class AudioPlayerComponent implements OnInit{
     }
 
     this.audioService.audio.muted = false;
+  }
+
+  addToLiked(event: any): void {
+    const id = this.track ? this.track.id : null;
+    if(id) {
+      this.likedTracksService.addToLiked(id).subscribe({
+        next: (response) => {
+
+        },
+        error: (err) => {
+         
+        }
+      })
+    }
+  }
+  
+  removeFromLiked(event: any): void {
+    const id = this.track ? this.track.id : null;
+    if(id) {
+      this.likedTracksService.removeFromLiked(id).subscribe({
+        next: (data) => {
+
+        },
+        error: (err) => {
+          
+        }
+      });
+    }
   }
 }

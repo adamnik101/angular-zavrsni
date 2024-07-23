@@ -7,6 +7,7 @@ import { TracksTableService } from '../../../services/tracks/table/tracks-table.
 import { TracksTableComponent } from '../../tracks/tracks-table/tracks-table.component';
 import { QueueService } from '../../../services/queue/base/queue.service';
 import { DominantColorService } from '../../../../shared/services/dominant-color/dominant-color.service';
+import { LikedTracksService } from '../../../user/services/liked-tracks/liked-tracks.service';
 
 @Component({
   selector: 'app-playlist-detail',
@@ -22,7 +23,8 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy{
     private playlistsService: PlaylistsService,
     private tracksTableService: TracksTableService,
     private queueService: QueueService,
-    private dominantColorService: DominantColorService
+    private dominantColorService: DominantColorService,
+    private likedTracksService: LikedTracksService
   ) {}
 
   public playlist: IPlaylist = {} as IPlaylist;
@@ -39,7 +41,11 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy{
 
       this.playlistsService.get<IPlaylist>(id).subscribe({
         next: (response) => {
+          console.log(response)
           this.playlist = response.data;
+          this.playlist.tracks.forEach(track => {
+              track['liked'] = this.likedTracksService.likedTracks().some(t => t.id === track.id);
+            })
           this.tracksTableService.setTracks(this.playlist.tracks);
 
           SpinnerFunctions.hideSpinner();
