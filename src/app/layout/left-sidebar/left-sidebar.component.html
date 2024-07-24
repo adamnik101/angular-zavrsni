@@ -21,6 +21,16 @@
     }
     
     @if (userService.loggedIn()) {
+        @for (link of userNavigationLinks; track $index) {
+            <app-navigation-link-item
+                class="nav-link-item"
+                [title]="link.title"
+                [routePath]="link.routePath"
+                [icon]="link.icon"
+                [action]="link.action">
+            </app-navigation-link-item>
+        }
+
         <div class="mat-tab-group-wrapper">
             <mat-tab-group class="custom-user-tab-group-sidebar" dynamicHeight="false" [@.disabled]="true">
                 <mat-tab label="Playlists">
@@ -39,20 +49,13 @@
                 </mat-tab>
                 <mat-tab label="Followings">
                     <ng-template matTabContent>
-                        @for(album of userAlbumLikesService.albums(); track $index) {
-                            <app-album-small-row-item [album]="album"></app-album-small-row-item>
+                        @for(artist of userArtistsFollowingsService.artists(); track $index) {
+                            <app-artist-small-row-item [artist]="artist"></app-artist-small-row-item>
                         }
                     </ng-template>
                 </mat-tab>
             </mat-tab-group>
         </div>
-        <!-- @for (link of userNavigationLinks; track $index) { -->
-            <!-- <app-navigation-link-item
-                [title]="link.title"
-                [routePath]="link.routePath"
-                [icon]="link.icon"
-                [action]="link.action">
-            </app-navigation-link-item> -->
-        <!-- } -->
+        
     }
 </div>

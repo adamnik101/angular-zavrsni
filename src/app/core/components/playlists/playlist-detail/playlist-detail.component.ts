@@ -8,6 +8,7 @@ import { TracksTableComponent } from '../../tracks/tracks-table/tracks-table.com
 import { QueueService } from '../../../services/queue/base/queue.service';
 import { DominantColorService } from '../../../../shared/services/dominant-color/dominant-color.service';
 import { LikedTracksService } from '../../../user/services/liked-tracks/liked-tracks.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-playlist-detail',
@@ -33,26 +34,32 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy{
   @ViewChild('image') private image: ElementRef = {} as ElementRef;
   @ViewChild('canvas') private canvas: ElementRef = {} as ElementRef;
 
+  private subscription: Subscription = new Subscription();
+
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-
-    if(id) {
-      SpinnerFunctions.showSpinner();
-
-      this.playlistsService.get<IPlaylist>(id).subscribe({
-        next: (response) => {
-          console.log(response)
-          this.playlist = response.data;
-          this.playlist.tracks.forEach(track => {
-              track['liked'] = this.likedTracksService.likedTracks().some(t => t.id === track.id);
-            })
-          this.tracksTableService.setTracks(this.playlist.tracks);
-
-          SpinnerFunctions.hideSpinner();
-        }
-      });
+    this.subscription.add(
+      this.route.paramMap.subscribe({
+        next: (data) => {
+          const id = data.get("id");
+  
+          if(id) {
+            SpinnerFunctions.showSpinner();
+  
+            this.playlistsService.get<IPlaylist>(id).subscribe({
+              next: (response) => {
+                this.playlist = response.data;
+                this.playlist.tracks.forEach(track => {
+                    track['liked'] = this.likedTracksService.likedTracks().some(t => t.id === track.id);
+                  })
+                this.tracksTableService.setTracks(this.playlist.tracks);
       
-    }
+                SpinnerFunctions.hideSpinner();
+              }
+            });
+          }
+        }
+      })
+    );
   }
 
   ngAfterViewInit(): void {
@@ -69,5 +76,6 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
     this.tracksTableService.resetTracks();
+    this.subscription.unsubscribe();
   }
 }

@@ -24,11 +24,12 @@ import { CommonInputType } from '../../../../shared/form-fields/common-input/int
 import { CommonInputComponent } from '../../../../shared/form-fields/common-input/common-input.component';
 import { FormBuilder } from '@angular/forms';
 import { PlayingFromService } from '../../../services/playing-from/playing-from.service';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-tracks-table-row',
   standalone: true,
-  imports: [MatIcon, MatIconButton, RouterLink, FormatDurationFromSecondsPipe, MatMenuModule, NgClass, CommonInputComponent],
+  imports: [MatIcon, MatIconButton, RouterLink, FormatDurationFromSecondsPipe, MatMenuModule, NgClass, CommonInputComponent, MatTooltip],
   templateUrl: './tracks-table-row.component.html',
   styleUrl: './tracks-table-row.component.scss'
 })
@@ -54,6 +55,7 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
   public isThisTrackBeingPlayed: boolean = false;
   public liked: boolean = false;
   public features: Map<string, string> = new Map<string, string>();
+  public featureNames: string[] = [];
   public isSelectedRow: boolean = false;
   
   public filteredPlaylists = signal<IPlaylist[]>(this.userPlaylistsService.playlists());
@@ -100,6 +102,7 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
   setFeatures(): void {
     this.track.features.forEach(feature => {
       this.features.set(feature.id, feature.name);
+      this.featureNames.push(feature.name);
     });
   }
 

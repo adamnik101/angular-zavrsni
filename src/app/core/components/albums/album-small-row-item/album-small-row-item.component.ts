@@ -10,11 +10,12 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatTooltip } from '@angular/material/tooltip';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AlbumsService } from '../../../services/albums/base/albums.service';
+import { PlayAllButtonComponent } from '../../play-all-button/play-all-button.component';
 
 @Component({
   selector: 'app-album-small-row-item',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, MatIconButton, MatIcon, MatTooltip, MatProgressSpinner, NgClass],
+  imports: [RouterLink, RouterLinkActive, MatIconButton, MatIcon, MatTooltip, MatProgressSpinner, NgClass, PlayAllButtonComponent],
   templateUrl: './album-small-row-item.component.html',
   styleUrl: './album-small-row-item.component.scss'
 })
@@ -22,7 +23,7 @@ export class AlbumSmallRowItemComponent {
 
   constructor(
     private queueService: QueueService,
-    private albumsService: AlbumsService,
+    public albumsService: AlbumsService,
     public playingFromService: PlayingFromService,
     public audioService: AudioService
   ) {}

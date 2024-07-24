@@ -4,11 +4,13 @@
             <img src="{{playlist.image_url}}"/>
 
             <div class="toggle-play">
-                <app-play-all-button 
-                    [customClass]="'small-item-row-play-btn'"
-                    [apiService]="playlistsService"
-                    [id]="playlist.id">
-                </app-play-all-button>
+                @if(playlist.tracks_count) {
+                    <app-play-all-button 
+                        [customClass]="'small-item-row-play-btn'"
+                        [apiService]="playlistsService"
+                        [id]="playlist.id">
+                    </app-play-all-button>
+                }
             </div>
         </div>
 

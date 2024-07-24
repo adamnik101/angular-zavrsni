@@ -17,9 +17,11 @@
             </div>
         </div>
     </a>
-    
-    <app-play-all-button 
-    [apiService]="apiService"
-    [id]="artist.id"
-    (onPlay)="playAll($event)"></app-play-all-button>    
+    @if(artist.tracks_count) {
+        <app-play-all-button 
+            [apiService]="apiService"
+            [id]="artist.id"
+            (onPlay)="playAll($event)">
+        </app-play-all-button>
+    }    
 </div>

@@ -14,10 +14,13 @@
         </div>
     </a>
 
-    <app-play-all-button 
-    [apiService]="apiService"
-    [id]="playlist.id" 
-    (onPlay)="playAll($event)"></app-play-all-button>    
-</div>
+    @if(playlist.tracks_count) {
+        <app-play-all-button 
+            [apiService]="apiService"
+            [id]="playlist.id" 
+            (onPlay)="playAll($event)">
+        </app-play-all-button>    
+    }
+    </div>
 <canvas #myCanvas hidden></canvas>
 <div #preview></div>

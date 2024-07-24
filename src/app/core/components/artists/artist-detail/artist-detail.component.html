@@ -39,5 +39,12 @@
     </div>
     <div class="content">
         <app-tracks-table></app-tracks-table>
+
+        <app-section-header [header]="'Albums'"></app-section-header>        
+        <div class="card-wrapper">
+            @for(album of artist.albums; track $index) {
+                <app-album-card [album]="album"></app-album-card>
+            }
+        </div>
     </div>
 </div>
