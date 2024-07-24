@@ -78,7 +78,9 @@ a{
   margin: 10px 0 !important;
   width: 90%;
 }
-
+.custom-divider {
+  margin: 10px 0 !important;
+}
 .custom-form {
   display: flex;
   flex-direction: column;
@@ -136,6 +138,7 @@ a{
 }
 .card-whole {
   position: relative;
+  width: 200px;
   .card {
     width: 200px;
     height: 280px;
@@ -414,8 +417,8 @@ a{
   overflow: hidden;
   display: flex !important;
   flex-direction: column !important;
-  min-height: calc(100vh - 370px);
-  max-height: calc(100vh - 370px);
+  min-height: calc(100vh - 460px);
+  max-height: calc(100vh - 460px);
 
   .mat-mdc-tab-body-content {
     overflow-y: auto;
@@ -479,4 +482,31 @@ img {
       transition: none !important;
     }
   }
+}
+.album-small-item-row-wrapper {
+  &:hover {
+    .small-item-row-play-btn {
+      transition: none !important;
+      opacity: 1 !important;
+    }
+
+    .play-button {
+      transition: none !important;
+    }
+  }
+}
+.artist-small-item-row-wrapper {
+  &:hover {
+    .small-item-row-play-btn {
+      transition: none !important;
+      opacity: 1 !important;
+    }
+
+    .play-button {
+      transition: none !important;
+    }
+  }
+}
+.my-custom-tooltip .mdc-tooltip__surface {
+  max-width: unset !important;
 }

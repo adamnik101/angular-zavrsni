@@ -1,1 +1,23 @@
-<p>artist-small-row-item works!</p>
+<div class="artist-small-item-row-wrapper" routerLinkActive="selected-artist">
+    <div class="content">
+        <div class="image">
+            <img src="{{artist.cover}}"/>
+
+            <div class="toggle-play">
+                @if(artist.tracks_count) {
+                    <app-play-all-button 
+                        [customClass]="'small-item-row-play-btn'"
+                        [apiService]="artistsService"
+                        [id]="artist.id">
+                    </app-play-all-button>
+                }
+            </div>
+        </div>
+
+        <div class="main">
+            <a class="title" routerLink="/artists/{{artist.id}}">
+                {{artist.name}}
+            </a>
+        </div>
+    </div>
+</div>

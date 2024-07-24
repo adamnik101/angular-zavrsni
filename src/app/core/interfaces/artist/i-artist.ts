@@ -10,6 +10,7 @@ export interface IArtist extends BaseInterface{
     features_count: number;
     monthly_listeners: number;
     featured_albums: IAlbum[];
+    albums: IAlbum[];
     tracks: ITrack[];
     verified: boolean;
     followed_by_count: number;

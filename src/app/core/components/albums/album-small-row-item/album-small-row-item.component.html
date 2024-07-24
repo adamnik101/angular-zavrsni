@@ -3,26 +3,16 @@
         <div class="image">
             <img src="{{album.cover}}"/>
 
-            <div class="toggle-play" [ngClass]="{'show-play-all': playingFromService.playingFrom() && playingFromService.playingFrom() === album.id ? 1 : 0}">
-                @if(audioService.isPlaying() && playingFromService.playingFrom() === album.id) {
-                    <button class="play" (click)="pause($event)" mat-icon-button matTooltip="Pause" matTooltipPosition="above">
-                        <mat-icon>pause</mat-icon>
-                    </button>
-                } @else {
-                    @if(!audioService.isPlaying() && playingFromService.playingFrom() === album.id) { 
-                        @if(audioService.trackIsLoading()) {
-                                <mat-progress-spinner [strokeWidth]="5" mode="indeterminate" [diameter]="50"></mat-progress-spinner>
-                        } @else {
-                            <button class="play" (click)="continue($event)" mat-icon-button matTooltip="Continue" matTooltipPosition="above">
-                                <mat-icon>play_arrow</mat-icon>
-                            </button>
-                        }
-                    } @else {
-                        <button class="play" (click)="play($event)" mat-icon-button matTooltip="Play" matTooltipPosition="above">
-                            <mat-icon>play_arrow</mat-icon>
-                        </button>
-                    }
+            <div class="toggle-play">
+
+                @if(album.tracks_count) {
+                    <app-play-all-button 
+                        [customClass]="'small-item-row-play-btn'"
+                        [apiService]="albumsService"
+                        [id]="album.id">
+                    </app-play-all-button>
                 }
+               
             </div>
         </div>
 

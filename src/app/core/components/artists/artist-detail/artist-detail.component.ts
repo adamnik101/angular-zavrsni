@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ArtistsService } from '../../../services/artists/base/artists.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -11,15 +11,17 @@ import { SmallRoundDividerComponent } from '../../../../shared/components/small-
 import { TracksTableComponent } from "../../tracks/tracks-table/tracks-table.component";
 import { TracksTableService } from '../../../services/tracks/table/tracks-table.service';
 import { UserArtistFollowingsService } from '../../../user/services/artists/user-artist-followings.service';
+import { AlbumCardComponent } from '../../albums/album-card/album-card.component';
+import { SectionHeaderComponent } from '../../section-header/section-header.component';
 
 @Component({
   selector: 'app-artist-detail',
   standalone: true,
-  imports: [NgOptimizedImage, MatIcon, MatTooltip, SmallRoundDividerComponent, TracksTableComponent],
+  imports: [NgOptimizedImage, MatIcon, MatTooltip, SmallRoundDividerComponent, TracksTableComponent, AlbumCardComponent, SectionHeaderComponent],
   templateUrl: './artist-detail.component.html',
   styleUrl: './artist-detail.component.scss'
 })
-export class ArtistDetailComponent implements OnInit{
+export class ArtistDetailComponent implements OnInit, OnDestroy{
 
   constructor(
     private artistsService: ArtistsService,
@@ -35,24 +37,31 @@ export class ArtistDetailComponent implements OnInit{
   private subscription: Subscription = new Subscription();
 
   ngOnInit(): void {
-    const id: string | null = this.getId();
+    this.subscription.add(
+      this.route.paramMap.subscribe({
+        next: (data) => {
+          const id = data.get('id');
 
-    if(id) {
-      SpinnerFunctions.showSpinner();
-      this.subscription.add(
-        this.artistsService.get<IArtist>(id).subscribe({
-          next: (response) => {
-            this.artist = response.data;
-            this.back.nativeElement.style.backgroundImage = `url(${this.artist.cover})`;
-            this.tracksTableService.setTracks(this.artist.tracks);
-            SpinnerFunctions.hideSpinner();
-          }
-        })
-      );
-    }
+          if(id) {
+            SpinnerFunctions.showSpinner();
+            this.subscription.add(
+              this.artistsService.get<IArtist>(id).subscribe({
+                next: (response) => {
+                  this.artist = response.data;
+                  this.back.nativeElement.style.backgroundImage = `url(${this.artist.cover})`;
+                  this.tracksTableService.setTracks(this.artist.tracks);
+                  SpinnerFunctions.hideSpinner();
+                }
+              })
+            );
+          };
+
+        }
+      })
+    );
   }
 
-  private getId(): string | null {
-    return this.route.snapshot.paramMap.get('id');
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

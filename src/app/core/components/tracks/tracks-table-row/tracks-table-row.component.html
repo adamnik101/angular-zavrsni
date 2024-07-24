@@ -6,7 +6,7 @@
                     {{index + 1}}
                 </div>
                 
-                <button mat-icon-button class="play" (click)="play()" >
+                <button mat-icon-button class="play" (click)="play()" matTooltip="Play {{track.title}} by {{track.owner.name}} {{featureNames.length ? 'x' : ''}} {{featureNames.join(', ')}}" matTooltipPosition="above" matTooltipClass="my-custom-tooltip">
                     <mat-icon>play_arrow</mat-icon>
                 </button>
             </div>
