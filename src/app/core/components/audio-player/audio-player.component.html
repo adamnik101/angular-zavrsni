@@ -101,7 +101,7 @@
     
             <div class="other">
                 <div class="queue">
-                    <button mat-icon-button class="action-icon-button small" matTooltip="Queue" matTooltipPosition="above">
+                    <button mat-icon-button class="action-icon-button small" matTooltip="Queue" matTooltipPosition="above" (click)="toggleQueue($event)">
                         <mat-icon>queue_music</mat-icon>
                     </button>
                 </div>
@@ -137,4 +137,7 @@
             </div>
         </div>
     }
+
 </div>
+
+<app-queue></app-queue>

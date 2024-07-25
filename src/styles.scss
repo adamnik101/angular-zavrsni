@@ -417,8 +417,8 @@ a{
   overflow: hidden;
   display: flex !important;
   flex-direction: column !important;
-  min-height: calc(100vh - 460px);
-  max-height: calc(100vh - 460px);
+  min-height: calc(100vh - 450px);
+  max-height: calc(100vh - 450px);
 
   .mat-mdc-tab-body-content {
     overflow-y: auto;

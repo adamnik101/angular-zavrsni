@@ -1,5 +1,6 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, WritableSignal } from '@angular/core';
 import { ITrack } from '../../../interfaces/tracks/i-track';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +10,14 @@ export class QueueService {
   constructor() { }
 
   public _queue = signal<ITrack[]>([]);
+  public showQueue: WritableSignal<boolean> = signal(false);
   public _queueIndex = signal<number | null>(null);
   private _from = signal<any>({id: null});
+
+  public toggleQueue(): void {
+    let val = this.showQueue();
+    this.showQueue.set(!val);
+  }
 
   public setQueue(tracks: ITrack[]): void {
     this._queue.set(tracks);

@@ -7,22 +7,22 @@ export class DominantColorService {
 
   constructor() { }
 
-  getDominantColorFromImage(image: any, canvas: any): string {
+  getDominantColorFromImage(image: any, canvas: any, opacity: number = .5): string {
 
     let ctx = canvas.getContext('2d');
   
-    return this.getDominantColor(ctx,image);
+    return this.getDominantColor(ctx,image, opacity);
        
   }
 
-  private getDominantColor(ctx: any, imageObject: any): string {
+  private getDominantColor(ctx: any, imageObject: any, opacity: number): string {
     //draw the image to one pixel and let the browser find the dominant color
     ctx.drawImage(imageObject, 0, 0, 1, 1);
 
     //get pixel color
     const i = ctx.getImageData(0, 0, 1, 1).data;
 
-    return `rgba(${i[0]},${i[1]},${i[2]}, .5)`;
+    return `rgba(${i[0]},${i[1]},${i[2]}, ${opacity})`;
   }
  public lightOrDark = (color: any) => {
     console.log({ color });

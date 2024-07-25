@@ -1,4 +1,4 @@
-import { Component, effect, OnInit, signal } from '@angular/core';
+import { Component, effect, ElementRef, Injector, OnInit, signal, ViewChild } from '@angular/core';
 import { QueueService } from '../../services/queue/base/queue.service';
 import { ITrack } from '../../interfaces/tracks/i-track';
 import { RouterLink } from '@angular/router';
@@ -10,15 +10,18 @@ import { AudioService } from '../../services/audio/audio.service';
 import { MatTooltip } from '@angular/material/tooltip';
 import { Repeat } from '../../services/audio/enums/repeat';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { UserTrackLikesService } from '../../user/services/tracks/user-track-likes.service';
 import { LikedTracksService } from '../../user/services/liked-tracks/liked-tracks.service';
 import { AlertService } from '../../../shared/services/alert/alert.service';
 import { TracksTableService } from '../../services/tracks/table/tracks-table.service';
+import { QueueComponent } from '../queue/queue.component';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-audio-player',
   standalone: true,
-  imports: [RouterLink, MatIcon, MatIconButton, MatSlider, MatSliderThumb, FormatDurationFromSecondsPipe, MatTooltip, MatIconButton, MatProgressSpinner],
+  imports: [RouterLink, MatIcon, MatIconButton, MatSlider, MatSliderThumb,
+    FormatDurationFromSecondsPipe, MatTooltip, MatIconButton,
+    MatProgressSpinner, QueueComponent],
   templateUrl: './audio-player.component.html',
   styleUrl: './audio-player.component.scss'
 })
@@ -29,7 +32,7 @@ export class AudioPlayerComponent implements OnInit{
     public audioService: AudioService,
     private likedTracksService: LikedTracksService,
     private alertService: AlertService,
-    private tracksTableService: TracksTableService
+    private tracksTableService: TracksTableService,
   ) {
     effect(() => {
       const currentTrack = this.queueService.getCurrentTrack();
@@ -141,4 +144,10 @@ export class AudioPlayerComponent implements OnInit{
       });
     }
   }
+
+  toggleQueue(event: any): void {
+    this.queueService.toggleQueue();
+  }
+
+  
 }

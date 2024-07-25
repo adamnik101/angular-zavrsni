@@ -1,1 +1,56 @@
-<p>queue works!</p>
+<div class="queue-wrapper" #queueWrapper [@slideInOut]="queueService.showQueue() ? 'in' : 'out'">
+    <div class="background-gradient-queue" #back></div>
+    
+    @if(queueService.showQueue()) {
+        <div class="content">
+            <div class="header">
+                <h1>Queue</h1>
+        
+                <button mat-mini-fab (click)="close()" matTooltip="Close queue">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        
+            <div class="main-content">
+                @if(track) {
+                    <div class="left">
+                        <div class="track-info">
+                            <div class="cover">
+                                <img crossorigin="anonymous" src="{{track.cover}}" #image/>
+                            </div>
+        
+                            <div class="info">
+                                <div class="title">
+                                    <p>{{track.title}}</p>
+                                </div>
+        
+                                <div class="artists">
+                                    <div class="owner">
+                                        <a routerLink="/artists/{{track.owner_id}}" (click)="close()">{{track.owner.name}}</a>
+                                    </div>
+                    
+                                    <div class="features">
+                                        @for (feature of track.features; track $index; let index = $index) {
+                                            @if (index !== 0) {,&nbsp;} @else {&nbsp;x&nbsp;} <a routerLink="/artists/{{feature.id}}" (click)="close()">{{feature.name}}</a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+        
+                <div class="right">
+                    <div class="tracks">
+                        @for(track of queueService._queue(); track $index) {
+                            <app-queue-track-item [track]="track" (closeQueue)="close()"/>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<canvas #myCanvas hidden></canvas>
+<div #preview></div>

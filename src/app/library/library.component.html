@@ -1,13 +1,17 @@
-<h1>My Playlists</h1>
 
 <div class="playlist-wrapper">
-    @for (playlist of userPlaylistsService.playlists(); track $index) {
-        @defer (on viewport) {
-            <app-playlist-card [playlist]="playlist"></app-playlist-card>
-        } @placeholder {
-            <app-placeholder-card></app-placeholder-card>
-        } @loading {
-            <app-placeholder-card></app-placeholder-card>
+    <app-section-header [header]="'My Playlists'"/>
+
+    <div class="card-wrapper">
+        @for (playlist of userPlaylistsService.playlists(); track $index) {
+            @defer (on viewport) {
+                <app-playlist-card [playlist]="playlist"></app-playlist-card>
+            } @placeholder {
+                <app-placeholder-card></app-placeholder-card>
+            } @loading {
+                <app-placeholder-card></app-placeholder-card>
+            }
         }
-    }
+    </div>
+    
 </div>

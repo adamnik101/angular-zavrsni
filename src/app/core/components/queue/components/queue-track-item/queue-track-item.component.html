@@ -1,0 +1,25 @@
+<div class="queue-track-item">
+    <div class="content">
+        <div class="cover">
+            <img src="{{track.cover}}"/>
+        </div>
+
+        <div class="track-info">
+            <div class="title">
+                <p>{{track.title}}</p>
+            </div>
+
+            <div class="artists">
+                <div class="owner">
+                    <a routerLink="/artists/{{track.owner.id}}" (click)="close()">{{track.owner.name}}</a>
+                </div>
+
+                <div class="features">
+                    @for (feature of track.features; track $index; let index = $index) {
+                        @if (index !== 0) {,&nbsp;} @else {&nbsp;x&nbsp;} <a routerLink="/artists/{{feature.id}}" (click)="close()">{{feature.name}}</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
