@@ -1,0 +1,108 @@
+@import '../../../shared/global-styles/colors';
+
+
+
+.queue-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 100px;
+    background: $background-color;
+    z-index: -100;
+    box-shadow: inset 0px -30px 15px -20px rgba(0,0,0,1);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    transition: .2s ease-in-out;
+
+    .background-gradient-queue {
+        position: absolute;
+        top: -20px;
+        right: -20px;
+        left: -20px;
+        /* height: 250px; */
+        background: linear-gradient(
+          to top,
+          #070707 0%,
+          rgba(0, 0, 0, 0.7882352941) 40%,
+          rgba(0, 0, 0, 0.6352941176) 100%);
+        z-index: -150;
+        bottom: 0;
+    }
+
+    .content {
+        width: 70vw;
+        .header{ 
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            height: 50px;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: row;
+            gap: 50px;
+            align-items: center;
+
+            .left {
+                .track-info {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 20px;
+                    .cover {
+                        width: 400px;
+                        img {
+                            width: 100%;
+                        }
+                    }
+
+                    .info {
+                        width: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 10px;
+                        .title {
+
+                        }
+
+                        .artists {
+                            display: flex;
+                            flex-direction: row;
+                            align-items: center;
+                            color: $text-color-light;
+                            a {
+                                color: $text-color-light;
+                            }
+                        }
+                    }
+                }
+            }
+            
+
+            .right {
+
+                .tracks {
+                    width: 500px;
+                    height: 500px;
+                    overflow-y: scroll;
+                }
+            }
+        }
+    }
+}
+
+.queue-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 100px;
+    background: linear-gradient(to bottom, #898989, #000);
+    z-index: -200;
+}

@@ -1,0 +1,46 @@
+.queue-track-item {
+    height: 50px;
+    padding: 7.5px;
+    .content {
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 20px;
+        .cover {
+            height: 100%;
+            img {
+                height: 100%;
+                width: auto;
+            }
+        }
+
+        .track-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            .title {
+                font-size: 15px;
+            }
+
+            .artists {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                .owner {
+                    font-size: 13px;
+                }
+
+                .features {
+                    font-size: 13px;
+
+                }
+            }
+        }
+    }
+
+    &:hover {
+        background-color: #000;
+    }
+}
