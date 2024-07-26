@@ -1,1 +1,68 @@
-<h1>Profile</h1>
+
+    <div class="profile-wrapper">
+        <div class="header">
+            <div class="cover">
+                <img crossorigin="anonymous" src="{{userService.user()?.cover}}" alt="user" #image/>
+            </div>
+            <div class="info-main">
+                <div class="info">
+                    <p>Profile</p>
+                </div>
+                <div class="title">
+                    <h2>{{userService.user()?.username}}</h2>
+                </div>
+
+                <div class="desc">
+                    <p>
+                        {{userPlaylistsService.playlists().length}} playlists
+                    </p>
+                    <app-small-round-divider/>
+                    <p>
+                        {{userAlbumLikesService.albums().length}} liked albums
+                    </p>
+                    <app-small-round-divider/>
+                    <p>
+                        {{userArtistFollowingsService.artists().length}} followings
+                    </p>
+                </div>
+            </div>
+    
+            <div class="background-gradient" #back></div>
+            <div class="background"></div>
+        </div>
+    
+        <div class="content">
+            <div class="profile-playlists-wrapper">
+                <app-section-header [header]="'My playlists'"/>
+    
+                <div class="card-wrapper">
+                    @for(playlist of userPlaylistsService.playlists() | slice:0:5; track $index) {
+                        <app-playlist-card [playlist]="playlist"/>
+                    }
+                </div>
+            </div>
+    
+            <div class="profile-artists-wrapper">
+                <app-section-header [header]="'Following'"/>
+    
+                <div class="card-wrapper">
+                    @for(artist of userArtistFollowingsService.artists() | slice:0:5; track $index) {
+                        <app-artist-card [artist]="artist"/>
+                    }
+                </div>
+            </div>
+
+            <div class="profile-albums-wrapper">
+                <app-section-header [header]="'Liked albums'"/>
+    
+                <div class="card-wrapper">
+                    @for(album of userAlbumLikesService.albums() | slice:0:5; track $index) {
+                        <app-album-card [album]="album"/>
+                    }
+                </div>
+            </div>
+    
+        </div>
+    </div>
+
+<canvas #canvas hidden></canvas>

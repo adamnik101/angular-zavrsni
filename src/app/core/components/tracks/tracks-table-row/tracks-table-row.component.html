@@ -96,6 +96,8 @@
                         <mat-icon>library_add</mat-icon>
                         <span>Add to queue</span>
                     </button>
+
+                    <mat-divider/>
                     <button mat-menu-item [matMenuTriggerFor]="owner">
                       <mat-icon>person</mat-icon>
                       <span>Owner</span>
@@ -119,6 +121,7 @@
                             <input  type="text" #search placeholder="Search playlists" (blur)="search.focus()" (input)="$event.preventDefault(); searchPlaylists(search.value)"/>
                             <!-- <app-common-input [type]="commonInputType.text" #search [onBlurElement]="true" [formControlToFill]="searchControl.get('search')" (OnInput)="searchPlaylists($event)" (keyup.Space)="$event.stopPropagation(); $event.preventDefault()"></app-common-input> -->
                         </button>
+                        <mat-divider/>
                         <button mat-menu-item (click)="openCreateNewPlaylistDialog()">
                             <mat-icon>add</mat-icon>
                             <span>Create new playlist</span>

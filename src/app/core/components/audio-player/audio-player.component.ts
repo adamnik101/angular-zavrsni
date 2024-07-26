@@ -39,7 +39,6 @@ export class AudioPlayerComponent implements OnInit{
       if(currentTrack) {
         console.log("play")
         this.setCurrentTrack(currentTrack);
-        this.audioService.play();
       }
     })
   }
@@ -65,10 +64,12 @@ export class AudioPlayerComponent implements OnInit{
 
   skipPrevious(): void {
     this.queueService.setQueuePreviousIndex();
+    this.audioService.play();
   }
 
   skipNext(): void {
     this.queueService.setQueueNextIndex();
+    this.audioService.play();
   }
 
   onDragStart(event: any): void {
@@ -148,6 +149,5 @@ export class AudioPlayerComponent implements OnInit{
   toggleQueue(event: any): void {
     this.queueService.toggleQueue();
   }
-
   
 }
