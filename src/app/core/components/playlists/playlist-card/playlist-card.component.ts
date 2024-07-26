@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { IPlaylist } from '../../../interfaces/playlist/i-playlist';
 import { DecimalPipe, NgOptimizedImage } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -13,7 +13,7 @@ import { DominantColorService } from '../../../../shared/services/dominant-color
   templateUrl: './playlist-card.component.html',
   styleUrl: './playlist-card.component.scss'
 })
-export class PlaylistCardComponent {
+export class PlaylistCardComponent implements AfterViewInit {
 
   constructor(
     public apiService: PlaylistsService,

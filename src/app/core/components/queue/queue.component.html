@@ -1,7 +1,7 @@
 <div class="queue-wrapper" #queueWrapper [@slideInOut]="queueService.showQueue() ? 'in' : 'out'">
     <div class="background-gradient-queue" #back></div>
     
-    @if(queueService.showQueue()) {
+    @if(track) {
         <div class="content">
             <div class="header">
                 <h1>Queue</h1>
@@ -41,9 +41,12 @@
                 }
         
                 <div class="right">
-                    <div class="tracks">
-                        @for(track of queueService._queue(); track $index) {
-                            <app-queue-track-item [track]="track" (closeQueue)="close()"/>
+                    <div class="tracks" #tracks cdkDropList cdkDragLockAxis="y" (cdkDropListDropped)="drop($event)">
+                        @for(track of queueService._queue(); track $index; let index = $index) {
+                            <div class="example-box" cdkDrag>
+                                <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+                                <app-queue-track-item [track]="track" [index]="index" (closeQueue)="close()" />
+                            </div>
                         }
                     </div>
                 </div>

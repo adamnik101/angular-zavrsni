@@ -25,11 +25,12 @@ import { CommonInputComponent } from '../../../../shared/form-fields/common-inpu
 import { FormBuilder } from '@angular/forms';
 import { PlayingFromService } from '../../../services/playing-from/playing-from.service';
 import { MatTooltip } from '@angular/material/tooltip';
+import { MatDivider } from '@angular/material/divider';
 
 @Component({
   selector: 'app-tracks-table-row',
   standalone: true,
-  imports: [MatIcon, MatIconButton, RouterLink, FormatDurationFromSecondsPipe, MatMenuModule, NgClass, CommonInputComponent, MatTooltip],
+  imports: [MatIcon, MatIconButton, RouterLink, FormatDurationFromSecondsPipe, MatMenuModule, NgClass, CommonInputComponent, MatTooltip, MatDivider],
   templateUrl: './tracks-table-row.component.html',
   styleUrl: './tracks-table-row.component.scss'
 })

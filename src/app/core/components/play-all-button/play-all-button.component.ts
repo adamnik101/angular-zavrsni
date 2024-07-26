@@ -55,7 +55,7 @@ export class PlayAllButtonComponent {
           this.queueService.setQueue(tracks);
           this.queueService._queueIndex.set(0);
           this.playingFromService.playingFrom.set(this.id);
-          
+          this.audioService.play();
           if(this.playingFromService.playingFrom() && this.playingFromService.playingFrom() === this.id) {
             this.togglePlayButton.nativeElement.classList.add('show-play-all');
           }

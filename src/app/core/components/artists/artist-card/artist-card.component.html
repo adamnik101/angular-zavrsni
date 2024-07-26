@@ -1,7 +1,7 @@
 <div class="card-whole">
-    <a class="card" routerLink="/artists/{{artist.id}}">
-        <div class="cover">
-            <img src="{{artist.cover}}"/>
+    <a class="card" routerLink="/artists/{{artist.id}}" #card (mouseenter)="applyBackground()" (mouseleave)="removeBackground()">
+        <div class="cover artist-cover">
+            <img crossorigin="anonymous" src="{{artist.cover}}" #image/>
         </div>
         <div class="content">
             <div class="title">
@@ -25,3 +25,6 @@
         </app-play-all-button>
     }    
 </div>
+
+<canvas #myCanvas hidden></canvas>
+<div #preview></div>

@@ -71,7 +71,7 @@ export class QueueService {
     this._queueIndex.set(0);
   }
 
-  public getCurrentTrack(): ITrack | null {
+  public getCurrentTrack(effectOnly: boolean = false): ITrack | null {
     if(this._queueIndex) {
       return this._queue()[this._queueIndex()!]; 
     }

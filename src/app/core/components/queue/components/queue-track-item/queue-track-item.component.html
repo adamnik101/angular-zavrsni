@@ -1,12 +1,35 @@
-<div class="queue-track-item">
+<div class="queue-track-item" [ngClass]="{'previous-queue-item' : (index < queueService._queueIndex()!)}">
     <div class="content">
+        <div class="index">
+            @if(queueService._queueIndex() === index) {
+                @if(audioService.isPlaying()) {
+                    <button mat-mini-fab (click)="pause()" matTooltip="Pause" matTooltipPosition="above">
+                        <mat-icon>pause</mat-icon>
+                    </button>
+                } @else {
+                    <button mat-mini-fab (click)="continue()" matTooltip="Continue" matTooltipPosition="above">
+                        <mat-icon>play_arrow</mat-icon>
+                    </button>
+                }
+            } @else {
+                <div class="number">
+                    {{index + 1}}
+                </div>
+
+                <div class="play">
+                    <button mat-mini-fab (click)="play(index)" matTooltip="Play" matTooltipPosition="above">
+                        <mat-icon>play_arrow</mat-icon>
+                    </button>
+                </div>
+            }
+        </div>
         <div class="cover">
             <img src="{{track.cover}}"/>
         </div>
 
         <div class="track-info">
             <div class="title">
-                <p>{{track.title}}</p>
+                <p [ngClass]="{'current-track' : queueService._queueIndex() === index}">{{track.title}}</p>
             </div>
 
             <div class="artists">

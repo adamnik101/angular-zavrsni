@@ -66,7 +66,7 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy{
     this.image.nativeElement.onload = () => {
       const color = this.dominantColorService.getDominantColorFromImage(this.image.nativeElement, this.canvas.nativeElement);
 
-      this.back.nativeElement.style.background = `linear-gradient(45deg, #070707 0%, #07070795 20%, ${color} 100%)`
+      this.back.nativeElement.style.background = `linear-gradient(to top, #070707 0%, #07070795 20%, ${color} 100%)`
     }
   }
 

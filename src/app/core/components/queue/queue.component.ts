@@ -1,4 +1,4 @@
-import { Component, effect, ElementRef, Injector, Input, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, effect, ElementRef, Injector, OnInit, ViewChild } from '@angular/core';
 import { QueueService } from '../../services/queue/base/queue.service';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { trigger, state, style, transition, animate } from '@angular/animations';
@@ -9,11 +9,13 @@ import { DominantColorService } from '../../../shared/services/dominant-color/do
 import { ITrack } from '../../interfaces/tracks/i-track';
 import { QueueTrackItemComponent } from './components/queue-track-item/queue-track-item.component';
 import { RouterLink } from '@angular/router';
+import { CdkDrag, CdkDragDrop, CdkDragPlaceholder, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
+import { AudioService } from '../../services/audio/audio.service';
 
 @Component({
   selector: 'app-queue',
   standalone: true,
-  imports: [MatMiniFabButton, MatIcon, MatTooltip, QueueTrackItemComponent, RouterLink],
+  imports: [MatMiniFabButton, MatIcon, MatTooltip, QueueTrackItemComponent, RouterLink, CdkDrag, CdkDropList, CdkDragPlaceholder],
   templateUrl: './queue.component.html',
   styleUrl: './queue.component.scss',
   animations: [
@@ -30,7 +32,8 @@ export class QueueComponent implements OnInit {
   constructor(
     public queueService: QueueService,
     private injector: Injector,
-    private dominantColorService: DominantColorService
+    private dominantColorService: DominantColorService,
+    private audioService: AudioService
   ) {
     effect(() => {
       const currentTrack = this.queueService.getCurrentTrack();
@@ -42,10 +45,11 @@ export class QueueComponent implements OnInit {
             this.color = this.dominantColorService.getDominantColorFromImage(this.image.nativeElement, this.myCanvas.nativeElement, 1);
             
             this.queueWrapper.nativeElement.style.backgroundColor = this.color;
+
           }
         }
       }
-    })
+    });
   }
 
   public track: ITrack | null = null;
@@ -55,9 +59,22 @@ export class QueueComponent implements OnInit {
   @ViewChild('queueWrapper') public queueWrapper!: ElementRef;
   @ViewChild('myCanvas', {static: false}) myCanvas!: ElementRef;
   @ViewChild('image') image!: ElementRef;
+  @ViewChild('tracks') tracks!: ElementRef;
 
   ngOnInit(): void {
     this.trackQueue();
+
+    this.trackAudioPlay();
+  }
+
+  trackAudioPlay(): void {
+    this.audioService.audio.onplay = () => {
+      this.tracks.nativeElement.children[this.queueService._queueIndex()!].scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'center',
+      })
+    }
   }
 
   trackQueue(): void {
@@ -70,6 +87,20 @@ export class QueueComponent implements OnInit {
         console.log(data);
       }
     })
+  }
+
+  drop(event: CdkDragDrop<string[]>): void {
+    let index = this.queueService._queueIndex()!;
+
+    if (event.previousIndex === index) {
+      this.queueService.setQueueIndex(event.currentIndex);
+    }
+    else if (event.previousIndex <= index && event.currentIndex >= index) {
+      this.queueService.setQueueIndex(index - 1);
+    } else if (event.previousIndex >= index && event.currentIndex <= index) {
+      this.queueService.setQueueIndex(index + 1);
+    }
+    moveItemInArray(this.queueService._queue(), event.previousIndex, event.currentIndex);
   }
 
   close(): void {
