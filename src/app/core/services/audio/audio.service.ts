@@ -3,6 +3,7 @@ import { QueueService } from '../queue/base/queue.service';
 import { Repeat } from './enums/repeat';
 import { IRepeat } from '../../interfaces/repeat/i-repeat';
 import { ITrack } from '../../interfaces/tracks/i-track';
+import { TracksService } from '../tracks/base/tracks.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ import { ITrack } from '../../interfaces/tracks/i-track';
 export class AudioService {
 
   constructor(
-    private queueService: QueueService
+    private queueService: QueueService,
+    private tracksService: TracksService
   ) { }
 
   public audio: HTMLAudioElement = new Audio();
@@ -31,6 +33,11 @@ export class AudioService {
       setTimeout(() => {
         this.trackIsLoading.set(true);
         this.audio.play().then(() => {
+          this.tracksService.get(track.id).subscribe({
+            next: (data) => {
+              console.log(data)
+            }
+          })
           this.trackIsLoading.set(false);
           this.isPlaying.set(true);
           this.onTrackTimeUpdate();

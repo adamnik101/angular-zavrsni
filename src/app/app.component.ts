@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
 import { PageSpinnerComponent } from './shared/components/page-spinner/page-spinner.component';
 import { SpinnerFunctions } from './core/static/spinner-functions';
@@ -20,6 +20,7 @@ export class AppComponent implements OnInit{
   constructor(
     private authService: AuthService,
     private userService: UserService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -39,10 +40,11 @@ export class AppComponent implements OnInit{
         }
       })).subscribe({
         next: (data) => {
-          console.log(data)
           this.userService.setUserData(data.data)
           SpinnerFunctions.initialRequest = false;
-          SpinnerFunctions.hideSpinner();
+          if(this.router.url !== '/home') {
+            SpinnerFunctions.hideSpinner();
+          }
         }
       });
     } else {
