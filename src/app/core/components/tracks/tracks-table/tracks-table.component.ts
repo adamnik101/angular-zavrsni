@@ -3,11 +3,12 @@ import { TracksTableService } from '../../../services/tracks/table/tracks-table.
 import { TracksTableRowComponent } from '../tracks-table-row/tracks-table-row.component';
 import { TracksTablePlaceholderRowComponent } from '../tracks-table-placeholder-row/tracks-table-placeholder-row.component';
 import { QueueService } from '../../../services/queue/base/queue.service';
+import { NoResultsComponent } from '../../../../shared/components/no-results/no-results.component';
 
 @Component({
   selector: 'app-tracks-table',
   standalone: true,
-  imports: [TracksTableRowComponent, TracksTablePlaceholderRowComponent],
+  imports: [TracksTableRowComponent, TracksTablePlaceholderRowComponent, NoResultsComponent],
   templateUrl: './tracks-table.component.html',
   styleUrl: './tracks-table.component.scss'
 })

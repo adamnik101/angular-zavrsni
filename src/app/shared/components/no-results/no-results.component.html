@@ -1,6 +1,6 @@
-<div class="no-results-wrapper">
+<div class="no-results-wrapper" [ngClass]="{'small': small}">
     <div class="content">
-        <mat-icon>manage_search</mat-icon>
-        <p>No results found</p>
+        <mat-icon>{{icon}}</mat-icon>
+        <p>{{message}}</p>
     </div>
 </div>

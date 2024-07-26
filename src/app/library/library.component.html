@@ -11,6 +11,8 @@
             } @loading {
                 <app-placeholder-card></app-placeholder-card>
             }
+        } @empty {
+            <app-no-results class="full-width" [icon]="'sentiment_dissatisfied'" [message]="'You don\'t have any playlists...'"/>
         }
     </div>
     

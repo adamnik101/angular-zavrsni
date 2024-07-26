@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { TracksTableComponent } from '../core/components/tracks/tracks-table/tracks-table.component';
 import { UserPlaylistsService } from '../core/user/services/playlists/user-playlists.service';
 import { UserArtistFollowingsService } from '../core/user/services/artists/user-artist-followings.service';
@@ -14,17 +14,22 @@ import { SmallRoundDividerComponent } from '../shared/components/small-round-div
 import { RecentlyPlayedService } from '../core/user/services/recently-played/recently-played.service';
 import { TracksTableService } from '../core/services/tracks/table/tracks-table.service';
 import { ITrack } from '../core/interfaces/tracks/i-track';
+import { SpinnerFunctions } from '../core/static/spinner-functions';
+import { NoResultsComponent } from '../shared/components/no-results/no-results.component';
+import { MatMiniFabButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
   imports: [TracksTableComponent, SectionHeaderComponent, PlaylistCardComponent, AlbumCardComponent, ArtistCardComponent, SlicePipe,
-    SmallRoundDividerComponent, TracksTableComponent
+    SmallRoundDividerComponent, TracksTableComponent, NoResultsComponent, MatMiniFabButton, MatIcon, MatTooltip
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
-export class ProfileComponent implements OnInit, AfterViewInit{
+export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy{
 
   constructor(
     public userService: UserService,
@@ -36,6 +41,8 @@ export class ProfileComponent implements OnInit, AfterViewInit{
     private tracksTableService: TracksTableService
   ) {}
 
+  public recent: boolean = false;
+
   @ViewChild('back') private back: ElementRef = {} as ElementRef;
   @ViewChild('image') private image: ElementRef = {} as ElementRef;
   @ViewChild('canvas') private canvas: ElementRef = {} as ElementRef;
@@ -45,21 +52,34 @@ export class ProfileComponent implements OnInit, AfterViewInit{
   }
 
   getRecentlyPlayedTracks(): void {
+    SpinnerFunctions.showSpinner();
     this.recentlyPlayedService.getAll<ITrack[]>().subscribe({
       next: (response) => {
         if(response) {
-          this.tracksTableService.setTracks(response.data);
+          if(response.data.length) {
+            this.tracksTableService.setTracks(response.data);
+            this.recent = true;
+          }
         }
+
+        SpinnerFunctions.hideSpinner();
       }
     })
   }
 
   ngAfterViewInit(): void {
+    if(this.userService.user()?.cover) {
       this.image.nativeElement.onload = () => {
         const color = this.dominantColorService.getDominantColorFromImage(this.image.nativeElement, this.canvas.nativeElement);
         
-        console.log(color)
         this.back.nativeElement.style.background = `linear-gradient(to top, #070707 0%, #07070795 20%, ${color} 100%)`
       }
+    } else {
+      this.back.nativeElement.style.background = `linear-gradient(to top, #070707 0%, #07070795 20%, #212121 100%)`
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.tracksTableService.resetTracks();
   }
 }

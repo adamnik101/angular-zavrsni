@@ -7,10 +7,14 @@
     gap: 20px;
     background-color: #101010;
     color: #e4e4e4;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
     .hex-color {
         width: 10px;
         height: inherit;
         transition: .1s ease-in-out;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
     }
     .content {
         height: inherit;

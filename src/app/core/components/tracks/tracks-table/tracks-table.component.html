@@ -10,6 +10,8 @@
         } @placeholder {
             <app-tracks-table-placeholder-row></app-tracks-table-placeholder-row>
         } 
+    } @empty {
+        <app-no-results [message]="'No tracks here...'"/>
     }
 
 </div>
