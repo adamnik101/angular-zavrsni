@@ -1,13 +1,19 @@
-<mat-form-field appearance="outline">
-    <mat-label>Favorite food</mat-label>
-    <mat-select>
-      @for (food of foods; track food) {
-        <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
-@for (playlist of playlistsService.playlists(); track $index) {
-    <p>
-    {{playlist.title}}
-    </p>
-}
+<div class="home-wrapper">
+  <div class="new-releases">
+    <div class="tracks">
+      <app-section-header [header]="'New tracks'"/>
+
+      <app-tracks-table />
+    </div>
+
+    <div class="albums">
+      <app-section-header [header]="'New albums'"/>
+
+      <div class="card-wrapper">
+        @for(album of newReleases.albums | slice:0:5; track $index) {
+          <app-album-card [album]="album"/>
+        }
+      </div>
+    </div>
+  </div>
+</div>

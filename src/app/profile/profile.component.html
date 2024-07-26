@@ -32,6 +32,11 @@
         </div>
     
         <div class="content">
+            <app-section-header [header]="'Recently played'"/>
+            <div class="recently-played-tracks-wrapper">
+                <app-tracks-table />
+            </div>
+
             <div class="profile-playlists-wrapper">
                 <app-section-header [header]="'My playlists'"/>
     

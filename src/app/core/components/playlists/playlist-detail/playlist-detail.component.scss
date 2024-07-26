@@ -1,0 +1,51 @@
+@import '../../../../shared/global-styles/colors';
+
+.playlist-wrapper {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    .header {
+        width: inherit;
+        height: 230px;
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        justify-content: flex-start;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+        .cover {
+            z-index: 1;
+            height: inherit;
+            img {
+                width: 230px;
+                height: auto;
+            }
+        }
+        .info-main {
+            z-index: 1;
+            .title {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                h2 {
+                    font-size: 40px;
+                    font-weight: bold;
+                }
+                .desc {
+                    font-size: 14px;
+                    color: $text-color-light;
+                }
+
+                .info {
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}
+
