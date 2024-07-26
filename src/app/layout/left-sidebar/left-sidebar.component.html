@@ -33,22 +33,22 @@
         <mat-divider class="divider"></mat-divider>
         <div class="mat-tab-group-wrapper">
             <mat-tab-group class="custom-user-tab-group-sidebar" dynamicHeight="false" [@.disabled]="true">
-                <mat-tab label="Playlists">
-                    <ng-template matTabContent>
+                <mat-tab label="Playlists" [disabled]="userPlaylistsService.playlists().length === 0">
+                    <ng-template matTabContent >
                         @for(playlist of userPlaylistsService.playlists(); track $index) {
                             <app-playlist-small-row-item [playlist]="playlist"></app-playlist-small-row-item>
                         }
                     </ng-template>
                 </mat-tab>
-                <mat-tab label="Albums">
-                    <ng-template matTabContent>
+                <mat-tab label="Albums" [disabled]="userAlbumLikesService.albums().length === 0">
+                    <ng-template matTabContent >
                         @for(album of userAlbumLikesService.albums(); track $index) {
                             <app-album-small-row-item [album]="album"></app-album-small-row-item>
                         }
                     </ng-template>
                 </mat-tab>
-                <mat-tab label="Followings">
-                    <ng-template matTabContent>
+                <mat-tab label="Followings" [disabled]="userArtistsFollowingsService.artists().length === 0">
+                    <ng-template matTabContent> 
                         @for(artist of userArtistsFollowingsService.artists(); track $index) {
                             <app-artist-small-row-item [artist]="artist"></app-artist-small-row-item>
                         }

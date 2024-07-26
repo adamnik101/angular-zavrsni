@@ -1,24 +1,28 @@
 .no-results-wrapper {
-    min-height: 100%;
+    height: 350px;
     width: 100%;
     display: flex;
-    position: relative;
-    flex-direction: column;
-    align-items: center;
-    justify-items: center;
+    flex-direction: row;
     justify-content: center;
     .content {
-        min-height: 100%;
         display: flex;
-        align-items: center;
-        justify-items: center;
         flex-direction: column;
+        align-items: center;
+        justify-content: center;
         gap: 20px;
-
         .mat-icon {
             width: 50px;
             height: 50px;
             font-size: 50px;
         }
+
+        p {
+            font-size: 16px;
+        }
     }
+}
+
+.small {
+    height: auto;
+    width: auto;
 }

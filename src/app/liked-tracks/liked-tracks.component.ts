@@ -3,13 +3,13 @@ import { TracksTableService } from '../core/services/tracks/table/tracks-table.s
 import { TracksTableComponent } from '../core/components/tracks/tracks-table/tracks-table.component';
 import { LikedTracksService } from '../core/user/services/liked-tracks/liked-tracks.service';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { skip, take } from 'rxjs';
 import { SpinnerFunctions } from '../core/static/spinner-functions';
+import { SectionHeaderComponent } from '../core/components/section-header/section-header.component';
 
 @Component({
   selector: 'app-liked-tracks',
   standalone: true,
-  imports: [TracksTableComponent],
+  imports: [TracksTableComponent, SectionHeaderComponent],
   templateUrl: './liked-tracks.component.html',
   styleUrl: './liked-tracks.component.scss'
 })
@@ -29,6 +29,7 @@ export class LikedTracksComponent implements OnInit, OnDestroy {
     tracks$.subscribe({
       next: (data) => {
         this.tracksTableService.setTracks(data);
+        SpinnerFunctions.hideSpinner();
       }
     });
   }

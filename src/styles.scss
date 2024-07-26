@@ -33,6 +33,7 @@ $ng-zavrsni-theme: mat.define-theme((
   @include mat.all-component-themes($ng-zavrsni-theme);
 
   --header: #010c01;
+  --genre-left: #070707;
 }
 
 // Comment out the line below if you want to use the pre-defined typography utility classes.
@@ -517,4 +518,16 @@ img {
 }
 .my-custom-tooltip .mdc-tooltip__surface {
   max-width: unset !important;
+}
+
+.no-results-page {
+  width: 100%;
+  height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.full-width {
+  width: 100%;
 }

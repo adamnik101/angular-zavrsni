@@ -16,6 +16,7 @@ import { tap } from 'rxjs';
 })
 export class AppComponent implements OnInit{
   title = 'ng-zavrsni';
+  private readonly noHideSpinnerPages = ['library'];
 
   constructor(
     private authService: AuthService,
@@ -42,7 +43,9 @@ export class AppComponent implements OnInit{
         next: (data) => {
           this.userService.setUserData(data.data)
           SpinnerFunctions.initialRequest = false;
-          if(this.router.url !== '/home') {
+          const page = this.router.url.split('/')[1];
+          console.log(page)
+          if(this.noHideSpinnerPages.includes(page)) {
             SpinnerFunctions.hideSpinner();
           }
         }

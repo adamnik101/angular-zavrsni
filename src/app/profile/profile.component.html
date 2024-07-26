@@ -2,7 +2,19 @@
     <div class="profile-wrapper">
         <div class="header">
             <div class="cover">
-                <img crossorigin="anonymous" src="{{userService.user()?.cover}}" alt="user" #image/>
+                @if (userService.user()?.cover) {
+                    <img crossorigin="anonymous" src="{{userService.user()?.cover}}" alt="user" #image/>
+                } @else {
+                    <div class="default-image">
+                        <mat-icon>person</mat-icon>
+                    </div>
+                }
+
+                <div class="button-edit">
+                    <button mat-mini-fab matTooltip="Edit profile image">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                </div>
             </div>
             <div class="info-main">
                 <div class="info">
@@ -32,41 +44,49 @@
         </div>
     
         <div class="content">
-            <app-section-header [header]="'Recently played'"/>
-            <div class="recently-played-tracks-wrapper">
-                <app-tracks-table />
-            </div>
 
-            <div class="profile-playlists-wrapper">
-                <app-section-header [header]="'My playlists'"/>
-    
-                <div class="card-wrapper">
-                    @for(playlist of userPlaylistsService.playlists() | slice:0:5; track $index) {
-                        <app-playlist-card [playlist]="playlist"/>
-                    }
+            @if (recent) {
+                <app-section-header [header]="'Recently played'"/>
+                <div class="recently-played-tracks-wrapper">
+                    <app-tracks-table />
                 </div>
-            </div>
-    
-            <div class="profile-artists-wrapper">
-                <app-section-header [header]="'Following'"/>
-    
-                <div class="card-wrapper">
-                    @for(artist of userArtistFollowingsService.artists() | slice:0:5; track $index) {
-                        <app-artist-card [artist]="artist"/>
-                    }
-                </div>
-            </div>
+            }
 
-            <div class="profile-albums-wrapper">
-                <app-section-header [header]="'Liked albums'"/>
-    
-                <div class="card-wrapper">
-                    @for(album of userAlbumLikesService.albums() | slice:0:5; track $index) {
-                        <app-album-card [album]="album"/>
-                    }
+            @if(userPlaylistsService.playlists().length) {
+                <div class="profile-playlists-wrapper">
+                    <app-section-header [header]="'My playlists'"/>
+        
+                    <div class="card-wrapper">
+                        @for(playlist of userPlaylistsService.playlists() | slice:0:5; track $index) {
+                            <app-playlist-card [playlist]="playlist"/>
+                        } 
+                    </div>
+                </div>    
+            }
+
+            @if (userArtistFollowingsService.artists().length) {
+                <div class="profile-artists-wrapper">
+                    <app-section-header [header]="'Following'"/>
+        
+                    <div class="card-wrapper">
+                        @for(artist of userArtistFollowingsService.artists() | slice:0:5; track $index) {
+                            <app-artist-card [artist]="artist"/>
+                        } 
+                    </div>
                 </div>
-            </div>
-    
+            }
+
+            @if (userAlbumLikesService.albums().length) {
+                <div class="profile-albums-wrapper">
+                    <app-section-header [header]="'Liked albums'"/>
+        
+                    <div class="card-wrapper">
+                        @for(album of userAlbumLikesService.albums() | slice:0:5; track $index) {
+                            <app-album-card [album]="album"/>
+                        }
+                    </div>
+                </div>    
+            }
         </div>
     </div>
 

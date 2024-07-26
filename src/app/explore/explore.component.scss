@@ -1,11 +1,30 @@
 .genre-wrapper {
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     gap:20px;
     flex-wrap: wrap;
     min-height: 100%;
+    z-index: 59999;
+    
 }
 .card {
     height: 50px;
+}
+
+.genre-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 10px;
+    bottom: 0;
+    background: 
+    radial-gradient(
+        transparent,
+      #070707
+      
+    );
+    background-color: #070707;
+    transition: background-color .5s ease-in-out;
 }
