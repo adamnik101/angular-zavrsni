@@ -1,6 +1,5 @@
-import { Component, effect, ElementRef, Injector, OnInit, ViewChild } from '@angular/core';
+import { Component, effect, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { QueueService } from '../../services/queue/base/queue.service';
-import { toObservable } from '@angular/core/rxjs-interop';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MatMiniFabButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -31,7 +30,6 @@ export class QueueComponent implements OnInit {
 
   constructor(
     public queueService: QueueService,
-    private injector: Injector,
     private dominantColorService: DominantColorService,
     private audioService: AudioService
   ) {
@@ -40,13 +38,10 @@ export class QueueComponent implements OnInit {
       if(currentTrack) {
         this.track = currentTrack;
 
-        if(this.image) {
-          this.image.nativeElement.onload = () => {
-            this.color = this.dominantColorService.getDominantColorFromImage(this.image.nativeElement, this.myCanvas.nativeElement, 1);
-            
-            this.queueWrapper.nativeElement.style.backgroundColor = this.color;
-
-          }
+        this.image.nativeElement.onload = () => {
+          this.color = this.dominantColorService.getDominantColorFromImage(this.image.nativeElement, this.myCanvas.nativeElement, 1);
+          
+          this.queueWrapper.nativeElement.style.backgroundColor = this.color;
         }
       }
     });
@@ -62,8 +57,6 @@ export class QueueComponent implements OnInit {
   @ViewChild('tracks') tracks!: ElementRef;
 
   ngOnInit(): void {
-    this.trackQueue();
-
     this.trackAudioPlay();
   }
 
@@ -75,18 +68,6 @@ export class QueueComponent implements OnInit {
         inline: 'center',
       })
     }
-  }
-
-  trackQueue(): void {
-    const queue$ = toObservable(this.queueService.showQueue, {
-      injector: this.injector
-    });
-
-    queue$.subscribe({
-      next: (data) => {
-        console.log(data);
-      }
-    })
   }
 
   drop(event: CdkDragDrop<string[]>): void {

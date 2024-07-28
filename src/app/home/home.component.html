@@ -1,8 +1,8 @@
 <div class="home-wrapper">
 
-  <div class="genre-wrapper" #genreBackground>
+  <div class="genre-wrapper" #genreBackground (dragstart)="drag($event)" draggable>
     @for(genre of genres; track $index) {
-      <app-genre-card [genre]="genre" (mouseenter)="applyBackground(genre)"/>
+      <app-genre-card [genre]="genre" draggable (mouseenter)="applyBackground(genre)"/>
     }
   </div>
   <div class="new-releases">

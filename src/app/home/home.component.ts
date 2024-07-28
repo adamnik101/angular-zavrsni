@@ -62,6 +62,10 @@ export class HomeComponent implements OnInit, OnDestroy{
     this.genreBackgroundEl.nativeElement.style.backgroundColor = genre.hex_color + '50';
   }
 
+  drag(event: any): void {
+    console.log(event)
+  }
+
   ngOnDestroy(): void {
     this.tracksTableService.resetTracks();
   }
