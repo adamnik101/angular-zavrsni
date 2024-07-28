@@ -3,6 +3,12 @@ export class SpinnerFunctions {
     public static initialRequest: boolean | null = null;
 
     static showSpinner(): void {
+      
+      let element = document.querySelector('.cdk-overlay-container');
+      
+      if(element) {
+        element.setAttribute('class', 'cdk-overlay-container no-display');
+      }
 
       let spinner = document.getElementById('global-spinner');
       if(spinner) {
@@ -15,13 +21,19 @@ export class SpinnerFunctions {
       
       if(this.initialRequest == false) {
         let spinner = document.getElementById('global-spinner');
+        
+        let element = document.querySelector('.cdk-overlay-container');
+        
+        if(element) {
+          element.setAttribute('class', 'cdk-overlay-container display');
+        }
+
         if(spinner) {
           spinner.style.display = 'none';
           spinner.classList.add("hide");
         }
       }
       
-      // this.initialRequest = initialRequest;
     }
   
     static checkIsDisplayed(): boolean {

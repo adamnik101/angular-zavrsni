@@ -1,4 +1,10 @@
 <div class="home-wrapper">
+
+  <div class="genre-wrapper" #genreBackground>
+    @for(genre of genres; track $index) {
+      <app-genre-card [genre]="genre" (mouseenter)="applyBackground(genre)"/>
+    }
+  </div>
   <div class="new-releases">
     <div class="tracks">
       <app-section-header [header]="'New tracks'"/>

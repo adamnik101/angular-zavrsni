@@ -1,7 +1,7 @@
-<div class="card-whole">
+<div class="card-whole" (contextmenu)="openMenu($event)">
     <a class="card" routerLink="/playlists/{{playlist.id}}" #card (mouseenter)="applyBackground()" (mouseleave)="removeBackground()">
         <div class="cover">
-            <img crossorigin="anonymous" src="{{playlist.image_url}}" #image/>
+            <img crossorigin="anonymous" src="{{playlist.image_url ? playlist.image_url : '/images/empty-playlist.png'}}" #image/>
         </div>
         <div class="content">
             <div class="title">
@@ -21,6 +21,44 @@
             (onPlay)="playAll($event)">
         </app-play-all-button>    
     }
-    </div>
+
+        <mat-menu #menu="matMenu">
+
+            <button mat-menu-item (click)="playAll($event)" [disabled]="!playlist.tracks_count">
+                <mat-icon>play_arrow</mat-icon>
+                Play all
+            </button>
+
+            <button mat-menu-item (click)="addToQueue($event)" [disabled]="!playlist.tracks_count">
+                <mat-icon>play_arrow</mat-icon>
+                Add to queue
+            </button>
+
+            @if (userService.user() && playlist.user_id === userService.user()?.id) {
+
+                <mat-divider />
+
+                <button mat-menu-item (click)="edit()">
+                    <mat-icon>edit</mat-icon>
+                    Edit
+                </button>
+
+                <button mat-menu-item (click)="delete()">
+                    <mat-icon>delete</mat-icon>
+                    Delete
+                </button>
+            }
+
+        </mat-menu>
+        
+        <div #trigger="matMenuTrigger"
+            style="position: fixed"
+            [style.left]="contextMenuPosition.x"
+            [style.top]="contextMenuPosition.y"
+            [matMenuTriggerFor]="menu">
+        </div>
+</div>
 <canvas #myCanvas hidden></canvas>
 <div #preview></div>
+
+

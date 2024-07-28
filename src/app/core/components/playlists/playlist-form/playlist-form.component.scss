@@ -1,8 +1,21 @@
-.playlist-form {
+.playlist-form1 {
     display: flex;
-    flex-direction: column;
-    gap: 3.5px;
-    .row {
-        min-height: 60px;
+    flex-direction: row;
+    gap: 20px;
+    .left {
+        .image {
+            width: 195px;
+            img {
+                width: 100%;
+                height: auto;
+            }
+        }
+    }
+
+    .right {
+        flex-grow: 1;
+        .row {
+            min-height: 60px;
+        }
     }
 }

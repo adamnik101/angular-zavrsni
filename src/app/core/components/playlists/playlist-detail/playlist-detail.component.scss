@@ -40,7 +40,12 @@
                     font-size: 14px;
                     color: $text-color-light;
                 }
-
+                .edit-title {
+                    display: flex;
+                    flex-direction: row;
+                    gap: 20px;
+                    align-items: center;
+                }
                 .info {
                     font-size: 14px;
                 }

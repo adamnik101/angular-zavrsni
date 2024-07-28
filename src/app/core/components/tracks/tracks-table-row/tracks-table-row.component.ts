@@ -26,6 +26,7 @@ import { FormBuilder } from '@angular/forms';
 import { PlayingFromService } from '../../../services/playing-from/playing-from.service';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatDivider } from '@angular/material/divider';
+import { IApiResponse } from '../../../../shared/interfaces/i-api-response';
 
 @Component({
   selector: 'app-tracks-table-row',
@@ -176,7 +177,19 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
 
   addToPlaylist(id: string): void {
     this.playlistsService.addTracksToPlaylist([this.track.id], id).subscribe({
-      next: (data) => {
+      next: (data: IApiResponse<any>) => {
+        const addedCount = data.data.added_count;
+        
+        this.userPlaylistsService.playlists.update(playlists => {
+          const indexToUpdate = playlists.findIndex(playlist => playlist.id === id);
+          
+          if(indexToUpdate !== -1) {
+            playlists[indexToUpdate].tracks_count += addedCount;
+          }
+
+          return playlists;
+        });
+
         this.alertService.showDefaultMessage(data.data.message);
       },
       error: (err) => {

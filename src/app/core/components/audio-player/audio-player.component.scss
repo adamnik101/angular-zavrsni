@@ -26,7 +26,7 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
-            width: 500px;
+            width: 350px;
             .title {
                 display: flex;
                 flex-direction: row;
@@ -99,6 +99,9 @@
                 align-items: center;
                 gap: 15px;
 
+                .fake-time {
+                    color: var(--mdc-icon-button-disabled-icon-color);
+                }
                 .current-time, .duration {
                     width: 50px;
                 }
@@ -134,6 +137,11 @@
 .action-icon-button {
     width: 35px;
     height: 35px;
+    &:disabled {
+        .mat-icon {
+            color: unset;
+        }
+    }
     .mat-icon {
         width: 35px;
         height: 35px;

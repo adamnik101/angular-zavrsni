@@ -242,7 +242,7 @@ a{
 ::-webkit-scrollbar {
   width: 10px;
   border-radius: 5px;
-
+  height: 3px;
 }
 
 /* Track */
@@ -530,4 +530,16 @@ img {
 
 .full-width {
   width: 100%;
+}
+
+.no-display {
+  display: none !important;
+}
+
+.display {
+  display: block !important;
+}
+
+.cdk-global-scrollblock {
+  overflow-y: hidden;
 }

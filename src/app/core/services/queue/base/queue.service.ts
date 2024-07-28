@@ -100,4 +100,14 @@ export class QueueService {
     });
     console.log(this._queue())
   }
+
+  public addTracksToQueue(tracks: ITrack[]): void {
+    this._queue.update(queue => {
+      let newQueue = queue.concat(tracks);
+      return newQueue;
+    });
+
+    console.log(this._queue())
+
+  }
 }
