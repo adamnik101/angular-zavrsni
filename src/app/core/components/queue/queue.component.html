@@ -1,7 +1,6 @@
 <div class="queue-wrapper" #queueWrapper [@slideInOut]="queueService.showQueue() ? 'in' : 'out'">
     <div class="background-gradient-queue" #back></div>
     
-    @if(track) {
         <div class="content">
             <div class="header">
                 <h1>Queue</h1>
@@ -12,25 +11,24 @@
             </div>
         
             <div class="main-content">
-                @if(track) {
                     <div class="left">
                         <div class="track-info">
                             <div class="cover">
-                                <img crossorigin="anonymous" src="{{track.cover}}" #image/>
+                                <img crossorigin="anonymous" src="{{track?.cover}}" #image/>
                             </div>
         
                             <div class="info">
                                 <div class="title">
-                                    <p>{{track.title}}</p>
+                                    <p>{{track?.title}}</p>
                                 </div>
         
                                 <div class="artists">
                                     <div class="owner">
-                                        <a routerLink="/artists/{{track.owner_id}}" (click)="close()">{{track.owner.name}}</a>
+                                        <a routerLink="/artists/{{track?.owner_id}}" (click)="close()">{{track?.owner?.name}}</a>
                                     </div>
                     
                                     <div class="features">
-                                        @for (feature of track.features; track $index; let index = $index) {
+                                        @for (feature of track?.features; track $index; let index = $index) {
                                             @if (index !== 0) {,&nbsp;} @else {&nbsp;x&nbsp;} <a routerLink="/artists/{{feature.id}}" (click)="close()">{{feature.name}}</a>
                                         }
                                     </div>
@@ -38,7 +36,6 @@
                             </div>
                         </div>
                     </div>
-                }
         
                 <div class="right">
                     <div class="tracks" #tracks cdkDropList cdkDragLockAxis="y" (cdkDropListDropped)="drop($event)">
@@ -52,7 +49,6 @@
                 </div>
             </div>
         </div>
-    }
 </div>
 
 <canvas #myCanvas hidden></canvas>
