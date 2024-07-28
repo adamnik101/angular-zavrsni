@@ -20,6 +20,10 @@ export class ConfirmDialogWithActionsComponent {
 
   public readonly confirmDialogActions = ConfirmDialogActions;
 
+  confirm(): void {
+    this.matDialogRef.close({state: true, action: this.confirmDialogActions.confirm});
+  }
+  
   protected close(state: boolean = false): void {
     this.matDialogRef.close(state);
   }

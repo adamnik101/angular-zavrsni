@@ -38,6 +38,10 @@ export abstract class ApiService<T> {
     return this.http.post<T>(`${this.baseUrl + this.endpoint}`, body);
   }
 
+  patch<T>(id: string, body: any): Observable<IApiResponse<T>> {
+    return this.http.patch<IApiResponse<T>>(`${this.baseUrl + this.endpoint}/${id}`, body);
+  }
+
   delete<T>(id: string): Observable<IApiResponse<T>> {
     return this.http.delete<IApiResponse<T>>(`${this.baseUrl + this.endpoint}/${id}`);
   }

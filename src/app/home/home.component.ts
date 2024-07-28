@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { HomeService } from './services/api/home.service';
 import { UserPlaylistsService } from '../core/user/services/playlists/user-playlists.service';
 import { SpinnerFunctions } from '../core/static/spinner-functions';
@@ -7,11 +7,13 @@ import { TracksTableService } from '../core/services/tracks/table/tracks-table.s
 import { TracksTableComponent } from '../core/components/tracks/tracks-table/tracks-table.component';
 import { AlbumCardComponent } from '../core/components/albums/album-card/album-card.component';
 import { SlicePipe } from '@angular/common';
+import { GenreCardComponent } from '../core/components/genres/genre-card/genre-card.component';
+import { IGenre } from '../core/interfaces/genre/i-genre';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [SectionHeaderComponent, TracksTableComponent, AlbumCardComponent, SlicePipe],
+  imports: [SectionHeaderComponent, TracksTableComponent, AlbumCardComponent, SlicePipe, GenreCardComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -28,6 +30,10 @@ export class HomeComponent implements OnInit, OnDestroy{
     tracks: []
   };
 
+  public genres: IGenre[] = [];
+
+  @ViewChild('genreBackground') public genreBackgroundEl!: ElementRef;
+
   ngOnInit(): void {
     this.getFromInitialRequests();
   }
@@ -40,14 +46,20 @@ export class HomeComponent implements OnInit, OnDestroy{
 
           this.newReleases = {
             albums: response.albums.data,
-            tracks: response.tracks.data
+            tracks: response.tracks.data,
           };
+
+          this.genres = response.genres.data;
 
           this.tracksTableService.setTracks(this.newReleases.tracks);
           SpinnerFunctions.hideSpinner();
         }
       }
     });
+  }
+
+  applyBackground(genre: IGenre): void {
+    this.genreBackgroundEl.nativeElement.style.backgroundColor = genre.hex_color + '50';
   }
 
   ngOnDestroy(): void {

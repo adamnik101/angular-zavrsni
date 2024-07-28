@@ -12,6 +12,10 @@
         @if (action === confirmDialogActions.addAnyway) {
             <button class="secondary-btn" mat-flat-button>{{action}}</button>
         }
+        @if (action === confirmDialogActions.confirm) {
+            <button mat-flat-button (click)="confirm()">{{action}}</button>
+        }
+
     }
 
     <button class="warning-btn" mat-flat-button (click)="close()">{{confirmDialogActions.cancel}}</button>

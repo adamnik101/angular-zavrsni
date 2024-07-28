@@ -1,43 +1,62 @@
 <div class="audio-player-wrapper">
-    @if (track) {
         <div class="track-main-info">
-            <div class="image">
-                <img src="{{track.cover}}"/>
-            </div>
-            
-            <div class="content">
-                <div class="title">
-                    <p>{{track.title}}</p>
-                    @if (track.explicit) {
-                        <mat-icon matTooltip="Explicit" matTooltipPosition="above">explicit</mat-icon>
-                    }
-
-                    @if(track.liked) {
-                        <button (click)="removeFromLiked($event)" class="toggle-like-btn" mat-icon-button matTooltip="Remove from liked" matTooltipPosition="above">
-                            <mat-icon>favorite</mat-icon>
-                        </button>
-                    } @else {
-                        <button (click)="addToLiked($event)" class="toggle-like-btn" mat-icon-button matTooltip="Add to liked" matTooltipPosition="above">
-                            <mat-icon>favorite_outline</mat-icon>                                
-                        </button>
-                    }
+            @if (track) {
+                <div class="image">
+                    <img src="{{track.cover}}"/>
                 </div>
-                <div class="artists">
-                    <div class="owner">
-                        <a routerLink="/artists/{{track.owner_id}}">{{track.owner.name}}</a>
-                    </div>
+                
+                <div class="content">
+                    <div class="title">
+                        <p>{{track.title}}</p>
+                        @if (track.explicit) {
+                            <mat-icon matTooltip="Explicit" matTooltipPosition="above">explicit</mat-icon>
+                        }
     
-                    <div class="features">
-                        @for (feature of track.features; track $index; let index = $index) {
-                            @if (index !== 0) {,&nbsp;} @else {&nbsp;x&nbsp;} <a routerLink="/artists/{{feature.id}}">{{feature.name}}</a>
+                        @if(track.liked) {
+                            <button (click)="removeFromLiked($event)" class="toggle-like-btn" mat-icon-button matTooltip="Remove from liked" matTooltipPosition="above">
+                                <mat-icon>favorite</mat-icon>
+                            </button>
+                        } @else {
+                            <button (click)="addToLiked($event)" class="toggle-like-btn" mat-icon-button matTooltip="Add to liked" matTooltipPosition="above">
+                                <mat-icon>favorite_outline</mat-icon>                                
+                            </button>
                         }
                     </div>
+                    <div class="artists">
+                        <div class="owner">
+                            <a routerLink="/artists/{{track.owner_id}}">{{track.owner.name}}</a>
+                        </div>
+        
+                        <div class="features">
+                            @for (feature of track.features; track $index; let index = $index) {
+                                @if (index !== 0) {,&nbsp;} @else {&nbsp;x&nbsp;} <a routerLink="/artists/{{feature.id}}">{{feature.name}}</a>
+                            }
+                        </div>
+                    </div>
                 </div>
-            </div>
-    
+        
+            } @else {
+                <div class="image">
+                    <img src="/images/empty-playlist.png"/>
+                </div>
+                
+                <div class="content">
+                    <div class="title">
+                        
+                    </div>
+                    <div class="artists">
+                        <div class="owner">
+                        </div>
+        
+                        <div class="features">
+                        </div>
+                    </div>
+                </div>
+            }
+            
             <div class="actions">
                 <div class="audio-actions">
-                    <button mat-icon-button class="action-icon-button smallest" (click)="toggleShuffle()" [matTooltip]="audioService.shuffle() ? 'Shuffle on' : 'Shuffle off'" matTooltipPosition="above">
+                    <button [disabled]="!track" mat-icon-button class="action-icon-button smallest" (click)="toggleShuffle()" [matTooltip]="audioService.shuffle() ? 'Shuffle on' : 'Shuffle off'" matTooltipPosition="above">
                         @if (audioService.shuffle()) {
                             <mat-icon>shuffle_on</mat-icon>
                         } @else {
@@ -45,7 +64,7 @@
                         }
                     </button>
     
-                    <button mat-icon-button class="action-icon-button" [disabled]="audioService.trackIsLoading()" (click)="skipPrevious()" matTooltip="Previous" matTooltipPosition="above">
+                    <button mat-icon-button class="action-icon-button" [disabled]="!track || audioService.trackIsLoading()" (click)="skipPrevious()" matTooltip="Previous" matTooltipPosition="above">
                         <mat-icon>skip_previous</mat-icon>
                     </button>
                     
@@ -55,21 +74,21 @@
                         </div>
                     } @else {
                         @if (!audioService.isPlaying()) {
-                            <button mat-icon-button class="action-icon-button play" (click)="continue()" matTooltip="Play" matTooltipPosition="above">
+                            <button [disabled]="!track" mat-icon-button class="action-icon-button play" (click)="continue()" matTooltip="Play" matTooltipPosition="above">
                                 <mat-icon>play_arrow</mat-icon>
                             </button>
                         } @else {
-                            <button mat-icon-button class="action-icon-button play" (click)="pause()" matTooltip="Pause" matTooltipPosition="above">
+                            <button [disabled]="!track" mat-icon-button class="action-icon-button play" (click)="pause()" matTooltip="Pause" matTooltipPosition="above">
                                 <mat-icon>pause</mat-icon>
                             </button>
                         }
                     }
     
-                    <button mat-icon-button class="action-icon-button" [disabled]="audioService.trackIsLoading()" (click)="skipNext()" matTooltip="Next" matTooltipPosition="above">
+                    <button mat-icon-button class="action-icon-button" [disabled]="!track || audioService.trackIsLoading()" (click)="skipNext()" matTooltip="Next" matTooltipPosition="above">
                         <mat-icon>skip_next</mat-icon>
                     </button>
     
-                    <button mat-icon-button class="action-icon-button smallest" (click)="toggleRepeat()" [matTooltip]="audioService.repeat().title" matTooltipPosition="above">
+                    <button [disabled]="!track" mat-icon-button class="action-icon-button smallest" (click)="toggleRepeat()" [matTooltip]="audioService.repeat().title" matTooltipPosition="above">
                         @switch (audioService.repeat().repeat) {
                             @case (repeatEnum.DisableRepeat) {
                                 <mat-icon>repeat</mat-icon>
@@ -84,29 +103,46 @@
                     </button>
                 </div>
     
-                <div class="progress">
-                    <div class="current-time">
-                        <p>{{audioService.currentTime() | formatDurationFromSeconds}}</p>
+                @if (track) {
+                    <div class="progress">
+                        <div class="current-time">
+                            <p>{{audioService.currentTime() | formatDurationFromSeconds}}</p>
+                        </div>
+                        
+                        <mat-slider [min]="0" [max]="(+track!.duration) * 1000" step="1" discrete [displayWith]="formatTime">
+                            <input #slider matSliderThumb [value]="+audioService.currentTime() * 1000" (dragStart)="onDragStart($event)" (change)="onSliderChange(slider.value)" (dragEnd)="onDragEnd($event)">
+                        </mat-slider>
+                        
+                        <div class="duration">
+                            <p>{{track.duration! | formatDurationFromSeconds}}</p>
+                        </div>
                     </div>
-                    
-                    <mat-slider [min]="0" [max]="(+track!.duration) * 1000" step="1" discrete [displayWith]="formatTime">
-                        <input #slider matSliderThumb [value]="+audioService.currentTime() * 1000" (dragStart)="onDragStart($event)" (change)="onSliderChange(slider.value)" (dragEnd)="onDragEnd($event)">
-                    </mat-slider>
-                    
-                    <div class="duration">
-                        <p>{{track.duration! | formatDurationFromSeconds}}</p>
+                } @else {
+                    <div class="progress">
+                        <div class="current-time">
+                            <p class="fake-time">--:--</p>
+                        </div>
+                        
+                        <mat-slider [min]="0" [max]="100" step="1">
+                            <input matSliderThumb [disabled]="!track">
+                        </mat-slider>
+                        
+                        <div class="duration">
+                            <p class="fake-time">--:--</p>
+                        </div>
                     </div>
-                </div>
+                }
+                
             </div>
     
             <div class="other">
                 <div class="queue">
-                    <button mat-icon-button class="action-icon-button small" matTooltip="Queue" matTooltipPosition="above" (click)="toggleQueue($event)">
+                    <button [disabled]="!track" mat-icon-button class="action-icon-button small" matTooltip="Queue" matTooltipPosition="above" (click)="toggleQueue($event)">
                         <mat-icon>queue_music</mat-icon>
                     </button>
                 </div>
                 <div class="volume">
-                    <button mat-icon-button class="action-icon-button small" (click)="toggleVolume($event)" >
+                    <button [disabled]="!track" mat-icon-button class="action-icon-button small" (click)="toggleVolume($event)" >
                         @if (audioService.audio.muted) {
                             <mat-icon matTooltip="Unmute">volume_off</mat-icon>
                         } @else {
@@ -126,17 +162,21 @@
                                     <mat-icon matTooltip="Mute">volume_up</mat-icon>
                                 }
                             }
-                            <mat-icon></mat-icon>
                         }
                     </button>
-    
-                    <mat-slider min="0" max="1" step="0.01">
-                        <input #volume matSliderThumb [value]="audioService.volume" (input)="onVolumeInput(volume.value)">
-                    </mat-slider>
+                    
+                    @if(!track) {
+                        <mat-slider min="0" max="1" step="0.01">
+                            <input matSliderThumb disabled>
+                        </mat-slider>
+                    } @else {
+                        <mat-slider min="0" max="1" step="0.01">
+                            <input #volume matSliderThumb [value]="audioService.volume" (input)="onVolumeInput(volume.value)" [disabled]="!track">
+                        </mat-slider>
+                    }
                 </div>
             </div>
         </div>
-    }
 
 </div>
 

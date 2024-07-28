@@ -1,12 +1,21 @@
 <div class="playlist-wrapper">
     <div class="header">
         <div class="cover">
-            <img crossorigin="anonymous" src="{{playlist.image_url}}" alt="playlist_cover" #image/>
+            <img crossorigin="anonymous" src="{{playlist.image_url ? playlist.image_url : '/images/empty-playlist.png'}}" alt="playlist_cover" #image/>
         </div>
+
         <div class="info-main">
             <div class="title">
                 <p class="desc">Playlist</p>
-                <h2>{{playlist.title}}</h2>
+                <div class="edit-title">
+                    <h2>{{playlist.title}}</h2>
+
+                    @if (isEditable) {
+                        <button mat-mini-fab matTooltip="Edit" matTooltipPosition="above" (click)="openFormDialog()">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                    }
+                </div>
                 <p class="desc">{{playlist.description}}</p>
                 <div class="info">
                     <p>{{playlist.tracks_count}} tracks</p>

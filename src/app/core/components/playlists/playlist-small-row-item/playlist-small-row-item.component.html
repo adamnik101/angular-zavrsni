@@ -1,10 +1,10 @@
-<div class="playlist-small-item-row-wrapper" routerLinkActive="selected-playlist">
+<div class="playlist-small-item-row-wrapper" routerLinkActive="selected-playlist" (contextmenu)="openMenu($event)">
     <div class="content">
         <div class="image">
-            <img src="{{playlist.image_url}}"/>
+            <img src="{{playlist.image_url ? playlist.image_url : '/images/empty-playlist.png'}}"/>
 
             <div class="toggle-play">
-                @if(playlist.tracks_count) {
+                @if(playlist.tracks_count > 0) {
                     <app-play-all-button 
                         [customClass]="'small-item-row-play-btn'"
                         [apiService]="playlistsService"
@@ -24,4 +24,24 @@
             </div>
         </div>
     </div>
+
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="edit()">
+            <mat-icon>edit</mat-icon>
+            Edit
+        </button>
+
+        <button mat-menu-item (click)="delete()">
+            <mat-icon>delete</mat-icon>
+            Delete
+        </button>
+    </mat-menu>
+
+    <div #trigger="matMenuTrigger"
+        style="position: fixed"
+        [style.left]="contextMenuPosition.x"
+        [style.top]="contextMenuPosition.y"
+        [matMenuTriggerFor]="menu">
+    </div>
+
 </div>

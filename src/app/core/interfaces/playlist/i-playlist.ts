@@ -1,7 +1,7 @@
 export interface IPlaylist {
     id: string;
     title: string;
-    image_url: string;
+    image_url: string | null;
     description: string;
     tracks: any[];
     tracks_count: number;

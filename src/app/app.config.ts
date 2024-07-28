@@ -1,5 +1,5 @@
 import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, RouteReuseStrategy, withRouterConfig, withViewTransitions } from '@angular/router';
+import { provideRouter, RouteReuseStrategy, withInMemoryScrolling, withRouterConfig, withViewTransitions } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -12,7 +12,10 @@ import { MatIconRegistry } from '@angular/material/icon';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes, withViewTransitions(), withRouterConfig({onSameUrlNavigation: 'reload'})),
+    provideRouter(routes, 
+      withInMemoryScrolling({scrollPositionRestoration: 'top'}),
+      withViewTransitions({skipInitialTransition: true}), 
+      withRouterConfig({onSameUrlNavigation: 'reload'})),
     provideAnimationsAsync(),
     importProvidersFrom(
       FormsModule,

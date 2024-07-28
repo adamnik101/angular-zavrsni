@@ -17,20 +17,29 @@
 
 <div mat-dialog-content>
 
-    <form [formGroup]="form" class="playlist-form">
-        <div class="row common-input-display">
-            <app-common-input
-                [formControlToFill]="form.get('title')"
-                [label]="'Name of playlist'">
-            </app-common-input>
+    <form [formGroup]="form" class="playlist-form1">
+        <div class="left">
+            <div class="image">
+                <img src="{{form.get('imagePath')?.value ? form.get('imagePath')?.value : '/images/empty-playlist.png'}}"/>
+            </div>
         </div>
 
-        <div class="row">
-            <app-common-textarea
-                [formControlToFill]="form.get('description')"
-                [label]="'Description'">
-            </app-common-textarea>
+        <div class="right">
+            <div class="row common-input-display">
+                <app-common-input
+                    [formControlToFill]="form.get('title')"
+                    [label]="'Name of playlist'">
+                </app-common-input>
+            </div>
+    
+            <div class="row">
+                <app-common-textarea
+                    [formControlToFill]="form.get('description')"
+                    [label]="'Description'">
+                </app-common-textarea>
+            </div>
         </div>
+        
     </form>
 </div>
 
