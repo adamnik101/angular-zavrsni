@@ -15,11 +15,12 @@ import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 import { PlaylistFormComponent } from '../playlist-form/playlist-form.component';
 import { MatDialog } from '@angular/material/dialog';
+import { SmallHeaderComponent } from '../../small-header/small-header.component';
 
 @Component({
   selector: 'app-playlist-detail',
   standalone: true,
-  imports: [TracksTableComponent, MatMiniFabButton, MatIcon, MatTooltip],
+  imports: [TracksTableComponent, MatMiniFabButton, MatIcon, MatTooltip, SmallHeaderComponent],
   templateUrl: './playlist-detail.component.html',
   styleUrl: './playlist-detail.component.scss'
 })

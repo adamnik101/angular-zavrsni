@@ -27,11 +27,14 @@ import { PlayingFromService } from '../../../services/playing-from/playing-from.
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatDivider } from '@angular/material/divider';
 import { IApiResponse } from '../../../../shared/interfaces/i-api-response';
+import { ConfirmDialogActions } from '../../../../shared/components/confirm-dialog-with-actions/enums/confirm-dialog-actions';
+import { FormatDateFromNowPipe } from '../../../../shared/pipes/format-date-from-now.pipe';
 
 @Component({
   selector: 'app-tracks-table-row',
   standalone: true,
-  imports: [MatIcon, MatIconButton, RouterLink, FormatDurationFromSecondsPipe, MatMenuModule, NgClass, CommonInputComponent, MatTooltip, MatDivider],
+  imports: [MatIcon, MatIconButton, RouterLink, FormatDurationFromSecondsPipe, MatMenuModule, NgClass,
+    CommonInputComponent, MatTooltip, MatDivider, FormatDateFromNowPipe],
   templateUrl: './tracks-table-row.component.html',
   styleUrl: './tracks-table-row.component.scss'
 })
@@ -59,7 +62,8 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
   public features: Map<string, string> = new Map<string, string>();
   public featureNames: string[] = [];
   public isSelectedRow: boolean = false;
-  
+  public canBeRemovedFromPlaylist: boolean = false; 
+
   public filteredPlaylists = signal<IPlaylist[]>(this.userPlaylistsService.playlists());
 
   @Input({required: true}) public index: number = 0;
@@ -89,6 +93,9 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
 
   ngOnInit(): void {
     this.setFeatures();
+    if(this.userService.loggedIn()) {
+      this.setIfCanBeRemovedFromPlaylist();
+    }
   }
 
   ngAfterViewInit(): void {
@@ -106,6 +113,17 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
       this.features.set(feature.id, feature.name);
       this.featureNames.push(feature.name);
     });
+  }
+
+  setIfCanBeRemovedFromPlaylist(): void {
+    let userPlaylists = this.userPlaylistsService.playlists().map(playlist => playlist.id);
+
+    const playlist = this.track.pivot ? this.track.pivot.playlist_id : null;
+
+    console.log(playlist)
+    if(playlist && userPlaylists.includes(playlist)) {
+      this.canBeRemovedFromPlaylist = true;
+    }
   }
 
   play(): void {
@@ -175,8 +193,8 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
     this.trackTableRowService.currTrack.set(null);
   }
 
-  addToPlaylist(id: string): void {
-    this.playlistsService.addTracksToPlaylist([this.track.id], id).subscribe({
+  addToPlaylist(id: string, confirm: boolean | null = null): void {
+    this.playlistsService.addTracksToPlaylist([this.track.id], id, confirm).subscribe({
       next: (data: IApiResponse<any>) => {
         const addedCount = data.data.added_count;
         
@@ -201,6 +219,12 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
               header: dialogHeader,
               message: errResponse.errors.content,
               actions: errResponse.errors.actions
+            }
+          }).afterClosed().subscribe({
+            next: (data) => {
+              if(data.state && data.action === ConfirmDialogActions.addAnyway) {
+                this.addToPlaylist(id, true);
+              }
             }
           })
           return;

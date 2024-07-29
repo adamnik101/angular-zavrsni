@@ -17,6 +17,14 @@ export interface ITrack extends BaseInterface {
     genre_id: string;
     albumId: string | null;
 
-    pivot: any;
+    pivot: ITrackPivot;
     liked: boolean;
+}
+
+
+interface ITrackPivot {
+    id: string;
+    playlist_id: string;
+    track_id: string;
+    created_at: string;
 }

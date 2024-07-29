@@ -18,7 +18,7 @@ export class PlaylistsService extends ApiService<IApiResponse<IPlaylist>>{
     super(API_ENDPOINTS.playlist.api, http);
   }
   
-  addTracksToPlaylist(trackIds: string[], playlistId: string): Observable<IApiResponse<any>> {
-    return this.http.post<IApiResponse<any>>(`${environment.baseUrl + API_ENDPOINTS.playlist.tracks + playlistId}`, {tracks: trackIds});
+  addTracksToPlaylist(trackIds: string[], playlistId: string, confirm: boolean | null = null): Observable<IApiResponse<any>> {
+    return this.http.post<IApiResponse<any>>(`${environment.baseUrl + API_ENDPOINTS.playlist.tracks + playlistId}`, {tracks: trackIds, confirm});
   }
 }

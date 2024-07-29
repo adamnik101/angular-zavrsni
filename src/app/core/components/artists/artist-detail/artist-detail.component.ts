@@ -13,11 +13,13 @@ import { TracksTableService } from '../../../services/tracks/table/tracks-table.
 import { UserArtistFollowingsService } from '../../../user/services/artists/user-artist-followings.service';
 import { AlbumCardComponent } from '../../albums/album-card/album-card.component';
 import { SectionHeaderComponent } from '../../section-header/section-header.component';
+import { SmallHeaderComponent } from '../../small-header/small-header.component';
 
 @Component({
   selector: 'app-artist-detail',
   standalone: true,
-  imports: [NgOptimizedImage, MatIcon, MatTooltip, SmallRoundDividerComponent, TracksTableComponent, AlbumCardComponent, SectionHeaderComponent],
+  imports: [NgOptimizedImage, MatIcon, MatTooltip, SmallRoundDividerComponent, TracksTableComponent, AlbumCardComponent,
+    SectionHeaderComponent, SmallHeaderComponent],
   templateUrl: './artist-detail.component.html',
   styleUrl: './artist-detail.component.scss'
 })
