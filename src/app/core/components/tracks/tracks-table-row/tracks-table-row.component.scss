@@ -103,8 +103,16 @@
                     }
                 }
             }
+
+            .created-at {
+                span {
+                    font-size: 13px;
+                    color: $text-color-light;
+                }
+            }
     
         }
+
 
         .right {
             display: flex;

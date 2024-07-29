@@ -1,4 +1,7 @@
-<div class="artist-wrapper">
+<app-small-header [title]="artist.name" [image]="artist.cover"/>
+
+<div class="artist-wrapper" #wrapper>
+
     <div class="header">
         <div class="cover">
             @if (artist.cover) {
@@ -38,13 +41,17 @@
         <div class="background-gradient"></div>
     </div>
     <div class="content">
-        <app-tracks-table></app-tracks-table>
+        @if (artist.tracks_count) {
+            <app-tracks-table></app-tracks-table>
+        }
 
-        <app-section-header [header]="'Albums'"></app-section-header>        
-        <div class="card-wrapper">
-            @for(album of artist.albums; track $index) {
-                <app-album-card [album]="album"></app-album-card>
-            }
-        </div>
+        @if (artist.albums_count) {
+            <app-section-header [header]="'Albums'"></app-section-header>        
+            <div class="card-wrapper">
+                @for(album of artist.albums; track $index) {
+                    <app-album-card [album]="album"></app-album-card>
+                }
+            </div>
+        }
     </div>
 </div>

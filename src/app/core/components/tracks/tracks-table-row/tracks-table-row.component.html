@@ -37,8 +37,15 @@
                 }
             </div>
     
+            @if (track.pivot) {
+                <div class="created-at">
+                    <span>{{track.pivot.created_at | formatDateFromNow}}</span>
+                </div>
+            }
         </div>
+
         
+
         <div class="right">
             <div class="favorite">
                 @if (userService.loggedIn()) {
@@ -59,9 +66,7 @@
             <div class="duration">
                 <span>{{track.duration | formatDurationFromSeconds}}</span>
             </div>
-    
-            
-    
+
             <div class="options-menu">
                 <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                     <mat-icon>more_vert</mat-icon>
@@ -73,7 +78,14 @@
                             <mat-icon>queue</mat-icon>
                             <span>Add to Playlist</span>
                         </button>     
-                         
+                        
+                        @if(canBeRemovedFromPlaylist) {
+                            <button mat-menu-item>
+                                <mat-icon>delete</mat-icon>
+                                <span>Remove from Playlist</span>
+                            </button>    
+                        }
+                    
                         <button mat-menu-item (click)="toggleLike($event)">
                             <mat-icon>
                                 @if (track.liked) {
