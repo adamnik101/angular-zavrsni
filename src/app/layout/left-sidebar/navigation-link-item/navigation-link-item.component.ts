@@ -43,7 +43,7 @@ export class NavigationLinkItemComponent implements OnInit {
       } break;
       case "My library": {
         this.tooltip = "Number of playlists"
-      }
+      } break;
     };
   }
 

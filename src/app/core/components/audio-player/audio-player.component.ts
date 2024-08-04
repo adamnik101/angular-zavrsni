@@ -15,6 +15,7 @@ import { AlertService } from '../../../shared/services/alert/alert.service';
 import { TracksTableService } from '../../services/tracks/table/tracks-table.service';
 import { QueueComponent } from '../queue/queue.component';
 import { toObservable } from '@angular/core/rxjs-interop';
+import { UserService } from '../../user/services/user/user.service';
 
 @Component({
   selector: 'app-audio-player',
@@ -31,8 +32,7 @@ export class AudioPlayerComponent implements OnInit{
     public queueService: QueueService,
     public audioService: AudioService,
     private likedTracksService: LikedTracksService,
-    private alertService: AlertService,
-    private tracksTableService: TracksTableService,
+    public userService: UserService 
   ) {
     effect(() => {
       const currentTrack = this.queueService.getCurrentTrack();

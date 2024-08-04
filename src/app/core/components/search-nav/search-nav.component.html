@@ -20,7 +20,10 @@
             </button>
 
             <mat-menu #menu>
-                @for (link of userMenuNavigationLinks; track $index) {
+                @for (link of userMenuNavigationLinks; track $index; let last = $last) {
+                    @if (last) {
+                        <mat-divider/>
+                    }
                     <button mat-menu-item [routerLink]="link.routePath ? link.routePath: null" (click)="link.method ? link.method() : null">
                         <mat-icon>{{link.icon}}</mat-icon>
                         <span>{{link.title}}</span>

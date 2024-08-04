@@ -1,6 +1,6 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { IPlaylist } from '../../../interfaces/playlist/i-playlist';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
@@ -37,10 +37,11 @@ export class PlaylistSmallRowItemComponent {
     public playlistsService: PlaylistsService,
     public playingFromService: PlayingFromService,
     public audioService: AudioService,
-    private likedTracksService: LikedTracksService,
     private matDialog: MatDialog,
     private userPlaylistsService: UserPlaylistsService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
   
   @Input() public playlist: IPlaylist = {} as IPlaylist;
@@ -110,6 +111,14 @@ export class PlaylistSmallRowItemComponent {
         if(data.state && data.action === ConfirmDialogActions.confirm) {
           this.userPlaylistsService.deletePlaylist(this.playlist.id).subscribe({
             next: (data) => {
+              
+              const currentRoute = this.router.lastSuccessfulNavigation?.extractedUrl.root.children['primary'].segments[0].path;
+              const playlistRouteId = this.router.lastSuccessfulNavigation?.extractedUrl.root.children['primary'].segments[1].path;
+      
+              if(currentRoute && playlistRouteId && playlistRouteId === this.playlist.id) {
+                this.router.navigateByUrl('/home');
+              }
+
               this.userPlaylistsService.playlists.update(playlists => {
                 let indexToDelete = playlists.findIndex(playlist => playlist.id === this.playlist.id);
 

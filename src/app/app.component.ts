@@ -30,6 +30,7 @@ export class AppComponent implements OnInit{
 
   checkPreviousUserData(): void {
     const hasToken = this.authService.hasToken();
+    console.log(hasToken);
     if(hasToken) {
       SpinnerFunctions.initialRequest = true;
       SpinnerFunctions.showSpinner();

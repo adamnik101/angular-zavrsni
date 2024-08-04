@@ -1,5 +1,5 @@
 .small-header-wrapper {
-    z-index: 50;
+    z-index: 9999999;
     position: fixed;
     left: calc(var(--mat-sidenav-container-width) - 50px);
     right: 10px;

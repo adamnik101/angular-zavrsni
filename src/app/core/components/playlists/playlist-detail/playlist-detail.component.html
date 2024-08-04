@@ -8,7 +8,13 @@
 
         <div class="info-main">
             <div class="title">
-                <p class="desc">Playlist</p>
+                <p class="desc">
+                    @if (isEditable) {
+                        My Playlist
+                    } @else {
+                        Playlist
+                    }
+                </p>
                 <div class="edit-title">
                     <h2>{{playlist.title}}</h2>
 

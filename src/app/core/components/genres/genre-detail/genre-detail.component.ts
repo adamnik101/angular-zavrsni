@@ -7,11 +7,12 @@ import { IApiResponse } from '../../../../shared/interfaces/i-api-response';
 import { SpinnerFunctions } from '../../../static/spinner-functions';
 import { PlaylistCardComponent } from '../../playlists/playlist-card/playlist-card.component';
 import { PlaceholderCardComponent } from '../../placeholder-card/placeholder-card.component';
+import { SmallHeaderComponent } from "../../small-header/small-header.component";
 
 @Component({
   selector: 'app-genre-detail',
   standalone: true,
-  imports: [PlaylistCardComponent, PlaceholderCardComponent],
+  imports: [PlaylistCardComponent, PlaceholderCardComponent, SmallHeaderComponent],
   templateUrl: './genre-detail.component.html',
   styleUrl: './genre-detail.component.scss'
 })
