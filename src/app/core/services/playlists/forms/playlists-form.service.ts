@@ -73,7 +73,7 @@ export class PlaylistsFormService implements IFormService{
     
     return this.playlistsService.post(data).pipe(tap({
       next: (data) => {
-        this.userPlaylistsService.getPlaylists();
+        this.userPlaylistsService.getPlaylists(false);
       }
     }));
   }

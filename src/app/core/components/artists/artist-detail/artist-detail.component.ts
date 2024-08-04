@@ -14,6 +14,7 @@ import { UserArtistFollowingsService } from '../../../user/services/artists/user
 import { AlbumCardComponent } from '../../albums/album-card/album-card.component';
 import { SectionHeaderComponent } from '../../section-header/section-header.component';
 import { SmallHeaderComponent } from '../../small-header/small-header.component';
+import { LikedTracksService } from '../../../user/services/liked-tracks/liked-tracks.service';
 
 @Component({
   selector: 'app-artist-detail',
@@ -29,7 +30,8 @@ export class ArtistDetailComponent implements OnInit, OnDestroy{
     private artistsService: ArtistsService,
     private route: ActivatedRoute,
     private tracksTableService: TracksTableService,
-    public userArtistsFollowingsService: UserArtistFollowingsService
+    public userArtistsFollowingsService: UserArtistFollowingsService,
+    private likedTracksService: LikedTracksService
   ) {}
 
   public artist: IArtist = {} as IArtist;
@@ -51,6 +53,11 @@ export class ArtistDetailComponent implements OnInit, OnDestroy{
                 next: (response) => {
                   this.artist = response.data;
                   this.back.nativeElement.style.backgroundImage = `url(${this.artist.cover})`;
+
+                  this.artist.tracks.forEach(track => {
+                    track['liked'] = this.likedTracksService.likedTracks().some(t => t.id === track.id);
+                  });
+
                   this.tracksTableService.setTracks(this.artist.tracks);
                   SpinnerFunctions.hideSpinner();
                 }

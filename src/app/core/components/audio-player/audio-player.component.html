@@ -11,15 +11,16 @@
                         @if (track.explicit) {
                             <mat-icon matTooltip="Explicit" matTooltipPosition="above">explicit</mat-icon>
                         }
-    
-                        @if(track.liked) {
-                            <button (click)="removeFromLiked($event)" class="toggle-like-btn" mat-icon-button matTooltip="Remove from liked" matTooltipPosition="above">
-                                <mat-icon>favorite</mat-icon>
-                            </button>
-                        } @else {
-                            <button (click)="addToLiked($event)" class="toggle-like-btn" mat-icon-button matTooltip="Add to liked" matTooltipPosition="above">
-                                <mat-icon>favorite_outline</mat-icon>                                
-                            </button>
+                        @if(userService.loggedIn()) {
+                            @if(track.liked) {
+                                <button (click)="removeFromLiked($event)" class="toggle-like-btn" mat-icon-button matTooltip="Remove from liked" matTooltipPosition="above">
+                                    <mat-icon>favorite</mat-icon>
+                                </button>
+                            } @else {
+                                <button (click)="addToLiked($event)" class="toggle-like-btn" mat-icon-button matTooltip="Add to liked" matTooltipPosition="above">
+                                    <mat-icon>favorite_outline</mat-icon>                                
+                                </button>
+                            }
                         }
                     </div>
                     <div class="artists">

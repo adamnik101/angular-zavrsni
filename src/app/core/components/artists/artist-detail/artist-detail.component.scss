@@ -26,9 +26,17 @@
             flex-direction: column;
             gap: 10px;
             .header {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 10px;
                 p {
                     font-size: 13px;
                     color: $text-color-light;
+                }
+
+                .mat-icon {
+                    color: $main-color;
                 }
             }
             .name {
@@ -42,9 +50,6 @@
                     font-size: 45px;
                 }
 
-                .mat-icon {
-                    color: $main-color;
-                }
             }
 
             .desc {

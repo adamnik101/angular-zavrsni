@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Injector, Input, OnDestroy, OnInit, Output, signal, ViewChild } from '@angular/core';
 import { ITrack } from '../../../interfaces/tracks/i-track';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
@@ -29,6 +29,7 @@ import { MatDivider } from '@angular/material/divider';
 import { IApiResponse } from '../../../../shared/interfaces/i-api-response';
 import { ConfirmDialogActions } from '../../../../shared/components/confirm-dialog-with-actions/enums/confirm-dialog-actions';
 import { FormatDateFromNowPipe } from '../../../../shared/pipes/format-date-from-now.pipe';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-tracks-table-row',
@@ -51,9 +52,9 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
     private audioService: AudioService,
     private playlistsService: PlaylistsService,
     private matDialog: MatDialog,
-    private tracksTableService: TracksTableService,
     private formBuilder: FormBuilder,
-    private playingFromService: PlayingFromService
+    private playingFromService: PlayingFromService,
+    private injector: Injector
   ) {}
 
   public currentSectionId: string = "";
@@ -94,6 +95,7 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
   ngOnInit(): void {
     this.setFeatures();
     if(this.userService.loggedIn()) {
+      this.trackUserPlaylists();
       this.setIfCanBeRemovedFromPlaylist();
     }
   }
@@ -115,12 +117,26 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
     });
   }
 
+  trackUserPlaylists(): void {
+    this.subscription.add(
+      toObservable(this.userPlaylistsService.playlists, {
+        injector: this.injector
+      }).subscribe({
+        next: (data) => {
+          if(data) {
+            this.filteredPlaylists.set(data);
+          }
+        }
+      })
+    );
+  }
+
   setIfCanBeRemovedFromPlaylist(): void {
     let userPlaylists = this.userPlaylistsService.playlists().map(playlist => playlist.id);
 
     const playlist = this.track.pivot ? this.track.pivot.playlist_id : null;
 
-    console.log(playlist)
+    console.log(playlist, userPlaylists)
     if(playlist && userPlaylists.includes(playlist)) {
       this.canBeRemovedFromPlaylist = true;
     }
@@ -253,5 +269,6 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
 
   ngOnDestroy(): void {
     this.removeSelected();
+    this.subscription.unsubscribe();
   }
 }

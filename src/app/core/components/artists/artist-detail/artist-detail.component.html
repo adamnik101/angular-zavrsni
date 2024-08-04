@@ -10,13 +10,15 @@
         </div>
         <div class="info">
             <div class="header">
-                <p>Artist</p>
+                @if(artist.verified) {
+                    <p>Verified Artist</p>
+                    <mat-icon matTooltip="Verified" matTooltipPosition="right">verified</mat-icon>
+                } @else {
+                    <p>Artist</p>
+                }
             </div>
             <div class="name">
                 <h1>{{artist.name}}</h1>
-                @if(artist.verified) {
-                    <mat-icon matTooltip="Verified" matTooltipPosition="right">verified</mat-icon>
-                }
             </div>
             <p>
                 {{artist.monthly_listeners}} monthly listeners

@@ -85,7 +85,8 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy{
           this.playlist = response.data;
           this.playlist.tracks.forEach(track => {
               track['liked'] = this.likedTracksService.likedTracks().some(t => t.id === track.id);
-            })
+          });
+          
           this.tracksTableService.setTracks(this.playlist.tracks);
             
           const userId = this.userService.user()?.id;

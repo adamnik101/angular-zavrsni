@@ -19,6 +19,7 @@ import { NoResultsComponent } from '../shared/components/no-results/no-results.c
 import { MatMiniFabButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
+import { LikedTracksService } from '../core/user/services/liked-tracks/liked-tracks.service';
 
 @Component({
   selector: 'app-profile',
@@ -38,7 +39,8 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy{
     public userAlbumLikesService: UserAlbumLikesService,
     private dominantColorService: DominantColorService,
     private recentlyPlayedService: RecentlyPlayedService,
-    private tracksTableService: TracksTableService
+    private tracksTableService: TracksTableService,
+    private likedTracksService: LikedTracksService
   ) {}
 
   public recent: boolean = false;
@@ -57,7 +59,13 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy{
       next: (response) => {
         if(response) {
           if(response.data.length) {
-            this.tracksTableService.setTracks(response.data);
+            const tracks = response.data;
+            
+            tracks.forEach(track => {
+              track['liked'] = this.likedTracksService.likedTracks().some(t => t.id === track.id);  
+            });
+
+            this.tracksTableService.setTracks(tracks);
             this.recent = true;
           }
         }
