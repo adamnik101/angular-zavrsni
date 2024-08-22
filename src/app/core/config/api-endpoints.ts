@@ -41,5 +41,8 @@ export const API_ENDPOINTS = {
     artists: {
         api: "artists",
         trending: "artists/trending"
+    },
+    users: {
+        api: "users"
     }
 }
