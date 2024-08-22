@@ -36,6 +36,19 @@
                     {{artist.albums_count}} albums
                 </p>
             </div>
+            <div class="actions">
+                @if (isFollowing) {
+                    <button mat-fab extended (click)="unfollowArtist()">
+                        <mat-icon>check</mat-icon>
+                        Following
+                    </button>
+                } @else {
+                    <button mat-fab extended (click)="followArtist()">
+                        <mat-icon>add</mat-icon>
+                        Follow
+                    </button>
+                }
+            </div>
         </div>
 
                 

@@ -1,0 +1,31 @@
+@import '../../../shared/global-styles/colors';
+
+.admin-card {
+    height: 100px;
+    width: 300px;
+    background-color: $hover;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 20px;
+    position: relative;
+    .icon {
+        position: absolute;
+        top: 20px;
+        left: 15px;
+        .mat-icon {
+            width: 55px;
+            font-size: 55px;
+            height: 55px;
+        }
+    }
+
+    .data {
+        p{
+            font-size: 25px;
+            font-weight: bold;
+        }
+    }
+}

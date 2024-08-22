@@ -7,6 +7,10 @@ export const routes: Routes = [
         redirectTo: 'home'
     },
     {
+        path: "admin",
+        loadChildren: () => import('./admin-dashboard/routes/admin-routes').then(r => r.ADMIN_ROUTES)
+    },
+    {
         path: 'home',
         loadComponent: () => import('./home/home.component').then(c => c.HomeComponent)
     },
