@@ -1,1 +1,65 @@
-<p>album-detail works!</p>
+<app-small-header [title]="album.name" [image]="album.cover"/>
+
+<div class="album-wrapper" #wrapper>
+
+    <div class="header">
+        <div class="cover">
+            @if (album.cover) {
+                <img [ngSrc]="album.cover" alt="album,{{album.name}}" [width]="250" height="250" [priority]="true"/>
+            }
+        </div>
+        <div class="info">
+            <div class="header">                
+                <p>Album</p>
+            </div>
+            <div class="name">
+                <h1>{{album.name}}</h1>
+            </div>
+            
+            <div class="desc">   
+                <div class="artist">
+                    @if(album.artist) {
+                        <img src="{{album.artist.cover}}"/>
+                        <a routerLink="/artists/{{album.artist.id}}">{{album.artist.name}}</a>
+                        @if(album.artist.verified) {
+                            <mat-icon>verified</mat-icon>
+                        }
+                    }
+    
+                </div> 
+                <app-small-round-divider></app-small-round-divider>
+                <p>
+                    {{album.release_year}}
+                </p>
+                <app-small-round-divider></app-small-round-divider>
+                <p>
+                    {{album.tracks_count}} tracks
+                </p>
+            </div>
+            
+            <div class="actions">
+                @if (liked) {
+                    <button mat-fab extended (click)="removeFromSaved()">
+                        <mat-icon>check</mat-icon>
+                        Saved
+                    </button>
+                } @else {
+                    <button mat-fab extended (click)="saveAlbum()">
+                        <mat-icon>add</mat-icon>
+                        Save
+                    </button>
+                }
+            </div>
+        </div>
+
+                
+        <div class="background" #back></div>
+        <div class="background-gradient"></div>
+    </div>
+    <div class="content">
+        <app-section-header [header]="'Tracks'"></app-section-header>   
+        @if (album.tracks_count) {
+            <app-tracks-table></app-tracks-table>
+        }
+    </div>
+</div>

@@ -90,9 +90,9 @@ export class PlaylistSmallRowItemComponent {
       data: this.playlist
     }).afterClosed().subscribe({
       next: (data) => {
-        if (data) {
-          this.userPlaylistsService.getPlaylists(false);
-        }
+        // if (data) {
+        //   this.userPlaylistsService.getPlaylists(false);
+        // }
       }
     });
   }

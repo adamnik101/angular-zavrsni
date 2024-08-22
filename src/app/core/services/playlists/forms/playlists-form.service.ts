@@ -25,6 +25,8 @@ export class PlaylistsFormService implements IFormService{
     return this.formBuilder.group<any>({
       id: this.formBuilder.control(''),
       imagePath: this.formBuilder.control(null),
+      image: this.formBuilder.control(null),
+      imageChange: this.formBuilder.control(''),
       title: this.formBuilder.control('', [Validators.required]),
       description: this.formBuilder.control('')
     })
@@ -58,14 +60,20 @@ export class PlaylistsFormService implements IFormService{
   }
 
   prepareDataToSend(): any {
-    let dataToSend: any = {
-      id: this.form.get('id')?.value,
-      title: this.form.get('title')?.value,
-      description: this.form.get('description')?.value
-    };
+    const formData = new FormData();
 
-    this.dataToSend = dataToSend;
-    return dataToSend;
+    if(this.form.get("image")?.value) {
+      formData.append('image', this.form.get("image")?.value)
+    }
+    // if (this.removeCoverImage) {
+    //   formData.append('remove_image', 'true')
+    // }
+    formData.append('title', this.form.get("title")?.value)
+
+    formData.append('description', this.form.get("description")?.value)
+
+    console.log(formData)
+    return formData;
   }
 
   submitCreate(): Observable<any> {
@@ -81,7 +89,7 @@ export class PlaylistsFormService implements IFormService{
   submitUpdate(): Observable<any> {
     let dataToSend = this.prepareDataToSend();
 
-    return this.playlistsService.patch<IPlaylist>(dataToSend.id, dataToSend).pipe(tap({
+    return this.playlistsService.postAsPatch<IPlaylist>(this.form.get("id")?.value, dataToSend).pipe(tap({
       next: (data) => {
         const playlistId = data.data.id;
 
