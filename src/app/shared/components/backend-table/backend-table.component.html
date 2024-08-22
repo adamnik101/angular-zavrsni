@@ -1,0 +1,15 @@
+@if (tableService.data.length > 0) {
+    
+    @for(item of tableService.columns; track $index) {
+        {{item.title}}
+    }
+@for(item of tableService.data; track $index) {
+    
+
+    <div>
+        @for (item of tableService.operations; track $index) {
+            <button (click)="item.method(item)">{{item.title}}</button>
+        }
+    </div>
+}
+}

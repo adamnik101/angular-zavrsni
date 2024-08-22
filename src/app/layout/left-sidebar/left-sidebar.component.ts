@@ -14,6 +14,7 @@ import { UserArtistFollowingsService } from '../../core/user/services/artists/us
 import { UserAlbumLikesService } from '../../core/user/services/albums/user-album-likes.service';
 import { AlbumSmallRowItemComponent } from '../../core/components/albums/album-small-row-item/album-small-row-item.component';
 import { ArtistSmallRowItemComponent } from '../../core/components/artists/artist-small-row-item/artist-small-row-item.component';
+import { ADMIN_NAVIGATION_LINKS } from '../../core/consts/admin-navigation-links';
 
 @Component({
   selector: 'app-left-sidebar',
@@ -37,4 +38,5 @@ export class LeftSidebarComponent {
   public mainNavigationLinks: IMainNavigationLink[] = MAIN_NAVIGATION_LINKS;
   public authNavigationLinks: IMainNavigationLink[] = AUTH_NAVIGATION_LINKS;
   public userNavigationLinks: IMainNavigationLink[] = USER_NAVIGATION_LINKS;
+  public adminNavigationLinks: IMainNavigationLink[] = ADMIN_NAVIGATION_LINKS;
 }
