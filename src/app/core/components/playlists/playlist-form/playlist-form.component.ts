@@ -19,7 +19,7 @@ import { BaseFormDialogComponent } from '../../../../shared/components/base-form
   standalone: true,
   imports: [MatDialogActions, MatDialogContent, MatDialogTitle, MatButtonModule,
     ReactiveFormsModule, MatFormField, MatLabel, MatInput, CommonInputComponent,
-    CommonInputComponent, CommonTextareaComponent, MatMiniFabButton, MatIcon, MatDialogClose, MatTooltip, ReactiveFormsModule],
+    CommonInputComponent, CommonTextareaComponent, MatMiniFabButton, MatIcon, MatDialogClose, MatTooltip],
   templateUrl: './playlist-form.component.html',
   styleUrl: './playlist-form.component.scss'
 })

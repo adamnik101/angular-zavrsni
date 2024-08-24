@@ -1,1 +1,11 @@
-<p>common-select works!</p>
+<mat-form-field appearance="outline">
+    <mat-label>{{label}}</mat-label>
+    <mat-select [formControl]="formControlToFill">
+        @if(showDefaultValue) {
+            <mat-option [value]="null">Choose...</mat-option>
+        }
+        @for (option of options; track $index) {
+            <mat-option [value]="option.id">{{option.title}}</mat-option>
+        }
+    </mat-select>
+</mat-form-field>

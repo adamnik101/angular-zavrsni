@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AdminUsersService } from './services/api/admin-users.service';
 import { BackendTableComponent } from "../../../shared/components/backend-table/backend-table.component";
 import { AdminUsersTableService } from './services/table/admin-users-table.service';
+import { IUser } from '../../../core/interfaces/user/i-user';
+import { MatDialog } from '@angular/material/dialog';
+import { AddEditUserComponent } from './components/add-edit-user/add-edit-user.component';
 
 @Component({
   selector: 'app-admin-users',
@@ -14,10 +17,46 @@ export class AdminUsersComponent implements OnInit {
 
   constructor(
     public apiService: AdminUsersService,
-    public adminUsersTableService: AdminUsersTableService
+    public adminUsersTableService: AdminUsersTableService,
+    private matDialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    
+    this.setDefaultOperations();
+    this.setGroupOperations();
+  }
+
+  setDefaultOperations(): void {
+    this.adminUsersTableService.operations = [
+      {
+        title: "Add",
+        method: () => {
+          this.matDialog.open(AddEditUserComponent);
+        }
+      },
+      {
+        title: "Edit",
+        method: (row: IUser) => {
+          this.matDialog.open(AddEditUserComponent, {data: row});
+        }
+      },
+      {
+        title: "Delete",
+        method: (row: IUser) => {
+          console.log(row);
+        }
+      }
+    ];
+  }
+
+  setGroupOperations(): void {
+    this.adminUsersTableService.groupOperations = [
+      {
+        title: "Delete",
+        method: (row: IUser) => {
+          console.log(this.adminUsersTableService.selectedRowIds);
+        }
+      }
+    ]
   }
 }

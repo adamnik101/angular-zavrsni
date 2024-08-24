@@ -6,8 +6,17 @@
     padding-left: 12px;
 }
 
+.below-table {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    height: 70px;
+    .group-operations {
+        width: 175px;
+    }
+}
 .pagination-button-links {
-    margin-top: 15px;
     display: flex;
     flex-direction: row;
     gap: 5px;
@@ -23,13 +32,26 @@
         align-items: center;
         justify-content: center;
         &:hover {
-          color: #c4c4c4;
           cursor: pointer;
+        }
+        &:disabled {
+            background-color: $gray;
+            cursor: auto;
         }
     }
 
     .current-page {
-        background-color: $text-color-light;
-        color: $hover;
+        background-color: $main-color;
+        color: $background-color;
+    }
+}
+
+.showing {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    p{
+        font-size: 13px;
+        color: $text-color-light;
     }
 }

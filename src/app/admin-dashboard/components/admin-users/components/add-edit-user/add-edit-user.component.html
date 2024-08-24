@@ -1,0 +1,51 @@
+<div mat-dialog-title>
+    <div class="dialog-title">
+        <h3>
+            @if (isEdit) {
+                {{enumActions.Edit}}
+            } @else {
+                {{enumActions.Create}}
+            }
+            User
+        </h3>
+    
+        <button mat-mini-fab (click)="close()" matTooltip="Close" matTooltipPosition="above">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
+
+<div mat-dialog-content>
+    <form [formGroup]="form" class="user-form">
+
+    @if (isLoading) {
+        <div class="loading">
+            <mat-progress-spinner [diameter]="40" mode="indeterminate"></mat-progress-spinner>Loading...
+        </div>
+    } @else {
+        <app-common-input
+            [formControlToFill]="form.get('username')"
+            [label]="'Username'">
+        </app-common-input>
+
+        <app-common-input
+            [type]="commonInputType.email"
+            [label]="'Email'"
+            [formControlToFill]="form.get('email')">
+        </app-common-input>
+
+        <app-common-select
+            [formControlToFill]="form.get('roleId')"
+            [options]="dropdownData.roles"
+            [label]="'Role'">
+        </app-common-select>
+    }
+        
+    </form>
+        
+</div>
+
+<div mat-dialog-actions>
+    <button mat-flat-button [disabled]="form.invalid || (isTrackingChanges && !formChanged)" (click)="confirm()">{{confirmDialogActions.confirm}}</button>
+    <button class="warning-btn" mat-flat-button (click)="close()">{{confirmDialogActions.cancel}}</button>
+</div>

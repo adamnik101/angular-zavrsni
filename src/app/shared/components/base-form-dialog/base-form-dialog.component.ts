@@ -25,8 +25,10 @@ export abstract class BaseFormDialogComponent implements OnDestroy {
 
   protected formChanged: boolean = false;
 
-  private isTrackingChanges: boolean = false;
+  protected isTrackingChanges: boolean = false;
   private subscription: Subscription = new Subscription();
+
+  protected isLoading: boolean = false;
 
   trackBackdropClick(matDialogRef: MatDialogRef<any>): void {
     matDialogRef.disableClose = true;

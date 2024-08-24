@@ -1,32 +1,53 @@
 @if (tableService.data.data && tableService.data.data.length > 0) {
+    
     <table class="custom-table">
         <thead>
             <tr>
-                <th class="first">#</th>
-                @for(item of tableService.columns; track $index) {
-                    <th>{{item.title}}</th>    
+                @for(item of tableService.columns; track $index; let first = $first) {
+                    @if (first && item.id === 'select') {
+                        <th [ngClass]="{'first' : first}">
+                            <mat-checkbox [indeterminate]="tableService.selectedRowIds.length > 0 && tableService.selectedRowIds.length < tableService.data.data.length" [checked]="tableService.selectedRowIds.length === tableService.data.data.length" (change)="toggleCheckboxAll()"></mat-checkbox>
+                        </th>
+                    } @else {
+                        <th [ngClass]="{'first' : first}">{{item.title}}</th>
+                    }    
                 }
                 <th class="operations">Operations</th>
             </tr>
         </thead>
        
         <tbody>
-            @for(item of tableService.data.data; track $index; let even = $even) {
+            @for(item of tableService.data.data; track item.id; let even = $even) {
                 <tr [ngClass]="{'even' : even}">
-                    <td class="first">{{tableService.data.from! + $index}}</td>
-                    @for (column of tableService.columns; track $index) {
-                        <td>
-                            @if(item.hasOwnProperty(column.id)) {
-                                {{item[column.id]}}
-                            }
-                        </td>
+                    
+                    @for (column of tableService.columns; track $index; let first = $first) {
+                        @if (first && column.id === 'select') {
+                            <td [ngClass]="{'first' : first}">
+                                <mat-checkbox [checked]="tableService.selectedRowIds.includes(item.id)" (change)="toggleCheckbox($event, item)"></mat-checkbox>
+                            </td>
+                        } @else {
+                            <td [ngClass]="{'first' : first}">
+                                @if(item.hasOwnProperty(column.id)) {
+                                    @if(column.template) {
+                                        {{column.template(item)}}
+                                        
+                                    } @else {
+                                        {{item[column.id]}}
+                                    }
+                                }
+                            </td>
+                        }
                     }
                     <td class="operations">
                         <mat-form-field appearance="outline" class="custom-operations-form-field">
                             <mat-label>Operations</mat-label>
                             <mat-select matNativeSelect panelClass="custom-operations-select">    
-                                @for (operation of tableService.operations; track $index) {
-                                    <mat-option class="custom-mat-option" [value]="operation.title" (click)="operation.method(item)">{{operation.title}}</mat-option>
+                                @for (operation of tableService.operations; track $index; let first = $first) {
+                                    @if (first && operation.title === 'Add') {
+
+                                    } @else {
+                                        <mat-option class="custom-mat-option" [value]="operation.title" (click)="operation.method(item)">{{operation.title}}</mat-option>
+                                    }
                                 }
                             </mat-select>
                         </mat-form-field>
@@ -39,21 +60,48 @@
 
     </table>
 
-   <div class="pagination-button-links">
-    @for (item of tableService.data.links; track $index; let first = $first; let last = $last) {
-        @if(first) {
-            <button class="pagination-button" (click)="goToPage(item.url)" [disabled]="tableService.data.current_page === 1">
-                <mat-icon>arrow_left</mat-icon>
-            </button>
-        }        
-        @else if (last) {
-            <button class="pagination-button" (click)="goToPage(item.url)" [disabled]="tableService.data.current_page === tableService.data.last_page">
-                <mat-icon>arrow_right</mat-icon>
-            </button>
-        } @else {
-            <button class="pagination-button" (click)="goToPage(item.url)" [ngClass]="{'current-page' : item.active}">{{item.label}}</button>
+    <div class="below-table">
+        <div class="table-actions">
+            @if (tableService.operations && tableService.operations[0].title === 'Add') {
+                <button mat-fab extended class="custom-extended-fab-btn" (click)="tableService.operations[0].method()">
+                    <mat-icon>add</mat-icon>
+                    New
+                </button>
+            }
+        </div>
+        @if(tableService.groupOperations.length > 0) {
+            <div class="group-operations">
+                <mat-form-field appearance="outline" class="custom-group-operations-form-field" [matBadge]="tableService.selectedRowIds.length">
+                    <mat-label>Group Operations</mat-label>
+                    <mat-select [disabled]="tableService.selectedRowIds.length === 0" matNativeSelect panelClass="custom-operations-select">    
+                        @for (operation of tableService.groupOperations; track $index) {
+                            <mat-option class="custom-mat-option" [value]="operation.title" (click)="operation.method()">{{operation.title}}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
         }
-    }
-   </div>
+       <div class="pagination-button-links">
+            @for (item of tableService.data.links; track $index; let first = $first; let last = $last) {
+                @if(first) {
+                    <button class="pagination-button" (click)="goToPage(item.url)" [disabled]="tableService.data.current_page === 1">
+                        <mat-icon>arrow_left</mat-icon>
+                    </button>
+                }        
+                @else if (last) {
+                    <button class="pagination-button" (click)="goToPage(item.url)" [disabled]="tableService.data.current_page === tableService.data.last_page">
+                        <mat-icon>arrow_right</mat-icon>
+                    </button>
+                } @else {
+                    <button class="pagination-button" (click)="goToPage(item.url)" [ngClass]="{'current-page' : item.active}">{{item.label}}</button>
+                }
+            }
+        </div>
 
+        <div class="showing">
+            <p>{{tableService.data.from}} - {{tableService.data.to}} of {{tableService.data.total}}</p>
+        </div>
+    
+    </div>
+    
 }
