@@ -1,15 +1,59 @@
-@if (tableService.data.length > 0) {
-    
-    @for(item of tableService.columns; track $index) {
-        {{item.title}}
-    }
-@for(item of tableService.data; track $index) {
-    
+@if (tableService.data.data && tableService.data.data.length > 0) {
+    <table class="custom-table">
+        <thead>
+            <tr>
+                <th class="first">#</th>
+                @for(item of tableService.columns; track $index) {
+                    <th>{{item.title}}</th>    
+                }
+                <th class="operations">Operations</th>
+            </tr>
+        </thead>
+       
+        <tbody>
+            @for(item of tableService.data.data; track $index; let even = $even) {
+                <tr [ngClass]="{'even' : even}">
+                    <td class="first">{{tableService.data.from! + $index}}</td>
+                    @for (column of tableService.columns; track $index) {
+                        <td>
+                            @if(item.hasOwnProperty(column.id)) {
+                                {{item[column.id]}}
+                            }
+                        </td>
+                    }
+                    <td class="operations">
+                        <mat-form-field appearance="outline" class="custom-operations-form-field">
+                            <mat-label>Operations</mat-label>
+                            <mat-select matNativeSelect panelClass="custom-operations-select">    
+                                @for (operation of tableService.operations; track $index) {
+                                    <mat-option class="custom-mat-option" [value]="operation.title" (click)="operation.method(item)">{{operation.title}}</mat-option>
+                                }
+                            </mat-select>
+                        </mat-form-field>
+                        
+                    </td>
+                </tr>
+            }
+        </tbody>
+        
 
-    <div>
-        @for (item of tableService.operations; track $index) {
-            <button (click)="item.method(item)">{{item.title}}</button>
+    </table>
+
+   <div class="pagination-button-links">
+    @for (item of tableService.data.links; track $index; let first = $first; let last = $last) {
+        @if(first) {
+            <button class="pagination-button" (click)="goToPage(item.url)" [disabled]="tableService.data.current_page === 1">
+                <mat-icon>arrow_left</mat-icon>
+            </button>
+        }        
+        @else if (last) {
+            <button class="pagination-button" (click)="goToPage(item.url)" [disabled]="tableService.data.current_page === tableService.data.last_page">
+                <mat-icon>arrow_right</mat-icon>
+            </button>
+        } @else {
+            <button class="pagination-button" (click)="goToPage(item.url)" [ngClass]="{'current-page' : item.active}">{{item.label}}</button>
         }
-    </div>
-}
+    }
+   </div>
+
 }

@@ -1,0 +1,35 @@
+@import '../../global-styles/colors';
+
+.even {
+}
+.first {
+    padding-left: 12px;
+}
+
+.pagination-button-links {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    .pagination-button {
+        width: 30px;
+        height: 30px;
+        background: none;
+        border: none;
+        color: $text-color-light;
+        background-color: $hover;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &:hover {
+          color: #c4c4c4;
+          cursor: pointer;
+        }
+    }
+
+    .current-page {
+        background-color: $text-color-light;
+        color: $hover;
+    }
+}
