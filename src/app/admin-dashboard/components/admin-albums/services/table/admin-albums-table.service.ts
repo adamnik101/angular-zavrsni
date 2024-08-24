@@ -10,6 +10,10 @@ export class AdminAlbumsTableService extends TableService<IAlbum[]>{
 
   override columns: IColumn[] = [
     {
+      id: "select",
+      title: "Select"
+    },
+    {
       id: "name",
       title: "Name"
     },

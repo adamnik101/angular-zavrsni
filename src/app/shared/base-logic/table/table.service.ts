@@ -13,7 +13,11 @@ export class TableService<T> implements ITable<T> {
 
   operations: IOperation[] = [];
 
+  groupOperations: IOperation[] = [];
+
   columns: IColumn[] = [];
+
+  selectedRowIds: string[] = [];
   
   addDefaultOperation(): void {
     this.operations = [
@@ -30,5 +34,16 @@ export class TableService<T> implements ITable<T> {
         }
       }
     ];
+  }
+
+  setDefaultGroupOperations(): void {
+    this.groupOperations = [
+      {
+        title: "Delete",
+        method: (row: any) => {
+          console.log(row);
+        }
+      }
+    ]
   }
 }

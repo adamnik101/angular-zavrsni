@@ -1,0 +1,52 @@
+<div mat-dialog-title>
+    <div class="dialog-title">
+        <h3>
+            @if (isEdit) {
+                {{enumActions.Edit}}
+            } @else {
+                {{enumActions.Create}}
+            }
+            Track
+        </h3>
+    
+        <button mat-mini-fab (click)="close()" matTooltip="Close" matTooltipPosition="above">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
+
+<div mat-dialog-content>
+    <form [formGroup]="form" class="track-form">
+
+    @if (isLoading) {
+        <div class="loading">
+            <mat-progress-spinner [diameter]="40" mode="indeterminate"></mat-progress-spinner>Loading...
+        </div>
+    } @else {
+        <app-common-input
+            [formControlToFill]="form.get('title')"
+            [label]="'Title'">
+        </app-common-input>
+
+
+        <app-common-select
+            [formControlToFill]="form.get('ownerId')"
+            [options]="dropdownData.artists"
+            [label]="'Owner'">
+        </app-common-select>
+
+        <app-common-select
+            [formControlToFill]="form.get('albumId')"
+            [options]="dropdownData.albums"
+            [label]="'Albums'">
+        </app-common-select>
+    }
+        
+    </form>
+        
+</div>
+
+<div mat-dialog-actions>
+    <button mat-flat-button [disabled]="form.invalid || (isTrackingChanges && !formChanged)" (click)="confirm()">{{confirmDialogActions.confirm}}</button>
+    <button class="warning-btn" mat-flat-button (click)="close()">{{confirmDialogActions.cancel}}</button>
+</div>

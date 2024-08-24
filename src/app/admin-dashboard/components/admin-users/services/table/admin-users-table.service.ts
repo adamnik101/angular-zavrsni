@@ -11,8 +11,23 @@ export class AdminUsersTableService extends TableService<IUser[]>{
 
   override columns: IColumn[] = [
     {
+      id: "select",
+      title: "Select"
+    },
+    {
       id: "username",
       title: "Username"
+    },
+    {
+      id: "email",
+      title: "Email"
+    },
+    {
+      id: "role",
+      title: "Role",
+      template: (user: IUser) => {
+        return user.role.name;
+      }
     }
   ];
 }
