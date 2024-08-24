@@ -6,6 +6,7 @@ import { AudioPlayerComponent } from "../core/components/audio-player/audio-play
 import { QueueComponent } from '../core/components/queue/queue.component';
 import { QueueService } from '../core/services/queue/base/queue.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { UserService } from '../core/user/services/user/user.service';
 
 @Component({
   selector: 'app-layout',
@@ -25,7 +26,8 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 export class LayoutComponent implements OnInit {
 
   constructor(
-    public queueService: QueueService
+    public queueService: QueueService,
+    public userService: UserService
   ) {
     effect(() => {
       const currentTrack = this.queueService.getCurrentTrack();

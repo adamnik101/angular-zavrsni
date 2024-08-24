@@ -1,4 +1,6 @@
+import { IPagedResponse } from "./i-paged-response";
+
 export interface ITable<T> {
-    data: T[];
+    data: IPagedResponse<T>;
     
 }
