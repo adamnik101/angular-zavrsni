@@ -32,14 +32,36 @@
         <app-common-select
             [formControlToFill]="form.get('ownerId')"
             [options]="dropdownData.artists"
-            [label]="'Owner'">
+            [label]="'Owner'"
+            [disabledOptionIds]="disabledOwners"
+            (onSelect)="onOwnerChange($event)">
+        </app-common-select>
+
+        <app-common-select
+            [formControlToFill]="form.get('features')"
+            [options]="dropdownData.artists"
+            [mulitple]="true"
+            [disabledOptionIds]="disabledFeatures"
+            (onSelect)="onFeatureChange($event)"
+            [label]="'Features'">
         </app-common-select>
 
         <app-common-select
             [formControlToFill]="form.get('albumId')"
             [options]="dropdownData.albums"
-            [label]="'Albums'">
+            [label]="'Album'">
         </app-common-select>
+
+        <app-common-select
+            [formControlToFill]="form.get('genreId')"
+            [options]="dropdownData.genres"
+            [label]="'Genre'">
+        </app-common-select>
+
+        <app-common-radio-checkbox
+            [formControlToFill]="form.get('explicit')"
+            [label]="'Is explicit?'">
+        </app-common-radio-checkbox>
     }
         
     </form>

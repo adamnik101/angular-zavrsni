@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ArtistsService } from '../../../../../core/services/artists/base/artists.service';
 import { forkJoin, Observable } from 'rxjs';
-import { IArtist } from '../../../../../core/interfaces/artist/i-artist';
 import { AlbumsService } from '../../../../../core/services/albums/base/albums.service';
-import { IApiResponse } from '../../../../../shared/interfaces/i-api-response';
-import { IAlbum } from '../../../../../core/interfaces/album/i-album';
+import { API_ENDPOINTS } from '../../../../../core/config/api-endpoints';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +35,14 @@ export class AlbumFormRequestsService {
   }
 
   getArtists(): Observable<any> {
-    return this.artistsService.getAll<IArtist[]>();
+    return this.artistsService.getWithOverideEndpoint(API_ENDPOINTS.admin.artists);
+  }
+
+  submitUpdate(id: string, dataToSend: any): Observable<any> {
+    return this.apiService.postAsPatch(id, dataToSend);
+  }
+
+  submitInsert(dataToSend: any): Observable<any> {
+    return this.apiService.post(dataToSend);
   }
 }

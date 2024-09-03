@@ -45,7 +45,10 @@
                                 @for (operation of tableService.operations; track $index; let first = $first) {
                                     @if (first && operation.title === 'Add') {
 
-                                    } @else {
+                                    } @else if (operation.title === 'Delete' && !operation.hasOwnProperty('method')) {
+                                        <mat-option class="custom-mat-option" [value]="operation.title" (click)="deleteItem(item)">{{operation.title}}</mat-option>
+                                    } 
+                                    @else {
                                         <mat-option class="custom-mat-option" [value]="operation.title" (click)="operation.method(item)">{{operation.title}}</mat-option>
                                     }
                                 }
@@ -62,7 +65,7 @@
 
     <div class="below-table">
         <div class="table-actions">
-            @if (tableService.operations && tableService.operations[0].title === 'Add') {
+            @if (tableService.operations.length && tableService.operations[0].title === 'Add') {
                 <button mat-fab extended class="custom-extended-fab-btn" (click)="tableService.operations[0].method()">
                     <mat-icon>add</mat-icon>
                     New
@@ -75,7 +78,11 @@
                     <mat-label>Group Operations</mat-label>
                     <mat-select [disabled]="tableService.selectedRowIds.length === 0" matNativeSelect panelClass="custom-operations-select">    
                         @for (operation of tableService.groupOperations; track $index) {
-                            <mat-option class="custom-mat-option" [value]="operation.title" (click)="operation.method()">{{operation.title}}</mat-option>
+                            @if(operation.title === 'Delete' && !operation.hasOwnProperty('method')) {
+                                <mat-option class="custom-mat-option" [value]="operation.title" (click)="deleteMany()">{{operation.title}}</mat-option>
+                            } @else {
+                                <mat-option class="custom-mat-option" [value]="operation.title" (click)="operation.method()">{{operation.title}}</mat-option>
+                            }
                         }
                     </mat-select>
                 </mat-form-field>

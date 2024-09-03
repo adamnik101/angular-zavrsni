@@ -28,6 +28,7 @@ export class AdminUsersTableService extends TableService<IUser[]>{
       template: (user: IUser) => {
         return user.role.name;
       }
-    }
+    },
+    ...this.dateActionColumns
   ];
 }

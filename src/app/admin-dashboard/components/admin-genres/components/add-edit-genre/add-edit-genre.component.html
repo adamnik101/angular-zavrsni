@@ -1,0 +1,57 @@
+<div mat-dialog-title>
+    <div class="dialog-title">
+        <h3>
+            @if (isEdit) {
+                {{enumActions.Edit}}
+            } @else {
+                {{enumActions.Create}}
+            }
+            Genre
+        </h3>
+    
+        <button mat-mini-fab (click)="close()" matTooltip="Close" matTooltipPosition="above">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
+
+<div mat-dialog-content>
+    <form [formGroup]="form" class="genre-form">
+
+    @if (isLoading) {
+        <div class="loading">
+            <mat-progress-spinner [diameter]="40" mode="indeterminate"></mat-progress-spinner>Loading...
+        </div>
+    } @else {
+            <div class="form">
+                <div class="row common-input-display">
+                    <app-common-input
+                        [formControlToFill]="form.get('name')"
+                        [label]="'Genre name'">
+                    </app-common-input>
+                </div>
+
+                <div class="image">
+                    <img src="{{form.get('imagePath')?.value ? form.get('imagePath')?.value : '/images/empty-playlist.png'}}"/>
+                    <div class="change-image">
+                        <button class="change-image-btn" (click)="imageUpload.click()" mat-mini-fab matTooltip="Change image" matTooltipPosition="above">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        
+                        <input formControlName="imageChange" type="file" accept="image/jpg,image/png" hidden #imageUpload (change)="onImageChange($event)"/>
+                    </div>
+                </div>
+            </div>
+            
+
+            
+    }
+        
+    </form>
+        
+</div>
+
+<div mat-dialog-actions>
+    <button mat-flat-button [disabled]="form.invalid || (isTrackingChanges && !formChanged)" (click)="confirm()">{{confirmDialogActions.confirm}}</button>
+    <button class="warning-btn" mat-flat-button (click)="close()">{{confirmDialogActions.cancel}}</button>
+</div>

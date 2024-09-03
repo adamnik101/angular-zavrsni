@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ApiService } from '../../base-logic/api/api.service';
 import { TableService } from '../../base-logic/table/table.service';
 import { MatFormField, MatLabel, MatOption, MatSelect } from '@angular/material/select';
@@ -10,6 +10,11 @@ import { HttpClient } from '@angular/common/http';
 import { SpinnerFunctions } from '../../../core/static/spinner-functions';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatBadge } from '@angular/material/badge';
+import { AlertService } from '../../services/alert/alert.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogWithActionsComponent } from '../confirm-dialog-with-actions/confirm-dialog-with-actions.component';
+import { ConfirmDialogActions } from '../confirm-dialog-with-actions/enums/confirm-dialog-actions';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-backend-table',
@@ -18,16 +23,22 @@ import { MatBadge } from '@angular/material/badge';
   templateUrl: './backend-table.component.html',
   styleUrl: './backend-table.component.scss'
 })
-export class BackendTableComponent implements OnInit{
+export class BackendTableComponent implements OnInit, OnDestroy{
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private alertService: AlertService,
+    private matDialog: MatDialog
   ) {}
 
   @Input() public apiService: ApiService<any> = {} as ApiService<any>;
   @Input() public tableService: TableService<any> = {} as TableService<any>;
 
+  private subscription: Subscription = new Subscription();
+
   ngOnInit(): void {
+    this.tableService.apiService = this.apiService;
+    
     SpinnerFunctions.showSpinner();
     this.tableService.data = {} as IPagedResponse<any>;
     
@@ -61,6 +72,75 @@ export class BackendTableComponent implements OnInit{
     this.tableService.selectedRowIds.push(row.id)
   }
 
+  deleteItem(item: any): void {
+    this.subscription.add(
+      this.matDialog.open(ConfirmDialogWithActionsComponent, {
+        width: '500px',
+        height: 'auto',
+        data: {
+          header: 'Delete',
+          message: `Are you sure you want to delete?`,
+          actions: [ConfirmDialogActions.confirm]
+        }
+      }).afterClosed().subscribe({
+        next: (data) => {
+          if(data) {
+            if(this.apiService) {
+              SpinnerFunctions.showSpinner();
+              this.apiService.delete(item.id).subscribe({
+                next: (data) => {
+                  this.alertService.showDefaultMessage("Successfuly deleted.");
+                  this.tableService.refreshStorage();
+                  SpinnerFunctions.hideSpinner();
+                },
+                error: (err) => {
+                  this.alertService.showErrorMessage("Error while deleting, please try again later...")
+                  SpinnerFunctions.hideSpinner();
+                }
+              })
+            }
+          }
+        }
+      })
+    );
+  }
+
+  deleteMany(): void {
+    this.subscription.add(
+      this.matDialog.open(ConfirmDialogWithActionsComponent, {
+        width: '500px',
+        height: 'auto',
+        data: {
+          header: 'Group Delete',
+          message: `Are you sure you want to delete selected items?`,
+          actions: [ConfirmDialogActions.confirm]
+        }
+      }).afterClosed().subscribe({
+        next: (data) => {
+          if(data) {
+            if(this.apiService) {
+              SpinnerFunctions.showSpinner();
+              this.apiService.deleteMany(this.tableService.selectedRowIds).subscribe({
+                next: (data) => {
+                  this.alertService.showDefaultMessage("Successfuly deleted.");
+                  this.tableService.refreshStorage();
+                  SpinnerFunctions.hideSpinner();
+                },
+                error: (err) => {
+                  this.alertService.showErrorMessage("Error while deleting, please try again later...")
+                  SpinnerFunctions.hideSpinner();
+                },
+                complete: () => {
+                  this.tableService.selectedRowIds = [];
+                }
+              })
+            }
+          }
+        }
+      })
+    );
+  }
+
   goToPage(url: string | null): void {
     if(url) {
       this.http.get<IPagedResponse<any>>(url).subscribe({
@@ -68,7 +148,11 @@ export class BackendTableComponent implements OnInit{
           this.tableService.data = response.data;
           this.tableService.selectedRowIds = [];
         }
-      })
+      });
     }
+  }
+
+  ngOnDestroy(): void {
+    
   }
 }

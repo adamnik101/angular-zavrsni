@@ -55,8 +55,8 @@ export class AddEditAlbumsComponent extends BaseFormDialogComponent implements O
   fillForm(): void {
     this.isLoading = true;
     this.baseForm.fillForm(this.id).subscribe({
-      next: (data: {artists: IApiResponse<IArtist[]>}) => {
-        this.dropdownData.artists = data.artists.data.map(x => {return {id: x.id, title: x.name}}) as any;
+      next: (data: any) => {
+        this.dropdownData.artists = data.artists.data.map((x: IArtist) => {return {id: x.id, title: x.name}}) as any;
         
         this.isLoading = false;
       }
@@ -79,6 +79,18 @@ export class AddEditAlbumsComponent extends BaseFormDialogComponent implements O
   }
 
   confirm(): void {
-
+    if(this.isEdit) {
+      this.baseForm.submitUpdate(this.id).subscribe({
+        next: (response) => {
+          this.matDialogRef.close(true);
+        } 
+      });
+    } else {
+      this.baseForm.submitInsert().subscribe({
+        next: (response) => {
+          this.matDialogRef.close(true);
+        }
+      });
+    }
   }
 }

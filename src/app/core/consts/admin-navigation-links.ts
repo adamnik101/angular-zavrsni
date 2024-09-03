@@ -22,8 +22,14 @@ export const ADMIN_NAVIGATION_LINKS: IMainNavigationLink[] = [
         icon: "album"
     },
     {
+        title: "Manage genres",
+        routePath: "/admin/genres",
+        icon: "speaker_group"
+    },
+    {
         title: "Manage users",
         routePath: "/admin/users",
         icon: "people"
-    }
+    },
+    
 ]

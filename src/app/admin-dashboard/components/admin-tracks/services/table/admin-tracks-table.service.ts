@@ -39,6 +39,7 @@ export class AdminTracksTableService extends TableService<ITrack[]>{
     {
       id: "track_plays_count",
       title: "Plays"
-    }
+    },
+    ...this.dateActionColumns
   ];
 }

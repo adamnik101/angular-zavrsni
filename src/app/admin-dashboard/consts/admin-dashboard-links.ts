@@ -16,6 +16,11 @@ export const ADMIN_DASHBOARD_LINKS: ITabMenu = {
             id: "albums",
             title: "Albums",
             routePath: "/admin/albums"
+        },
+        {
+            id: "genres",
+            title: "Genres",
+            routePath: "/admin/genres"
         }
     ]
 }

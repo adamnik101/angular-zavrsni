@@ -41,10 +41,7 @@ export class AdminUsersComponent implements OnInit {
         }
       },
       {
-        title: "Delete",
-        method: (row: IUser) => {
-          console.log(row);
-        }
+        title: "Delete"
       }
     ];
   }
