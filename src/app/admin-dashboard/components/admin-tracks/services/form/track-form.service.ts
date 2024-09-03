@@ -4,6 +4,7 @@ import { TrackRequestsService } from '../requests/track-requests.service';
 import { IFormService } from '../../../../../shared/interfaces/i-form-service';
 import { Observable, tap } from 'rxjs';
 import { ITrack } from '../../../../../core/interfaces/tracks/i-track';
+import { IArtist } from '../../../../../core/interfaces/artist/i-artist';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,12 @@ export class TrackFormService implements IFormService{
     return this.fb.group({
       title: this.fb.control("", [Validators.required]),
       ownerId: this.fb.control("", [Validators.required]),
-      albumId: this.fb.control("")
+      features: this.fb.control(""),
+      albumId: this.fb.control(""),
+      path: this.fb.control(""),
+      duration: this.fb.control(""),
+      explicit: this.fb.control(""),
+      genreId: this.fb.control("")
     });
   }
   
@@ -41,6 +47,26 @@ export class TrackFormService implements IFormService{
     this.form.get('albumId')?.setValue(id);
   }
 
+  setPath(path: string): void {
+    this.form.get("path")?.setValue(path);
+  }
+
+  setDuration(duration: any): void {
+    this.form.get("duration")?.setValue(duration);
+  }
+
+  setExplicit(explicit: any): void {
+    this.form.get("explicit")?.setValue(explicit);
+  }
+
+  setGenreId(genreId: string): void {
+    this.form.get("genreId")?.setValue(genreId);
+  }
+
+  setFeatures(features: IArtist[]): void {
+    this.form.get('features')?.setValue(features.map(x => x.id));
+  }
+
   fillForm(track: ITrack): Observable<any> {
     return this.trackRequestsService.getDataFromRequestsById(null).pipe(tap({
       next: (data: any) => {
@@ -48,6 +74,11 @@ export class TrackFormService implements IFormService{
             this.setTitle(track.title);
             this.setOwnerId(track.owner.id);
             this.setAlbumId(track.album ? track.album.id : "");
+            this.setPath(track.path);
+            this.setDuration(track.duration);
+            this.setExplicit(track.explicit);
+            this.setGenreId(track.genre_id);
+            this.setFeatures(track.features);
           }
         }
     }))

@@ -30,22 +30,31 @@ export class AdminAlbumsComponent implements OnInit {
   setDefaultOperations(): void {
     this.tableService.operations = [
       {
-        title: "Add",
+        title: "Add", 
         method: (event: any) => {
-          this.matDialog.open(AddEditAlbumsComponent, {data: null})
+          this.matDialog.open(AddEditAlbumsComponent, {data: null}).afterClosed().subscribe({
+            next: (data) => {
+              if(data) {
+                this.tableService.refreshStorage();
+              }
+            }
+          })
         }
       },
       {
         title: "Edit",
         method: (album: IAlbum) => {
-          this.matDialog.open(AddEditAlbumsComponent, {data: album})
+          this.matDialog.open(AddEditAlbumsComponent, {data: album}).afterClosed().subscribe({
+            next: (data) => {
+              if(data) {
+                this.tableService.refreshStorage();
+              }
+            }
+          })
         }
       },
       {
-        title: "Delete",
-        method: (album: IAlbum) => {
-          console.log(album);
-        }
+        title: "Delete"
       }
     ];
   }
@@ -53,10 +62,7 @@ export class AdminAlbumsComponent implements OnInit {
   setGroupOperations(): void {
     this.tableService.groupOperations = [
       {
-        title: "Delete",
-        method: () => {
-          console.log(this.tableService.selectedRowIds)
-        }
+        title: "Delete"
       }
     ]
   }

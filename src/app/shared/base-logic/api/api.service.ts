@@ -18,8 +18,8 @@ export abstract class ApiService<T> {
 
   private baseUrl: string = "";
 
-  getAll<T>(): Observable<IApiResponse<T>> {
-    return this.http.get<IApiResponse<T>>(`${this.baseUrl + this.endpoint}`);
+  getAll<T>(params?: any): Observable<IApiResponse<T>> {
+    return this.http.get<IApiResponse<T>>(`${this.baseUrl + this.endpoint}?${params ? params.join("&"): ""}`);
   }
 
   get<T>(id: string): Observable<IApiResponse<T>> {
@@ -48,5 +48,9 @@ export abstract class ApiService<T> {
 
   delete<T>(id: string): Observable<IApiResponse<T>> {
     return this.http.delete<IApiResponse<T>>(`${this.baseUrl + this.endpoint}/${id}`);
+  }
+
+  deleteMany<T>(ids: string[]): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl + this.endpoint}/delete-many`, {data: ids});
   }
 }

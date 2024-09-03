@@ -4,6 +4,7 @@ import { AdminTracksComponent } from "../components/admin-tracks/admin-tracks.co
 import { AdminArtistsComponent } from "../components/admin-artists/admin-artists.component";
 import { AdminDashboardComponent } from "../admin-dashboard.component";
 import { AdminAlbumsComponent } from "../components/admin-albums/admin-albums.component";
+import { AdminGenresComponent } from "../components/admin-genres/admin-genres.component";
 
 export const ADMIN_ROUTES: Route[] = [
     {
@@ -25,6 +26,10 @@ export const ADMIN_ROUTES: Route[] = [
     {
         path: "albums",
         component: AdminAlbumsComponent
+    },
+    {
+        path: "genres",
+        component: AdminGenresComponent
     },
     {
         path: "",

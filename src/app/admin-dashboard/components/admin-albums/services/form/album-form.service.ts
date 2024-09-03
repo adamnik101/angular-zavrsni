@@ -20,6 +20,7 @@ export class AlbumFormService implements IFormService{
   init(): UntypedFormGroup {
     return this.fb.group({
       name: this.fb.control("", [Validators.required]),
+      image: this.fb.control(null),
       imagePath: this.fb.control(""),
       imageChange: this.fb.control(""),
       releaseYear: this.fb.control(null, [Validators.required]),
@@ -62,6 +63,34 @@ export class AlbumFormService implements IFormService{
         }
       }
     }))
+  }
+
+  submitUpdate(id: string | null): Observable<any> {
+    let dataToSend = this.prepareDataToSend();
+
+    return this.albumsFormRequestsService.submitUpdate(id ?? '', dataToSend);
+  }
+
+  submitInsert(): Observable<any>{
+    let dataToSend = this.prepareDataToSend();
+
+    return this.albumsFormRequestsService.submitInsert(dataToSend);
+  }
+
+  prepareDataToSend(): any {
+    const formData = new FormData();
+
+    if(this.form.get("image")?.value) {
+      formData.append('cover', this.form.get("image")?.value)
+    }
+
+    formData.append('name', this.form.get("name")?.value)
+
+    formData.append('release_year', this.form.get("releaseYear")?.value)
+
+    formData.append('artist_id', this.form.get("artistId")?.value)
+
+    return formData;
   }
 
   reset(): void {

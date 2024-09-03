@@ -72,7 +72,6 @@ export class PlaylistsFormService implements IFormService{
 
     formData.append('description', this.form.get("description")?.value)
 
-    console.log(formData)
     return formData;
   }
 

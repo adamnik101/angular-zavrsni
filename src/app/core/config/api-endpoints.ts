@@ -1,6 +1,9 @@
 export const API_ENDPOINTS = {
     admin: {
-        dashboard: "admin/dashboard"
+        dashboard: "admin/dashboard",
+        albums: "admin/albums",
+        artists: "admin/artists",
+        genres: "admin/genres"
     },
     auth: {
         login: "auth/login",

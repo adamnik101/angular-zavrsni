@@ -13,11 +13,18 @@ import { ITrack } from '../../../../../core/interfaces/tracks/i-track';
 import { ConfirmDialogActions } from '../../../../../shared/components/confirm-dialog-with-actions/enums/confirm-dialog-actions';
 import { EnumActions } from '../../../../../shared/enums/enum-actions';
 import { CommonInputType } from '../../../../../shared/form-fields/common-input/interfaces/i-common-input';
+import { CommonRadioCheckboxComponent } from '../../../../../shared/form-fields/common-radio-checkbox/common-radio-checkbox.component';
+import { distinctUntilChanged, Subscription } from 'rxjs';
+import { IArtist } from '../../../../../core/interfaces/artist/i-artist';
+import { IAlbum } from '../../../../../core/interfaces/album/i-album';
+import { ISelectOption } from '../../../../../shared/interfaces/i-select-option';
+import { AlertService } from '../../../../../shared/services/alert/alert.service';
 
 @Component({
   selector: 'app-add-edit-track',
   standalone: true,
-  imports: [MatIcon, MatFormField, MatButton, MatMiniFabButton, MatProgressSpinner,ReactiveFormsModule, CommonInputComponent, CommonSelectComponent, MatDialogTitle, MatDialogContent, MatDialogClose, MatDialogActions],
+  imports: [MatIcon, MatFormField, MatButton, MatMiniFabButton, MatProgressSpinner,ReactiveFormsModule, CommonInputComponent, 
+    CommonSelectComponent, MatDialogTitle, MatDialogContent, MatDialogClose, MatDialogActions, CommonRadioCheckboxComponent],
   templateUrl: './add-edit-track.component.html',
   styleUrl: './add-edit-track.component.scss'
 })
@@ -27,7 +34,8 @@ export class AddEditTrackComponent extends BaseFormDialogComponent {
     protected override matDialog: MatDialog,
     protected override matDialogRef: MatDialogRef<AddEditTrackComponent>,
     protected override baseForm: TrackFormService,
-    @Inject(MAT_DIALOG_DATA) public data: ITrack
+    @Inject(MAT_DIALOG_DATA) public data: ITrack,
+    private alertService: AlertService
   ) {
     super(matDialog, matDialogRef, baseForm);
   }
@@ -41,8 +49,14 @@ export class AddEditTrackComponent extends BaseFormDialogComponent {
   id: string | null = null;
   dropdownData = {
     artists: [],
-    albums: []
+    albums: [],
+    genres: []
   };
+
+  disabledOwners: string[] = [];
+  disabledFeatures: string[] = [];
+
+  private sub: Subscription = new Subscription();
 
   ngOnInit(): void {
     if(this.data && this.data.id) {
@@ -54,18 +68,56 @@ export class AddEditTrackComponent extends BaseFormDialogComponent {
     this.fillForm();
   }
 
+  trackOwner(): void {
+    this.sub.add(
+      this.form.get("ownerId")?.valueChanges.pipe(distinctUntilChanged()).subscribe({
+        next: (id: string) => {
+
+          if(id !== null) {
+            const ownerIndex = this.dropdownData.artists.findIndex((x: IArtist) => x.id === id);
+
+            const owner: IArtist = this.dropdownData.artists[ownerIndex];
+            if(owner) {
+              this.disabledFeatures = [owner.id];
+              (this.dropdownData.albums as ISelectOption[]) = owner.albums.map(x => {return {id: x.id, title: x.name}});
+              if(!owner.albums.length) {
+                  this.form.get('albumId')?.disable();
+              } else {
+                this.form.get('albumId')?.enable();
+              }
+            }
+          } else {
+            this.dropdownData.albums = [];
+            this.disabledFeatures = [];
+          }
+        }
+      })
+    );
+  }
+
+  onOwnerChange(event: any): void {
+    this.form.get('albumId')?.setValue(null);
+  }
+
+  onFeatureChange(event: any): void {
+    this.disabledOwners = this.form.get('features')?.value;
+  }
+
   fillForm(): void {
     this.isLoading = true;
     this.baseForm.fillForm(this.data).subscribe({
       next: (data: any) => {
-
         console.log(data);
-        this.dropdownData.albums = data.albums.data.data.map((x: any) => {return {id: x.id, title: x.name}});
-        this.dropdownData.artists = data.artists.data.map((x: any) => {return {id: x.id, title: x.name}});
+        // this.dropdownData.albums = data.albums.data.map((x: any) => {return {id: x.id, title: x.name}});
+        this.dropdownData.artists = data.artists.data.map((x: any) => {return {id: x.id, title: x.name, albums: x.albums}});
+        this.dropdownData.genres = data.genres.data.map((x: any) => {return {id: x.id, title: x.name}});
 
-        console.log(this.dropdownData)
-        // this.dropdownData.roles = data.roles.data.map((x: any) => {return {id: x.id, title: x.name}}) as any;
+        if(this.data) {
+          this.disabledOwners = this.data.features.map(x => x.id);
+        }
         this.isLoading = false;
+
+        this.trackOwner();
       }
     })
   }

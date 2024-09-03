@@ -41,10 +41,7 @@ export class AdminTracksComponent implements OnInit {
         }
       },
       {
-        title: "Delete",
-        method: (row: ITrack) => {
-          console.log(row);
-        }
+        title: "Delete"
       }
     ];
   }
@@ -52,10 +49,7 @@ export class AdminTracksComponent implements OnInit {
   setGroupOperations(): void {
     this.tableService.groupOperations = [
       {
-        title: "Delete",
-        method: (row: ITrack) => {
-          console.log(this.tableService.selectedRowIds);
-        }
+        title: "Delete"
       }
     ];
   }

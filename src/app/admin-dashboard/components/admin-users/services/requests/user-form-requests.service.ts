@@ -38,4 +38,12 @@ export class UserFormRequestsService {
   getRoles(): Observable<any> {
     return this.rolesService.getAll();
   }
+
+  submitInsert(dataToSend: any): Observable<any> {
+    return this.userService.post(dataToSend);
+  }
+
+  submitUpdate(id: any, dataToSend: any): Observable<any> {
+    return this.userService.patch(id, dataToSend);
+  }
 }

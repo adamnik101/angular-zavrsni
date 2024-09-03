@@ -3,6 +3,8 @@ import { forkJoin, Observable } from 'rxjs';
 import { TracksService } from '../../../../../core/services/tracks/base/tracks.service';
 import { AlbumsService } from '../../../../../core/services/albums/base/albums.service';
 import { ArtistsService } from '../../../../../core/services/artists/base/artists.service';
+import { API_ENDPOINTS } from '../../../../../core/config/api-endpoints';
+import { GenreService } from '../../../../../core/services/genre/base/genre.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,8 @@ export class TrackRequestsService {
   constructor(
     private apiService: TracksService,
     private albumsService: AlbumsService,
-    private artistsService: ArtistsService
+    private artistsService: ArtistsService,
+    private genreService: GenreService
   ) { }
 
   getDataFromRequestsById(id: string | null = null): Observable<any> {
@@ -20,9 +23,11 @@ export class TrackRequestsService {
       albums: any,
       artists: any,
       track?: any;
+      genres: any;
     } = {
       albums: this.getAlbums(),
-      artists: this.getArtists()
+      artists: this.getArtists(),
+      genres: this.getGenres()
     };
 
     if(id !== null) {
@@ -37,10 +42,14 @@ export class TrackRequestsService {
   }
 
   getArtists(): Observable<any> {
-    return this.artistsService.getAll();
+    return this.artistsService.getWithOverideEndpoint(API_ENDPOINTS.admin.artists);
   }
 
   getAlbums(): Observable<any> {
-    return this.albumsService.getAll();
+    return this.albumsService.getWithOverideEndpoint(API_ENDPOINTS.admin.albums);
+  }
+
+  getGenres(): Observable<any> {
+    return this.genreService.getAll();
   }
 }

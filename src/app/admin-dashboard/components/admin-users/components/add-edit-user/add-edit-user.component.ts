@@ -13,6 +13,7 @@ import { CommonInputComponent } from '../../../../../shared/form-fields/common-i
 import { CommonSelectComponent } from '../../../../../shared/form-fields/common-select/common-select.component';
 import { MatButton, MatMiniFabButton } from '@angular/material/button';
 import { CommonInputType } from '../../../../../shared/form-fields/common-input/interfaces/i-common-input';
+import { UserFormRequestsService } from '../../services/requests/user-form-requests.service';
 
 @Component({
   selector: 'app-add-edit-user',
@@ -27,7 +28,8 @@ export class AddEditUserComponent extends BaseFormDialogComponent implements OnI
     protected override matDialog: MatDialog,
     protected override matDialogRef: MatDialogRef<AddEditUserComponent>,
     protected override baseForm: UserFormService,
-    @Inject(MAT_DIALOG_DATA) public data: IUser
+    @Inject(MAT_DIALOG_DATA) public data: IUser,
+    private requestsService: UserFormRequestsService
   ) {
     super(matDialog,matDialogRef, baseForm);
   }
@@ -78,7 +80,28 @@ export class AddEditUserComponent extends BaseFormDialogComponent implements OnI
     }
   }
 
-  confirm(): void {
+  prepareDataToSend(): any {
+    let formValue = this.form.getRawValue();
 
+    console.log(formValue);
+
+    return formValue;
+  }
+
+  confirm(): void {
+    let dataToSend = this.prepareDataToSend();
+    if(!this.isEdit) {
+      this.requestsService.submitInsert(dataToSend).subscribe({
+        next: (data) => {
+          console.log(data);
+        }
+      });
+    } else {
+      this.requestsService.submitUpdate(this.id, dataToSend).subscribe({
+        next: (data) => {
+          console.log(data);
+        }
+      });
+    }
   }
 }

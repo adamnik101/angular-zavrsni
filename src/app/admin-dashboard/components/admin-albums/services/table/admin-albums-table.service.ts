@@ -24,6 +24,7 @@ export class AdminAlbumsTableService extends TableService<IAlbum[]>{
     {
       id: "tracks_count",
       title: "No. of Tracks"
-    }
+    },
+    ...this.dateActionColumns
   ];
 }
