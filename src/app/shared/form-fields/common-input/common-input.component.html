@@ -13,9 +13,8 @@
             <mat-icon matIconPrefix>{{iconSuffix}}</mat-icon>
         }
 
-        
+        @if (showError) {
             <mat-error>
-                @if (showError) {
                 @if (formControlToFill.hasError('required')) {
                     {{label}} is required
                 }
@@ -35,8 +34,8 @@
                 @if (formControlToFill.hasError('confirm')) {
                     Passwords must match
                 }
+            </mat-error>    
         }
 
-            </mat-error>    
     </mat-form-field>
 </div>

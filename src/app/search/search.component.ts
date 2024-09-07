@@ -7,11 +7,14 @@ import { Subscription } from 'rxjs';
 import { SpinnerFunctions } from '../core/static/spinner-functions';
 import { AlbumCardComponent } from '../core/components/albums/album-card/album-card.component';
 import { ArtistCardComponent } from '../core/components/artists/artist-card/artist-card.component';
+import { SectionHeaderComponent } from "../core/components/section-header/section-header.component";
+import { TracksTableComponent } from "../core/components/tracks/tracks-table/tracks-table.component";
+import { TracksTableService } from '../core/services/tracks/table/tracks-table.service';
 
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [NoResultsComponent, AlbumCardComponent, ArtistCardComponent],
+  imports: [NoResultsComponent, AlbumCardComponent, ArtistCardComponent, SectionHeaderComponent, TracksTableComponent],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss'
 })
@@ -19,7 +22,8 @@ export class SearchComponent implements OnInit, OnDestroy{
 
   constructor(
     public searchService: SearchService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private tracksTableService: TracksTableService
   ) { }
 
   private subscription: Subscription = new Subscription();
@@ -51,6 +55,11 @@ export class SearchComponent implements OnInit, OnDestroy{
     this.searchService.getWithQueryParams<ISearchResult>([`query=${query}`]).subscribe({
       next: (response) => {
         this.searchService.results.set(response.data);
+
+        if(this.searchService.results()?.tracks.total) {
+          this.tracksTableService.setTracks(this.searchService.results()?.tracks.data!);
+        }
+        
         SpinnerFunctions.hideSpinner();
       }
     })

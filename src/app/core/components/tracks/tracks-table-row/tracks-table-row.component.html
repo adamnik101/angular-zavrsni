@@ -1,4 +1,4 @@
-<div class="table-row" #row tabindex="1" (blur)="selectRow($event)" (click)="selectRow($event)" (contextmenu)="onContextMenu($event)" [ngClass]="{'selected-row' : trackTableRowService.currTrack() == track.id}">
+<div class="table-row" #row tabindex="1" (blur)="selectRow($event)" (click)="selectRow($event)" (contextmenu)="onContextMenu($event)" [ngClass]="{'selected-row' : trackSelectionService.trackSelection.isSelected(track)}">
     <div class="inner">
         <div class="left">
             <div class="index-play">

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Injector, Input, OnDestroy, OnInit, Output, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Injector, Input, OnDestroy, OnInit, Output, signal, ViewChild } from '@angular/core';
 import { ITrack } from '../../../interfaces/tracks/i-track';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
@@ -17,7 +17,6 @@ import { ConfirmDialogWithActionsComponent } from '../../../../shared/components
 import { NgClass } from '@angular/common';
 import { TracksTableRowService } from '../../../services/tracks/tracks-table-row/tracks-table-row.service';
 import { Subscription } from 'rxjs';
-import { TracksTableService } from '../../../services/tracks/table/tracks-table.service';
 import { PlaylistFormComponent } from '../../playlists/playlist-form/playlist-form.component';
 import { IPlaylist } from '../../../interfaces/playlist/i-playlist';
 import { CommonInputType } from '../../../../shared/form-fields/common-input/interfaces/i-common-input';
@@ -30,6 +29,7 @@ import { IApiResponse } from '../../../../shared/interfaces/i-api-response';
 import { ConfirmDialogActions } from '../../../../shared/components/confirm-dialog-with-actions/enums/confirm-dialog-actions';
 import { FormatDateFromNowPipe } from '../../../../shared/pipes/format-date-from-now.pipe';
 import { toObservable } from '@angular/core/rxjs-interop';
+import { TrackSelectionService } from '../../../services/tracks/track-selection.service';
 
 @Component({
   selector: 'app-tracks-table-row',
@@ -48,6 +48,7 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
     public userPlaylistsService: UserPlaylistsService,
     public userService: UserService,
     public trackTableRowService: TracksTableRowService,
+    public trackSelectionService: TrackSelectionService,
     private alertService: AlertService,
     private audioService: AudioService,
     private playlistsService: PlaylistsService,

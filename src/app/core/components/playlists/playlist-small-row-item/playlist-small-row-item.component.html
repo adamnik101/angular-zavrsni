@@ -1,4 +1,4 @@
-<div class="playlist-small-item-row-wrapper" routerLinkActive="selected-playlist" (contextmenu)="openMenu($event)">
+<div class="playlist-small-item-row-wrapper custom-playlist-id" routerLinkActive="selected-playlist" (contextmenu)="openMenu($event)" [id]="playlist.id">
     <div class="content">
         <div class="image">
             <img src="{{playlist.image_url ? playlist.image_url : '/images/empty-playlist.png'}}"/>
