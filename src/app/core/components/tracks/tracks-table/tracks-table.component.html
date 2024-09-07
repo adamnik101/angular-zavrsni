@@ -1,11 +1,20 @@
 
-<div class="tracks-table-wrapper">
+<div class="tracks-table-wrapper" cdkDropList cdkDropListSortingDisabled >
     @for (track of tracksTableService.tracks(); track $index; let index = $index) {
         @defer (on viewport) {
-            <app-tracks-table-row 
+            <app-tracks-table-row
+                cdkDrag
+                (cdkDragDropped)="onDragDropped($event)" (cdkDragStarted)="onDragStarted($event)"
                 [index]="index" 
                 [track]="track"
-                (onPlay)="onPlay($event, index)">
+                (onPlay)="onPlay($event, index)"
+                (click)="onClick($event, track)"
+                (mousedown)="onMouseDown($event, track)">
+            <div *cdkDragPreview class="track-drag-preview">
+                @for (item of trackSelectionService.trackSelection.selected; track $index; let last = $last) {
+                    {{item.title}}@if (!last) {,}
+                }
+            </div>
             </app-tracks-table-row>
         } @placeholder {
             <app-tracks-table-placeholder-row></app-tracks-table-placeholder-row>

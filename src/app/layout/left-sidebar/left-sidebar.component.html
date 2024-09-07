@@ -1,5 +1,5 @@
 <div class="center">
-    @if(userService.loggedIn() && userService.user()?.role.name === 'end-user' ) {
+    @if(userService.loggedIn() && userService.user()?.role.name === 'admin' ) {
         @for (link of adminNavigationLinks; track $index) {
             <app-navigation-link-item
                 class="nav-link-item"
@@ -44,11 +44,13 @@
             <mat-divider class="divider"></mat-divider>
             <div class="mat-tab-group-wrapper">
                 <mat-tab-group class="custom-user-tab-group-sidebar" dynamicHeight="false" [@.disabled]="true">
-                    <mat-tab label="Playlists" [disabled]="userPlaylistsService.playlists().length === 0">
+                    <mat-tab label="Playlists" [disabled]="userPlaylistsService.playlists().length === 0" >
                         <ng-template matTabContent >
-                            @for(playlist of userPlaylistsService.playlists(); track $index) {
-                                <app-playlist-small-row-item [playlist]="playlist"></app-playlist-small-row-item>
-                            }
+                            <div class="content" [ngClass]="{'canBeDropped': trackSelectionService.isSelectionDragging | async}">
+                                @for(playlist of userPlaylistsService.playlists(); track $index) {
+                                    <app-playlist-small-row-item [playlist]="playlist"></app-playlist-small-row-item>
+                                }
+                            </div>
                         </ng-template>
                     </mat-tab>
                     <mat-tab label="Albums" [disabled]="userAlbumLikesService.albums().length === 0">

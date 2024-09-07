@@ -23,29 +23,45 @@
             <mat-progress-spinner [diameter]="40" mode="indeterminate"></mat-progress-spinner>Loading...
         </div>
     } @else {
-        <app-common-input
-            [formControlToFill]="form.get('title')"
-            [label]="'Title'">
-        </app-common-input>
+        <div class="row">
 
+            <div class="image">
+                <img src="{{form.get('imagePath')?.value ? form.get('imagePath')?.value : '/images/empty-playlist.png'}}"/>
+                <div class="change-image">
+                    <button class="change-image-btn" (click)="imageUpload.click()" mat-mini-fab matTooltip="Change image" matTooltipPosition="above">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    
+                    <input formControlName="imageChange" type="file" accept="image/jpg,image/png" hidden #imageUpload (change)="onImageChange($event)"/>
+                </div>
+            </div>
+            <div class="col">
+                <app-common-input
+                    [formControlToFill]="form.get('title')"
+                    [showError]="false"
+                    [label]="'Title'">
+                </app-common-input>
 
-        <app-common-select
-            [formControlToFill]="form.get('ownerId')"
-            [options]="dropdownData.artists"
-            [label]="'Owner'"
-            [disabledOptionIds]="disabledOwners"
-            (onSelect)="onOwnerChange($event)">
-        </app-common-select>
+                <app-common-select
+                    [formControlToFill]="form.get('ownerId')"
+                    [options]="dropdownData.artists"
+                    [label]="'Owner'"
+                    [disabledOptionIds]="disabledOwners"
+                    (onSelect)="onOwnerChange($event)">
+                </app-common-select>
 
-        <app-common-select
-            [formControlToFill]="form.get('features')"
-            [options]="dropdownData.artists"
-            [mulitple]="true"
-            [disabledOptionIds]="disabledFeatures"
-            (onSelect)="onFeatureChange($event)"
-            [label]="'Features'">
-        </app-common-select>
-
+                <app-common-select
+                    [formControlToFill]="form.get('features')"
+                    [options]="dropdownData.artists"
+                    [mulitple]="true"
+                    [disabledOptionIds]="disabledFeatures"
+                    (onSelect)="onFeatureChange($event)"
+                    [label]="'Features'">
+                </app-common-select>
+            </div>
+        
+        </div>
+    
         <app-common-select
             [formControlToFill]="form.get('albumId')"
             [options]="dropdownData.albums"
@@ -62,9 +78,11 @@
             [formControlToFill]="form.get('explicit')"
             [label]="'Is explicit?'">
         </app-common-radio-checkbox>
-    }
         
-    </form>
+        <audio [src]="form.get('path')?.value" controls style="width: 100%">
+        </audio>  
+    }  
+</form>
         
 </div>
 

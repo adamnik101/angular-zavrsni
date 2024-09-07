@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MAIN_NAVIGATION_LINKS } from '../../core/consts/main-navigation-links';
 import { IMainNavigationLink } from '../../core/interfaces/i-main-navigation-link';
 import { NavigationLinkItemComponent } from './navigation-link-item/navigation-link-item.component';
@@ -15,28 +15,48 @@ import { UserAlbumLikesService } from '../../core/user/services/albums/user-albu
 import { AlbumSmallRowItemComponent } from '../../core/components/albums/album-small-row-item/album-small-row-item.component';
 import { ArtistSmallRowItemComponent } from '../../core/components/artists/artist-small-row-item/artist-small-row-item.component';
 import { ADMIN_NAVIGATION_LINKS } from '../../core/consts/admin-navigation-links';
+import { TrackSelectionService } from '../../core/services/tracks/track-selection.service';
+import { AsyncPipe, NgClass } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-left-sidebar',
   standalone: true,
   imports: [NavigationLinkItemComponent, MatDividerModule, CdkAccordion, CdkAccordionItem,
     MatTabsModule, PlaylistSmallRowItemComponent,
-    AlbumSmallRowItemComponent, ArtistSmallRowItemComponent
+    AlbumSmallRowItemComponent, ArtistSmallRowItemComponent, NgClass, AsyncPipe
   ],
   templateUrl: './left-sidebar.component.html',
   styleUrl: './left-sidebar.component.scss'
 })
-export class LeftSidebarComponent {
+export class LeftSidebarComponent implements OnInit, OnDestroy {
 
   constructor(
     public userService: UserService,
     public userPlaylistsService: UserPlaylistsService,
     public userArtistsFollowingsService: UserArtistFollowingsService,
     public userAlbumLikesService: UserAlbumLikesService,
+    public trackSelectionService: TrackSelectionService
   ) {}
   
   public mainNavigationLinks: IMainNavigationLink[] = MAIN_NAVIGATION_LINKS;
   public authNavigationLinks: IMainNavigationLink[] = AUTH_NAVIGATION_LINKS;
   public userNavigationLinks: IMainNavigationLink[] = USER_NAVIGATION_LINKS;
   public adminNavigationLinks: IMainNavigationLink[] = ADMIN_NAVIGATION_LINKS;
+
+  private subscription: Subscription = new Subscription();
+
+  ngOnInit(): void {
+    this.trackSelectionService.isSelectionDragging.subscribe({
+      next: (data) => {
+        if(!data) {
+          console.log('to drop')
+        }
+      }
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 }

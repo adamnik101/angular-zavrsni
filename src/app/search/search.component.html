@@ -7,7 +7,13 @@
         ) {
             <app-no-results class="wrapper"></app-no-results>
         } @else {
+
+                @if(!!(searchService.results()!.tracks!.total)) {
+                    <app-section-header [header]="'Tracks'"></app-section-header>
+                    <app-tracks-table></app-tracks-table>
+                }
                 @if (!!(searchService.results()!.artists!.total)) {
+                    <app-section-header [header]="'Artists'"></app-section-header>
                     <div class="wrapper-cards">
                         @for (artist of searchService.results()?.artists?.data; track $index) {
                             <app-artist-card [artist]="artist"></app-artist-card>
@@ -15,6 +21,7 @@
                     </div>
                 }
                 @if (!!(searchService.results()!.albums!.total)) {
+                    <app-section-header [header]="'Albums'"></app-section-header>
                     <div class="wrapper-cards">
                         @for (album of searchService.results()?.albums?.data; track $index) {
                             <app-album-card [album]="album"></app-album-card>

@@ -27,7 +27,10 @@ export class TrackFormService implements IFormService{
       path: this.fb.control(""),
       duration: this.fb.control(""),
       explicit: this.fb.control(""),
-      genreId: this.fb.control("")
+      genreId: this.fb.control(""),
+      image: this.fb.control(null),
+      imagePath: this.fb.control(""),
+      imageChange: this.fb.control(""),
     });
   }
   
@@ -37,6 +40,10 @@ export class TrackFormService implements IFormService{
 
   setTitle(title: string): void {
     this.form.get('title')?.setValue(title);
+  }
+
+  setImage(image: string): void {
+    this.form.get('imagePath')?.setValue(image);
   }
 
   setOwnerId(id: string): void {
@@ -72,6 +79,7 @@ export class TrackFormService implements IFormService{
       next: (data: any) => {
         if(track) {
             this.setTitle(track.title);
+            this.setImage(track.cover);
             this.setOwnerId(track.owner.id);
             this.setAlbumId(track.album ? track.album.id : "");
             this.setPath(track.path);
