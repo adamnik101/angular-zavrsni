@@ -65,12 +65,12 @@ export class PlaylistsFormService implements IFormService{
     if(this.form.get("image")?.value) {
       formData.append('image', this.form.get("image")?.value)
     }
-    // if (this.removeCoverImage) {
-    //   formData.append('remove_image', 'true')
-    // }
+
     formData.append('title', this.form.get("title")?.value)
 
-    formData.append('description', this.form.get("description")?.value)
+    if(this.form.get('description')?.value !== null) {
+      formData.append('description', this.form.get("description")?.value)
+    }
 
     return formData;
   }

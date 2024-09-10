@@ -7,6 +7,7 @@ import { UserSettingsService } from '../settings/user-settings.service';
 import { ISettings } from '../../../../settings/interfaces/settings/i-settings';
 import { UserArtistFollowingsService } from '../artists/user-artist-followings.service';
 import { UserAlbumLikesService } from '../albums/user-album-likes.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -24,9 +25,11 @@ export class UserService {
   loggedIn = signal<boolean | null>(null);
   
   user: WritableSignal<IUser | null> = signal<IUser | null>(null);
+  isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   setUserData(data: IUser | null): void {
     console.log("User: ", data)
+    this.isLoggedIn.next(true);
     this.loggedIn.set(data ? true : false);
     this.setUser(data ?? null);
     this.setUserPlaylists(data?.playlists ?? []);

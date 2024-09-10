@@ -86,16 +86,13 @@ export class BackendTableComponent implements OnInit, OnDestroy{
         next: (data) => {
           if(data) {
             if(this.apiService) {
-              SpinnerFunctions.showSpinner();
               this.apiService.delete(item.id).subscribe({
                 next: (data) => {
                   this.alertService.showDefaultMessage("Successfuly deleted.");
                   this.tableService.refreshStorage();
-                  SpinnerFunctions.hideSpinner();
                 },
                 error: (err) => {
                   this.alertService.showErrorMessage("Error while deleting, please try again later...")
-                  SpinnerFunctions.hideSpinner();
                 }
               })
             }
@@ -119,16 +116,13 @@ export class BackendTableComponent implements OnInit, OnDestroy{
         next: (data) => {
           if(data) {
             if(this.apiService) {
-              SpinnerFunctions.showSpinner();
               this.apiService.deleteMany(this.tableService.selectedRowIds).subscribe({
                 next: (data) => {
                   this.alertService.showDefaultMessage("Successfuly deleted.");
                   this.tableService.refreshStorage();
-                  SpinnerFunctions.hideSpinner();
                 },
                 error: (err) => {
                   this.alertService.showErrorMessage("Error while deleting, please try again later...")
-                  SpinnerFunctions.hideSpinner();
                 },
                 complete: () => {
                   this.tableService.selectedRowIds = [];

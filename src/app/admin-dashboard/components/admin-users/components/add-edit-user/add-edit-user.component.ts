@@ -14,6 +14,8 @@ import { CommonSelectComponent } from '../../../../../shared/form-fields/common-
 import { MatButton, MatMiniFabButton } from '@angular/material/button';
 import { CommonInputType } from '../../../../../shared/form-fields/common-input/interfaces/i-common-input';
 import { UserFormRequestsService } from '../../services/requests/user-form-requests.service';
+import { AdminUsersTableService } from '../../services/table/admin-users-table.service';
+import { AlertService } from '../../../../../shared/services/alert/alert.service';
 
 @Component({
   selector: 'app-add-edit-user',
@@ -29,7 +31,9 @@ export class AddEditUserComponent extends BaseFormDialogComponent implements OnI
     protected override matDialogRef: MatDialogRef<AddEditUserComponent>,
     protected override baseForm: UserFormService,
     @Inject(MAT_DIALOG_DATA) public data: IUser,
-    private requestsService: UserFormRequestsService
+    private requestsService: UserFormRequestsService,
+    private tableService: AdminUsersTableService,
+    private alertService: AlertService
   ) {
     super(matDialog,matDialogRef, baseForm);
   }
@@ -83,9 +87,13 @@ export class AddEditUserComponent extends BaseFormDialogComponent implements OnI
   prepareDataToSend(): any {
     let formValue = this.form.getRawValue();
 
-    console.log(formValue);
+    let dataToSend = {
+      email: formValue.email,
+      username: formValue.username,
+      role_id: formValue.roleId
+    };
 
-    return formValue;
+    return dataToSend;
   }
 
   confirm(): void {
@@ -93,13 +101,23 @@ export class AddEditUserComponent extends BaseFormDialogComponent implements OnI
     if(!this.isEdit) {
       this.requestsService.submitInsert(dataToSend).subscribe({
         next: (data) => {
-          console.log(data);
+          this.close(true);
+          this.tableService.refreshStorage();
+          this.alertService.showDefaultMessage("Successfully added.");
+        },
+        error: (err) => {
+          this.alertService.showErrorMessage("Error on adding.");
         }
       });
     } else {
       this.requestsService.submitUpdate(this.id, dataToSend).subscribe({
         next: (data) => {
-          console.log(data);
+          this.close(true);
+          this.tableService.refreshStorage();
+          this.alertService.showDefaultMessage("Successfully updated.");
+        },
+        error: (err) => {
+          this.alertService.showErrorMessage("Error on updating.");
         }
       });
     }

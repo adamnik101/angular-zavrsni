@@ -29,12 +29,6 @@ export class AdminUsersComponent implements OnInit {
   setDefaultOperations(): void {
     this.adminUsersTableService.operations = [
       {
-        title: "Add",
-        method: () => {
-          this.matDialog.open(AddEditUserComponent);
-        }
-      },
-      {
         title: "Edit",
         method: (row: IUser) => {
           this.matDialog.open(AddEditUserComponent, {data: row});

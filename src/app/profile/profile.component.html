@@ -1,21 +1,7 @@
 
     <div class="profile-wrapper">
         <div class="header">
-            <div class="cover">
-                @if (userService.user()?.cover) {
-                    <img crossorigin="anonymous" src="{{userService.user()?.cover}}" alt="user" #image/>
-                } @else {
-                    <div class="default-image">
-                        <mat-icon>person</mat-icon>
-                    </div>
-                }
-
-                <div class="button-edit">
-                    <button mat-mini-fab matTooltip="Edit profile image">
-                        <mat-icon>edit</mat-icon>
-                    </button>
-                </div>
-            </div>
+            
             <div class="info-main">
                 <div class="info">
                     <p>Profile</p>

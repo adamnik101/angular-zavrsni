@@ -27,7 +27,7 @@ export const API_ENDPOINTS = {
     },
     playlist: {
         api: "playlists",
-        tracks: "playlists/tracks/"
+        tracks: "playlists/tracks/",
     },
     search: {
         api: "search"
