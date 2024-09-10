@@ -50,7 +50,6 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
     this.trackSelectionService.isSelectionDragging.subscribe({
       next: (data) => {
         if(!data) {
-          console.log('to drop')
         }
       }
     })

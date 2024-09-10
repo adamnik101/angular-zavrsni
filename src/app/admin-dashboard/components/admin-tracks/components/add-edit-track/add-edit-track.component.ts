@@ -19,6 +19,7 @@ import { IArtist } from '../../../../../core/interfaces/artist/i-artist';
 import { IAlbum } from '../../../../../core/interfaces/album/i-album';
 import { ISelectOption } from '../../../../../shared/interfaces/i-select-option';
 import { AlertService } from '../../../../../shared/services/alert/alert.service';
+import { AdminTracksTableService } from '../../services/table/admin-tracks-table.service';
 
 @Component({
   selector: 'app-add-edit-track',
@@ -35,7 +36,8 @@ export class AddEditTrackComponent extends BaseFormDialogComponent {
     protected override matDialogRef: MatDialogRef<AddEditTrackComponent>,
     protected override baseForm: TrackFormService,
     @Inject(MAT_DIALOG_DATA) public data: ITrack,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private adminTracksTableService: AdminTracksTableService
   ) {
     super(matDialog, matDialogRef, baseForm);
   }
@@ -137,7 +139,50 @@ export class AddEditTrackComponent extends BaseFormDialogComponent {
     }
   }
 
-  confirm(): void {
+  selectTrack(trackFile: any): void {
+    this.form.get("track")?.setValue(trackFile);
+  }
 
+  onFileSelected(event: any): void {
+    const reader = new FileReader()
+    console.log(event.target.files[0]);
+    this.baseForm.setPath(event.target.files[0]);
+
+    reader.readAsDataURL(event.target.files[0]);
+
+    reader.onload = (e) => {
+      this.baseForm.setPath(e.target?.result as any);
+      this.baseForm.setTrack(event.target.files[0]);
+      this.selectTrack(event.target.files[0]);
+      this.formChanged = true;
+    }
+  }
+
+  confirm(): void {
+    if(this.isEdit) {
+      this.baseForm.submitUpdate(this.data.id).subscribe({
+        next: (data) => {
+          this.close(true);
+          this.adminTracksTableService.refreshStorage();
+          this.alertService.showDefaultMessage("Successfully updated.");
+        },
+        error: (err) => {
+          this.close();
+          this.alertService.showErrorMessage("Error on updating.");
+        }
+      })
+    } else {
+      this.baseForm.submitInsert().subscribe({
+        next: (data) => {
+          this.close(true);
+          this.adminTracksTableService.refreshStorage();
+          this.alertService.showDefaultMessage("Successfully added.");
+        },
+        error: (err) => {
+          this.close();
+          this.alertService.showErrorMessage("Error on adding.");
+        }
+      })
+    }
   }
 }

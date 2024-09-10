@@ -28,6 +28,14 @@ export class ConfirmDialogWithActionsComponent {
     this.matDialogRef.close({state: true, action: this.confirmDialogActions.confirm});
   }
   
+  addNewOnes(): void {
+    this.matDialogRef.close({state: true, action: this.confirmDialogActions.addNewOnes});
+  }
+
+  addAll(): void {
+    this.matDialogRef.close({state: true, action: this.confirmDialogActions.addAll});
+  }
+  
   protected close(state: boolean = false): void {
     this.matDialogRef.close(state);
   }

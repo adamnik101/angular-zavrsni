@@ -20,6 +20,7 @@ export const API_ENDPOINTS = {
         username: "me/username",
         cover: "me/cover",
         recentlyPlayed: "me/recently-played",
+        role: "auth/user-role"
     },
     genre: {
         api: "genres"

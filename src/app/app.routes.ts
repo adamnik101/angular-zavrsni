@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './shared/guards/auth.guard';
+import { adminGuard } from './shared/guards/admin.guard';
 
 export const routes: Routes = [
     {
@@ -8,7 +10,8 @@ export const routes: Routes = [
     },
     {
         path: "admin",
-        loadChildren: () => import('./admin-dashboard/routes/admin-routes').then(r => r.ADMIN_ROUTES)
+        loadChildren: () => import('./admin-dashboard/routes/admin-routes').then(r => r.ADMIN_ROUTES),
+        canActivate: [authGuard, adminGuard]
     },
     {
         path: 'home',
@@ -32,7 +35,8 @@ export const routes: Routes = [
     },
     {
         path: "library",
-        loadComponent: () => import('./library/library.component').then(c => c.LibraryComponent)
+        loadComponent: () => import('./library/library.component').then(c => c.LibraryComponent),
+        canActivate: [authGuard]
     },
     {
         path: "playlists/:id",
@@ -52,15 +56,18 @@ export const routes: Routes = [
     },
     {
         path: "liked",
-        loadComponent: () => import('./liked-tracks/liked-tracks.component').then(c => c.LikedTracksComponent)
+        loadComponent: () => import('./liked-tracks/liked-tracks.component').then(c => c.LikedTracksComponent),
+        canActivate: [authGuard]
     },
     {
         path: "profile",
-        loadComponent: () => import('./profile/profile.component').then(c => c.ProfileComponent)
+        loadComponent: () => import('./profile/profile.component').then(c => c.ProfileComponent),
+        canActivate: [authGuard]
     },
     {
         path: "settings",
-        loadComponent: () => import('./settings/settings.component').then(c => c.SettingsComponent)
+        loadComponent: () => import('./settings/settings.component').then(c => c.SettingsComponent),
+        canActivate: [authGuard]
     },
     {
         path: "search",

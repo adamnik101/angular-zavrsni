@@ -26,7 +26,7 @@
                         <mat-icon>edit</mat-icon>
                     </button>
                     
-                    <input formControlName="imageChange" type="file" accept="image/jpg,image/png" hidden #imageUpload (change)="onImageChange($event)"/>
+                    <input formControlName="imageChange" type="file" accept="image/jpeg,image/png" hidden #imageUpload (change)="onImageChange($event)"/>
                 </div>
             </div>
         </div>
@@ -51,6 +51,6 @@
 </div>
 
 <div mat-dialog-actions>
-    <button mat-flat-button [disabled]="form.invalid || !formChanged" (click)="confirm()">{{confirmDialogActions.confirm}}</button>
+    <button mat-flat-button [disabled]="form.invalid || (isTrackingChanges && !formChanged)" (click)="confirm()">{{confirmDialogActions.confirm}}</button>
     <button class="warning-btn" mat-flat-button (click)="close()">{{confirmDialogActions.cancel}}</button>
 </div>

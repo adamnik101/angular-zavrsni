@@ -9,7 +9,7 @@ export class DominantColorService {
 
   getDominantColorFromImage(image: any, canvas: any, opacity: number = .5): string {
 
-    let ctx = canvas.getContext('2d');
+    let ctx = canvas.getContext('2d', { willReadFrequently: true });
   
     return this.getDominantColor(ctx,image, opacity);
        

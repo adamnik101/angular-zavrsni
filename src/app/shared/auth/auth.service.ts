@@ -57,6 +57,10 @@ export class AuthService extends ApiService<any>{
     return this.getWithOverideEndpoint('auth/me')
   }
 
+  getUserRole(): Observable<any> {
+    return this.getWithOverideEndpoint(API_ENDPOINTS.user.role);
+  }
+  
   clearAllDataForUser(): void {
     this.removeToken();
     this.userService.setUserData(null);

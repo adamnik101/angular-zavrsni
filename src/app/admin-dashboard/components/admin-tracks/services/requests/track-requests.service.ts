@@ -52,4 +52,12 @@ export class TrackRequestsService {
   getGenres(): Observable<any> {
     return this.genreService.getAll();
   }
+
+  submitUpdate(id: string, dataToSend: any): Observable<any> {
+    return this.apiService.postAsPatch(id, dataToSend);
+  }
+
+  submitInsert(dataToSend: any): Observable<any> {
+    return this.apiService.post(dataToSend);
+  }
 }

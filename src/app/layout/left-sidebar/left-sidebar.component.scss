@@ -19,7 +19,9 @@
     
 }
 
-
+.content {
+    border: 2px solid transparent;
+}
 .canBeDropped {
     border: 2px solid $main-color;
     border-radius: 15px;
