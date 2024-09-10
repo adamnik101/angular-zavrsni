@@ -16,6 +16,13 @@
             <button mat-flat-button (click)="confirm()">{{action}}</button>
         }
 
+        @if(action === confirmDialogActions.addAll) {
+            <button mat-flat-button (click)="addAll()">{{action}}</button>
+        }
+
+        @if(action === confirmDialogActions.addNewOnes) {
+            <button mat-flat-button (click)="addNewOnes()">{{action}}</button>
+        }
     }
 
     <button class="warning-btn" mat-flat-button (click)="close()">{{confirmDialogActions.cancel}}</button>

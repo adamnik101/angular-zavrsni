@@ -4,5 +4,6 @@ export enum ConfirmDialogActions {
     add = "Add",
     addAnyway = "Add anyway",
     addAll = "Add all",
-    dontAdd = "Don't add"
+    dontAdd = "Don't add",
+    addNewOnes = "Add new ones"
 }

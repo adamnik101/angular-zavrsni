@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { TrackRequestsService } from '../requests/track-requests.service';
 import { IFormService } from '../../../../../shared/interfaces/i-form-service';
-import { Observable, tap } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import { ITrack } from '../../../../../core/interfaces/tracks/i-track';
 import { IArtist } from '../../../../../core/interfaces/artist/i-artist';
 
@@ -31,6 +31,7 @@ export class TrackFormService implements IFormService{
       image: this.fb.control(null),
       imagePath: this.fb.control(""),
       imageChange: this.fb.control(""),
+      track: this.fb.control(null)
     });
   }
   
@@ -74,6 +75,10 @@ export class TrackFormService implements IFormService{
     this.form.get('features')?.setValue(features.map(x => x.id));
   }
 
+  setTrack(trackFile: any): void {
+    this.form.get('track')?.setValue(trackFile);
+  }
+
   fillForm(track: ITrack): Observable<any> {
     return this.trackRequestsService.getDataFromRequestsById(null).pipe(tap({
       next: (data: any) => {
@@ -94,5 +99,54 @@ export class TrackFormService implements IFormService{
 
   reset(): void {
     this.form = this.init();
+  }
+
+  prepareDataToSend(): any {
+    let formData = new FormData();
+
+    let formValue = this.form.getRawValue();
+
+
+    formData.append('title', formValue.title);
+
+    if(formValue.image) {
+      formData.append('cover', formValue.image);
+    }
+
+    formData.append('owner', formValue.ownerId);
+
+    if(formValue.albumId) {
+      formData.append('album', formValue.albumId);
+    }
+
+    if(formValue.genreId) {
+      formData.append('genre', formValue.genreId);
+    }
+
+    formData.append('explicit', formValue.explicit);
+
+    if(formValue.features) {
+      for(let id of formValue.features) {
+        formData.append('features[]', id)
+      }
+    }
+
+    if(formValue.track) {
+      formData.append('track', formValue.track);
+    }
+
+    return formData;
+  }
+
+  submitInsert(): Observable<any> {
+    let dataToSend = this.prepareDataToSend();
+
+    return this.trackRequestsService.submitInsert(dataToSend);
+  }
+
+  submitUpdate(id: string): Observable<any> {
+    let dataToSend = this.prepareDataToSend();
+
+    return this.trackRequestsService.submitUpdate(id, dataToSend);
   }
 }

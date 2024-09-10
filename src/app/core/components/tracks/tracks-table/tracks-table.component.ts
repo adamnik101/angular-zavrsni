@@ -9,6 +9,12 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { CdkDrag, CdkDragDrop, CdkDragPreview, CdkDragStart, CdkDropList } from '@angular/cdk/drag-drop';
 import { TrackSelectionService } from '../../../services/tracks/track-selection.service';
 import { PlaylistsService } from '../../../services/playlists/base/playlists.service';
+import { IApiResponse } from '../../../../shared/interfaces/i-api-response';
+import { ConfirmDialogWithActionsComponent } from '../../../../shared/components/confirm-dialog-with-actions/confirm-dialog-with-actions.component';
+import { ConfirmDialogActions } from '../../../../shared/components/confirm-dialog-with-actions/enums/confirm-dialog-actions';
+import { UserPlaylistsService } from '../../../user/services/playlists/user-playlists.service';
+import { AlertService } from '../../../../shared/services/alert/alert.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-tracks-table',
@@ -23,7 +29,10 @@ export class TracksTableComponent implements OnInit, OnDestroy{
     public tracksTableService: TracksTableService,
     public trackSelectionService: TrackSelectionService,
     private queueService: QueueService,
-    private playlistsService: PlaylistsService
+    private playlistsService: PlaylistsService,
+    private userPlaylistsService: UserPlaylistsService,
+    private alertService: AlertService,
+    private matDialog: MatDialog
   ) {}
 
   @Output() public OnTrackPlayed: EventEmitter<any> = new EventEmitter();
@@ -64,13 +73,78 @@ export class TracksTableComponent implements OnInit, OnDestroy{
       if(target) {
         const tracksToAdd = this.trackSelectionService.trackSelection.selected.map(x => x.id);
 
-        this.playlistsService.addTracksToPlaylist(tracksToAdd, target.id).subscribe({
-          next: (data) => {
-            console.log(data);
-          }
-        })
+        const id = target.id;
+
+        this.addToPlaylist(tracksToAdd, id);
       }
     }
+  }
+
+  private addToPlaylist(trackIds: string[], id: string, confirm: boolean | null = null): void {
+    this.playlistsService.addTracksToPlaylist(trackIds, id, confirm).subscribe({
+      next: (data: IApiResponse<any>) => {
+        const addedCount = data.data.added_count;
+        
+        this.userPlaylistsService.playlists.update(playlists => {
+          const indexToUpdate = playlists.findIndex(playlist => playlist.id === id);
+          
+          if(indexToUpdate !== -1) {
+            playlists[indexToUpdate].tracks_count += addedCount;
+          }
+
+          return playlists;
+        });
+        this.trackSelectionService.trackSelection.setSelection();
+        this.alertService.showDefaultMessage(data.data.message);
+      },
+      error: (err) => {
+        const errResponse = err.error;
+        if(errResponse.hasOwnProperty("errors") &&  errResponse.status_code === 422) {
+          const dialogHeader = errResponse.errors.tracks_already_in_playlist.length > 1 ? "Some already added" : "Already added"
+          this.matDialog.open(ConfirmDialogWithActionsComponent, {
+            data: {
+              header: dialogHeader,
+              message: errResponse.errors.content,
+              actions: errResponse.errors.actions
+            }
+          }).afterClosed().subscribe({
+            next: (data) => {
+              this.trackSelectionService.trackSelection.setSelection();
+
+              if(data.state && data.action === ConfirmDialogActions.addAnyway) {
+                this.addToPlaylist(trackIds, id, true);
+              } else if(data.state && data.action === ConfirmDialogActions.addAll) {
+                this.addToPlaylist(trackIds, id, true);
+              } else if(data.state && data.action === ConfirmDialogActions.addNewOnes) {
+                let allTrackIds = errResponse.errors.all_tracks_id as string[];
+
+                let tracksAlreadyAdded = Object.values(errResponse.errors.tracks_already_in_playlist) as string[];
+                let newOnes: string[] = [];
+                console.log(Object.values(tracksAlreadyAdded), allTrackIds)
+
+                const uniqueTrackIds = allTrackIds.filter(x => !tracksAlreadyAdded.includes(x));
+
+                // for(let trackId of allTrackIds) {
+                //   for(let addedId of tracksAlreadyAdded) {
+                //     console.log(trackId, addedId)
+                //       if(!allTrackIds.includes(addedId) && !newOnes.includes(trackId)) {
+                //         newOnes.push(trackId);
+                //       }
+                //   }
+                // }
+                
+                console.log(uniqueTrackIds)
+                this.addToPlaylist(uniqueTrackIds, id);
+              }
+
+            }
+          })
+          return;
+        }
+
+        this.alertService.showErrorMessage(err.error.message);
+      }
+    })
   }
 
   onMouseDown(event: any, track: ITrack): void {
