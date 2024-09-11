@@ -11,9 +11,6 @@
 
     @if (userService.loggedIn()) {
         <div class="user">
-            <button mat-mini-fab matBadge="1">
-                <mat-icon>notifications</mat-icon>
-            </button>
 
             <button mat-mini-fab [mat-menu-trigger-for]="menu" color="accent">
                 <mat-icon>menu</mat-icon>

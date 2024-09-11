@@ -1,8 +1,8 @@
 import { Component, Inject } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton, MatMiniFabButton } from '@angular/material/button';
 import { MatDialogTitle, MatDialogContent, MatDialogClose, MatDialogActions, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatFormField } from '@angular/material/form-field';
+import { MatError, MatFormField } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { CommonInputComponent } from '../../../../../shared/form-fields/common-input/common-input.component';
@@ -25,7 +25,7 @@ import { AdminTracksTableService } from '../../services/table/admin-tracks-table
   selector: 'app-add-edit-track',
   standalone: true,
   imports: [MatIcon, MatFormField, MatButton, MatMiniFabButton, MatProgressSpinner,ReactiveFormsModule, CommonInputComponent, 
-    CommonSelectComponent, MatDialogTitle, MatDialogContent, MatDialogClose, MatDialogActions, CommonRadioCheckboxComponent],
+    CommonSelectComponent, MatDialogTitle, MatDialogContent, MatDialogClose, MatDialogActions, CommonRadioCheckboxComponent, MatError],
   templateUrl: './add-edit-track.component.html',
   styleUrl: './add-edit-track.component.scss'
 })
@@ -65,6 +65,7 @@ export class AddEditTrackComponent extends BaseFormDialogComponent {
       this.isEdit = true;
       this.id = this.data.id;
       this.trackFormChanged(this.form);
+      this.form.get('track')?.setValidators([Validators.required]);
     }
 
     this.fillForm();

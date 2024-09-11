@@ -1,179 +1,181 @@
-<div class="table-row" #row tabindex="1" (blur)="selectRow($event)" (click)="selectRow($event)" (contextmenu)="onContextMenu($event)" [ngClass]="{'selected-row' : trackSelectionService.trackSelection.isSelected(track)}">
-    <div class="inner">
-        <div class="left">
-            <div class="index-play">
-                <div class="number">
-                    {{index + 1}}
-                </div>
-                
-                <button mat-icon-button class="play" (click)="play()" matTooltip="Play {{track.title}} by {{track.owner.name}} {{featureNames.length ? 'x' : ''}} {{featureNames.join(', ')}}" matTooltipPosition="above" matTooltipClass="my-custom-tooltip">
-                    <mat-icon>play_arrow</mat-icon>
-                </button>
-            </div>
-    
-            <div class="cover">
-                <img src="{{track.cover}}" alt="{{track.title}},cover"/>
-            </div>
-            <div class="title-artists">
-                <p class="title">{{track.title}}</p>
-                <div class="artists">
-                    <div class="owner">
-                        <a routerLink="/artists/{{track.owner_id}}">{{track.owner.name}}</a>
+@if (track) {
+    <div class="table-row" #row tabindex="1" (blur)="selectRow($event)" (click)="selectRow($event)" (contextmenu)="onContextMenu($event)" [ngClass]="{'selected-row' : trackSelectionService.trackSelection.isSelected(track)}">
+        <div class="inner">
+            <div class="left">
+                <div class="index-play">
+                    <div class="number">
+                        {{index + 1}}
                     </div>
-    
-                    <div class="features">
-                        @for (feature of track.features; track $index; let index = $index) {
-                            @if (index !== 0) {,&nbsp;} @else {&nbsp;x&nbsp;} <a routerLink="/artists/{{feature.id}}">{{feature.name}}</a>
-                        }
-                    </div>
+                    
+                    <button mat-icon-button class="play" (click)="play()" matTooltip="Play {{track.title}} by {{track.owner.name}} {{featureNames.length ? 'x' : ''}} {{featureNames.join(', ')}}" matTooltipPosition="above" matTooltipClass="my-custom-tooltip">
+                        <mat-icon>play_arrow</mat-icon>
+                    </button>
                 </div>
-            </div>
-    
-            <div class="album">
-                @if (track.album) {            
-                    <a routerLink="/albums/{{track.album.id}}">
-                        {{track.album.name}}
-                    </a>
-                }
-            </div>
-    
-            @if (track.pivot) {
-                <div class="created-at">
-                    <span>{{track.pivot.created_at | formatDateFromNow}}</span>
-                </div>
-            }
-        </div>
-
         
-
-        <div class="right">
-            <div class="favorite">
-                @if (userService.loggedIn()) {
-                    @if(track.liked) {
-                        <button mat-icon-button (click)="removeFromLiked()" class="is-favorite">
-                            <mat-icon>favorite</mat-icon>
-                        </button>
-                    } @else {
-                        <button mat-icon-button (click)="addToLiked()" class="not-favorite">
-                            <mat-icon>
-                                favorite_outline
-                            </mat-icon>
-                        </button>
+                <div class="cover">
+                    <img src="{{track.cover}}" alt="{{track.title}},cover"/>
+                </div>
+                <div class="title-artists">
+                    <p class="title">{{track.title}}</p>
+                    <div class="artists">
+                        <div class="owner">
+                            <a routerLink="/artists/{{track.owner_id}}">{{track.owner.name}}</a>
+                        </div>
+        
+                        <div class="features">
+                            @for (feature of track.features; track $index; let index = $index) {
+                                @if (index !== 0) {,&nbsp;} @else {&nbsp;x&nbsp;} <a routerLink="/artists/{{feature.id}}">{{feature.name}}</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="album">
+                    @if (track.album) {            
+                        <a routerLink="/albums/{{track.album.id}}">
+                            {{track.album.name}}
+                        </a>
                     }
+                </div>
+        
+                @if (track.pivot) {
+                    <div class="created-at">
+                        <span>{{track.pivot.created_at | formatDateFromNow}}</span>
+                    </div>
                 }
             </div>
     
-            <div class="duration">
-                <span>{{track.duration | formatDurationFromSeconds}}</span>
-            </div>
-
-            <div class="options-menu">
-                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-                    <mat-icon>more_vert</mat-icon>
-                </button>
+            
     
-                <mat-menu #menu="matMenu">
+            <div class="right">
+                <div class="favorite">
                     @if (userService.loggedIn()) {
-                        <button mat-menu-item [matMenuTriggerFor]="playlists">
-                            <mat-icon>queue</mat-icon>
-                            <span>Add to Playlist</span>
-                        </button>     
+                        @if(track.liked) {
+                            <button mat-icon-button (click)="removeFromLiked()" class="is-favorite">
+                                <mat-icon>favorite</mat-icon>
+                            </button>
+                        } @else {
+                            <button mat-icon-button (click)="addToLiked()" class="not-favorite">
+                                <mat-icon>
+                                    favorite_outline
+                                </mat-icon>
+                            </button>
+                        }
+                    }
+                </div>
+        
+                <div class="duration">
+                    <span>{{track.duration | formatDurationFromSeconds}}</span>
+                </div>
+    
+                <div class="options-menu">
+                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+        
+                    <mat-menu #menu="matMenu">
+                        @if (userService.loggedIn()) {
+                            <button mat-menu-item [matMenuTriggerFor]="playlists">
+                                <mat-icon>queue</mat-icon>
+                                <span>Add to Playlist</span>
+                            </button>     
+                            
+                            @if(canBeRemovedFromPlaylist) {
+                                <button mat-menu-item (click)="removeFromPlaylist(track)">
+                                    <mat-icon>delete</mat-icon>
+                                    <span>Remove from Playlist</span>
+                                </button>    
+                            }
                         
-                        @if(canBeRemovedFromPlaylist) {
-                            <button mat-menu-item>
-                                <mat-icon>delete</mat-icon>
-                                <span>Remove from Playlist</span>
+                            <button mat-menu-item (click)="toggleLike($event)">
+                                <mat-icon>
+                                    @if (track.liked) {
+                                        favorite
+                                    } @else {
+                                        favorite_outline
+                                    }
+                                </mat-icon>
+                                <span>
+                                    @if (track.liked) {
+                                        Remove from liked
+                                    } @else {
+                                        Add to liked
+                                    }
+                                </span>
                             </button>    
                         }
-                    
-                        <button mat-menu-item (click)="toggleLike($event)">
-                            <mat-icon>
-                                @if (track.liked) {
-                                    favorite
-                                } @else {
-                                    favorite_outline
-                                }
-                            </mat-icon>
-                            <span>
-                                @if (track.liked) {
-                                    Remove from liked
-                                } @else {
-                                    Add to liked
-                                }
-                            </span>
-                        </button>    
-                    }
-                    
-                    <button mat-menu-item (click)="addToQueue($event)">
-                        <mat-icon>library_add</mat-icon>
-                        <span>Add to queue</span>
-                    </button>
-
-                    <mat-divider/>
-                    <button mat-menu-item [matMenuTriggerFor]="owner">
-                      <mat-icon>person</mat-icon>
-                      <span>Owner</span>
-                    </button>
-    
-                    <button mat-menu-item [matMenuTriggerFor]="features" [disabled]="track.features.length === 0">
-                        <mat-icon>recent_actors</mat-icon>
-                        <span>Features</span>
-                    </button>
-      
-                    <button mat-menu-item [matMenuTriggerFor]="album" [disabled]="!track.album?.id">
-                      <mat-icon>album</mat-icon>
-                      <span>Album</span>
-                    </button>
-                  </mat-menu>
-    
-                  <mat-menu #playlists>
-                    <ng-template matMenuContent>
-                        <button mat-menu-item (click)="$event.stopPropagation(); $event.preventDefault(); search.focus()" class="custom-search-mat-menu">
-                            <mat-icon>search</mat-icon>
-                            <input  type="text" #search placeholder="Search playlists" (blur)="search.focus()" (input)="$event.preventDefault(); searchPlaylists(search.value)"/>
-                            <!-- <app-common-input [type]="commonInputType.text" #search [onBlurElement]="true" [formControlToFill]="searchControl.get('search')" (OnInput)="searchPlaylists($event)" (keyup.Space)="$event.stopPropagation(); $event.preventDefault()"></app-common-input> -->
+                        
+                        <button mat-menu-item (click)="addToQueue($event)">
+                            <mat-icon>library_add</mat-icon>
+                            <span>Add to queue</span>
                         </button>
+    
                         <mat-divider/>
-                        <button mat-menu-item (click)="openCreateNewPlaylistDialog()">
-                            <mat-icon>add</mat-icon>
-                            <span>Create new playlist</span>
+                        <button mat-menu-item [matMenuTriggerFor]="owner">
+                          <mat-icon>person</mat-icon>
+                          <span>Owner</span>
                         </button>
-                        @for (playlist of filteredPlaylists(); track $index) {
-                            <button mat-menu-item (click)="addToPlaylist(playlist.id)">{{playlist.title}}</button>
-                        } @empty {
-                            <button mat-menu-item class="no-playlists">No playlists</button>
-                        }
-                    </ng-template>
-                  </mat-menu>
-                  <mat-menu #owner="matMenu">
-                        <ng-template matMenuContent>
-                            <button mat-menu-item routerLink="/artists/{{track.owner.id}}">{{track.owner.name}}</button>
-                        </ng-template>
-                  </mat-menu>
-    
-                  
-                  <mat-menu #features="matMenu">
-                    <ng-template matMenuContent>
-                        @for (feature of track.features; track $index) {
-                            <button mat-menu-item routerLink="/artists/{{feature.id}}">{{feature.name}}</button>
-                        }
-                    </ng-template>
-                  </mat-menu>
-    
-                  <mat-menu #album="matMenu">
-                    <ng-template matMenuContent>
-                        <button mat-menu-item routerLink="/albums/{{track.album?.id}}">{{track.album?.name}}</button>
-                    </ng-template>
-                  </mat-menu>
-            </div>
-        </div>
         
-    </div>
-
-    <div #trigger="matMenuTrigger"
-        style="position: fixed"
-        [style.left]="contextMenuPosition.x"
-        [style.top]="contextMenuPosition.y"
-        [matMenuTriggerFor]="menu">
+                        <button mat-menu-item [matMenuTriggerFor]="features" [disabled]="track.features.length === 0">
+                            <mat-icon>recent_actors</mat-icon>
+                            <span>Features</span>
+                        </button>
+          
+                        <button mat-menu-item [matMenuTriggerFor]="album" [disabled]="!track.album?.id">
+                          <mat-icon>album</mat-icon>
+                          <span>Album</span>
+                        </button>
+                      </mat-menu>
+        
+                      <mat-menu #playlists>
+                        <ng-template matMenuContent>
+                            <button mat-menu-item (click)="$event.stopPropagation(); $event.preventDefault(); search.focus()" class="custom-search-mat-menu">
+                                <mat-icon>search</mat-icon>
+                                <input  type="text" #search placeholder="Search playlists" (blur)="search.focus()" (input)="$event.preventDefault(); searchPlaylists(search.value)"/>
+                                <!-- <app-common-input [type]="commonInputType.text" #search [onBlurElement]="true" [formControlToFill]="searchControl.get('search')" (OnInput)="searchPlaylists($event)" (keyup.Space)="$event.stopPropagation(); $event.preventDefault()"></app-common-input> -->
+                            </button>
+                            <mat-divider/>
+                            <button mat-menu-item (click)="openCreateNewPlaylistDialog()">
+                                <mat-icon>add</mat-icon>
+                                <span>Create new playlist</span>
+                            </button>
+                            @for (playlist of filteredPlaylists(); track $index) {
+                                <button mat-menu-item (click)="addToPlaylist(playlist.id)">{{playlist.title}}</button>
+                            } @empty {
+                                <button mat-menu-item class="no-playlists">No playlists</button>
+                            }
+                        </ng-template>
+                      </mat-menu>
+                      <mat-menu #owner="matMenu">
+                            <ng-template matMenuContent>
+                                <button mat-menu-item routerLink="/artists/{{track.owner.id}}">{{track.owner.name}}</button>
+                            </ng-template>
+                      </mat-menu>
+        
+                      
+                      <mat-menu #features="matMenu">
+                        <ng-template matMenuContent>
+                            @for (feature of track.features; track $index) {
+                                <button mat-menu-item routerLink="/artists/{{feature.id}}">{{feature.name}}</button>
+                            }
+                        </ng-template>
+                      </mat-menu>
+        
+                      <mat-menu #album="matMenu">
+                        <ng-template matMenuContent>
+                            <button mat-menu-item routerLink="/albums/{{track.album?.id}}">{{track.album?.name}}</button>
+                        </ng-template>
+                      </mat-menu>
+                </div>
+            </div>
+            
         </div>
-</div>
+    
+        <div #trigger="matMenuTrigger"
+            style="position: fixed"
+            [style.left]="contextMenuPosition.x"
+            [style.top]="contextMenuPosition.y"
+            [matMenuTriggerFor]="menu">
+            </div>
+    </div>
+}

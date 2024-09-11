@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IFormService } from '../../../shared/interfaces/i-form-service';
-import { FormBuilder, UntypedFormGroup } from '@angular/forms';
+import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ILoginForm } from '../interfaces/i-login';
 import { ICredentials } from '../../../shared/interfaces/i-credentials';
 import { Observable, tap } from 'rxjs';
@@ -22,8 +22,8 @@ export class LoginFormService implements IFormService{
 
   init(): UntypedFormGroup {
     return this.formBuilder.group<ILoginForm>({
-      email: this.formBuilder.control(''),
-      password: this.formBuilder.control('')
+      email: this.formBuilder.control('', [Validators.required]),
+      password: this.formBuilder.control('', [Validators.required])
     })
   }
 

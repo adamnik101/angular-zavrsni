@@ -100,11 +100,6 @@ export class SearchNavComponent implements OnInit{
         icon: "account_box"
       },
       {
-        title: "Settings",
-        routePath: "settings",
-        icon: "settings"
-      },
-      {
         title: "Logout",
         routePath: null,
         icon: "logout",

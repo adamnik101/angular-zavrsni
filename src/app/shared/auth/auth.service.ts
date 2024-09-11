@@ -65,5 +65,6 @@ export class AuthService extends ApiService<any>{
     this.removeToken();
     this.userService.setUserData(null);
     this.userService.loggedIn.set(null);
+    this.userService.isLoggedIn.next(false);
   }
 }

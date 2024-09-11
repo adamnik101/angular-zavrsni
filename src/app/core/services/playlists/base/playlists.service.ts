@@ -21,4 +21,8 @@ export class PlaylistsService extends ApiService<IApiResponse<IPlaylist>>{
   addTracksToPlaylist(trackIds: string[], playlistId: string, confirm: boolean | null = null): Observable<IApiResponse<any>> {
     return this.http.post<IApiResponse<any>>(`${environment.baseUrl + API_ENDPOINTS.playlist.tracks + playlistId}`, {tracks: trackIds, confirm});
   }
+
+  removeTrackFromPlaylist(trackId: any, playlistId: string): Observable<any> {
+    return this.http.delete<IApiResponse<any>>(`${environment.baseUrl + API_ENDPOINTS.playlist.api}/${playlistId}/tracks/${trackId}`);
+  }
 }

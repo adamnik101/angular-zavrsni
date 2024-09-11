@@ -5,6 +5,7 @@ import { AdminAlbumsTableService } from './services/table/admin-albums-table.ser
 import { IAlbum } from '../../../core/interfaces/album/i-album';
 import { AddEditAlbumsComponent } from './components/add-edit-albums/add-edit-albums.component';
 import { MatDialog } from '@angular/material/dialog';
+import { AlertService } from '../../../shared/services/alert/alert.service';
 
 @Component({
   selector: 'app-admin-albums',
@@ -18,8 +19,7 @@ export class AdminAlbumsComponent implements OnInit {
   constructor(
     public apiService: AdminAlbumsService,
     public tableService: AdminAlbumsTableService,
-    private matDialog: MatDialog
-    
+    private matDialog: MatDialog    
   ) {}
 
   ngOnInit(): void {

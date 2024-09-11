@@ -30,6 +30,7 @@ import { ConfirmDialogActions } from '../../../../shared/components/confirm-dial
 import { FormatDateFromNowPipe } from '../../../../shared/pipes/format-date-from-now.pipe';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { TrackSelectionService } from '../../../services/tracks/track-selection.service';
+import { IArtist } from '../../../interfaces/artist/i-artist';
 
 @Component({
   selector: 'app-tracks-table-row',
@@ -69,7 +70,7 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
   public filteredPlaylists = signal<IPlaylist[]>(this.userPlaylistsService.playlists());
 
   @Input({required: true}) public index: number = 0;
-  @Input({required: true}) public track: ITrack = {} as ITrack;
+  @Input({required: true}) public track: any = {} as ITrack;
 
   @Output() public onPlay: EventEmitter<ITrack> = new EventEmitter();
 
@@ -95,10 +96,22 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
 
   ngOnInit(): void {
     this.setFeatures();
-    if(this.userService.loggedIn()) {
-      this.trackUserPlaylists();
-      this.setIfCanBeRemovedFromPlaylist();
-    }
+
+    this.trackIsLoggedIn();
+    // if(this.userService.loggedIn()) {
+    //   this.trackUserPlaylists();
+    //   this.setIfCanBeRemovedFromPlaylist();
+    // }
+  }
+
+  trackIsLoggedIn(): void {
+    this.userService.isLoggedIn.subscribe({
+      next: (data) => {
+        if(data) { 
+          this.setIfCanBeRemovedFromPlaylist();
+        }
+      }
+    })
   }
 
   ngAfterViewInit(): void {
@@ -112,7 +125,7 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   setFeatures(): void {
-    this.track.features.forEach(feature => {
+    this.track.features.forEach((feature: IArtist) => {
       this.features.set(feature.id, feature.name);
       this.featureNames.push(feature.name);
     });
@@ -175,6 +188,26 @@ export class TracksTableRowComponent implements OnInit, AfterViewInit, OnDestroy
       },
       error: (err) => {
         
+      }
+    })
+  }
+
+  removeFromPlaylist(track: ITrack): void {
+    this.playlistsService.removeTrackFromPlaylist(track.pivot.id, track.pivot.playlist_id).subscribe({
+      next: (data) => {
+        this.userPlaylistsService.playlists.update(playlists => {
+          const indexToUpdate = playlists.findIndex(playlist => playlist.id === track.pivot.playlist_id);
+          
+          if(indexToUpdate !== -1) {
+            playlists[indexToUpdate].tracks_count -= 1;
+            console.log(playlists[indexToUpdate]);
+            this.track = null;
+            // playlists[indexToUpdate].tracks = playlists[indexToUpdate].tracks.filter(x => x.id !== track.id);
+          }
+
+          this.alertService.showDefaultMessage("Removed from playlist.");
+          return playlists;
+        })
       }
     })
   }

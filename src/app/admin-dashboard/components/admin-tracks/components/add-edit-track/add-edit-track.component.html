@@ -82,7 +82,9 @@
         <audio [src]="form.get('path')?.value" controls style="width: 100%">
         </audio>  
         <button mat-flat-button (click)="track.click()">Select track</button>
-
+        @if(form.get('track')?.hasError('required')) {
+            <mat-error>You must upload track file</mat-error>
+        }
         <input type="file" hidden (change)="onFileSelected($event)" accept="audio/mp3,audio/wav" #track/>
     }  
 </form>

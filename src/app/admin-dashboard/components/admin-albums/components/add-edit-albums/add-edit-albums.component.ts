@@ -13,6 +13,7 @@ import { CommonSelectComponent } from "../../../../../shared/form-fields/common-
 import { IArtist } from '../../../../../core/interfaces/artist/i-artist';
 import { IApiResponse } from '../../../../../shared/interfaces/i-api-response';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { AlertService } from '../../../../../shared/services/alert/alert.service';
 
 @Component({
   selector: 'app-add-edit-albums',
@@ -27,7 +28,8 @@ export class AddEditAlbumsComponent extends BaseFormDialogComponent implements O
     protected override matDialog: MatDialog,
     protected override matDialogRef: MatDialogRef<AddEditAlbumsComponent>,
     protected override baseForm: AlbumFormService,
-    @Inject(MAT_DIALOG_DATA) public data: IAlbum
+    @Inject(MAT_DIALOG_DATA) public data: IAlbum,
+    private alertService: AlertService
   ) {
     super(matDialog,matDialogRef, baseForm);
   }
@@ -83,12 +85,20 @@ export class AddEditAlbumsComponent extends BaseFormDialogComponent implements O
       this.baseForm.submitUpdate(this.id).subscribe({
         next: (response) => {
           this.matDialogRef.close(true);
-        } 
+          this.alertService.showDefaultMessage("Successfully updated.");
+        },
+        error: (err) => {
+          this.alertService.showErrorMessage("Erorr on updating.");
+        }
       });
     } else {
       this.baseForm.submitInsert().subscribe({
         next: (response) => {
           this.matDialogRef.close(true);
+          this.alertService.showDefaultMessage("Successfully added.");
+        },
+        error: (err) => {
+          this.alertService.showErrorMessage("Erorr on adding.");
         }
       });
     }
