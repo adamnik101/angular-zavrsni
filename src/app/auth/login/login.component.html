@@ -5,18 +5,20 @@
             <app-common-input
                 [label]="'Email'"
                 [type]="commonInputType.email"
-                [formControlToFill]="form.get('email')">
+                [formControlToFill]="form.get('email')"
+                [showError]="false">
             </app-common-input>
         </div>
         <div class="row">
             <app-common-input
                 [label]="'Pasword'"
                 [type]="commonInputType.password"
-                [formControlToFill]="form.get('password')">
+                [formControlToFill]="form.get('password')"
+                [showError]="false">
             </app-common-input>
         </div>
         <div class="row login-btn">
-            <button mat-flat-button type="button" (click)="login()">Login</button>
+            <button mat-flat-button type="button" [disabled]="form.invalid" (click)="login()">Login</button>
         </div>
 
         <div class="row register-link">
